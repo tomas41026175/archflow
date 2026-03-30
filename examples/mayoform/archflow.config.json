@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "project": {
+    "name": "MAYOForm-Web",
+    "description": "MAYOForm 表單管理系統前端",
+    "repository": "https://mayohr.visualstudio.com/MAYO-Form/_git/MAYOForm-Web"
+  },
+  "layers": [
+    {
+      "id": "presentation",
+      "label": "Presentation Layer",
+      "color": "#3B82F6",
+      "order": 0,
+      "modules": [
+        {
+          "id": "designer-pages",
+          "name": "Designer Pages",
+          "type": "page",
+          "description": "表單設計器頁面群組（流程設計、欄位設計、預覽）",
+          "files": ["src/app/[lng]/[appCode]/(interface)/designer/**"],
+          "tags": ["react-flow", "designer"],
+          "dependsOn": ["designer-hooks", "form-components"]
+        },
+        {
+          "id": "form-pages",
+          "name": "Form Pages",
+          "type": "page",
+          "description": "表單填寫 / 審核 / 查閱頁面",
+          "files": ["src/app/[lng]/[appCode]/(interface)/form/**"],
+          "tags": ["form", "approval"],
+          "dependsOn": ["form-hooks", "form-components"]
+        },
+        {
+          "id": "form-components",
+          "name": "Form Components",
+          "type": "component",
+          "description": "共用表單元件（輸入欄位、計算控件、Grid 等）",
+          "files": ["src/components/form/**"],
+          "tags": ["shared", "ui"],
+          "dependsOn": ["form-atoms"]
+        }
+      ]
+    },
+    {
+      "id": "business-logic",
+      "label": "Business Logic Layer",
+      "color": "#10B981",
+      "order": 1,
+      "modules": [
+        {
+          "id": "designer-hooks",
+          "name": "Designer Hooks",
+          "type": "hook",
+          "description": "表單設計器業務邏輯（圖形流程、節點操作、公式編輯）",
+          "files": ["src/app/[lng]/[appCode]/(interface)/designer/hooks/**"],
+          "tags": ["react-flow", "designer"],
+          "dependsOn": ["designer-atoms", "api-layer"]
+        },
+        {
+          "id": "form-hooks",
+          "name": "Form Hooks",
+          "type": "hook",
+          "description": "表單填寫業務邏輯（驗證、計算、聯動）",
+          "files": ["src/hooks/form/**"],
+          "tags": ["form", "validation"],
+          "dependsOn": ["form-atoms", "api-layer"]
+        },
+        {
+          "id": "flow-action-logic",
+          "name": "Flow Action Logic",
+          "type": "service",
+          "description": "簽核流程動作邏輯（審核、退回、加簽、會簽）",
+          "files": ["src/hooks/flowAction/**"],
+          "tags": ["approval", "workflow"],
+          "dependsOn": ["api-layer"]
+        }
+      ]
+    },
+    {
+      "id": "data-access",
+      "label": "Data Access Layer",
+      "color": "#F59E0B",
+      "order": 2,
+      "modules": [
+        {
+          "id": "api-layer",
+          "name": "API Layer",
+          "type": "api",
+          "description": "Axios HTTP 客戶端與 TanStack Query hooks",
+          "files": ["src/api/**", "src/hooks/api/**"],
+          "tags": ["http", "tanstack-query"],
+          "endpoints": [
+            "POST /api/form",
+            "GET /api/form/:id",
+            "PUT /api/form/:id",
+            "POST /api/flowAction"
+          ]
+        },
+        {
+          "id": "designer-atoms",
+          "name": "Designer Atoms",
+          "type": "store",
+          "description": "設計器相關的 Jotai atoms（流程節點、欄位設定）",
+          "files": ["src/lib/jotai/designer/**"],
+          "tags": ["jotai", "state"]
+        },
+        {
+          "id": "form-atoms",
+          "name": "Form Atoms",
+          "type": "store",
+          "description": "表單相關的 Jotai atoms（表單資料、驗證狀態）",
+          "files": ["src/lib/jotai/form/**"],
+          "tags": ["jotai", "state"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "archflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive project architecture visualization tool",
+  "scripts": {
+    "dev": "pnpm --filter @archflow/app dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md,css}\"",
+    "test": "pnpm -r test",
+    "test:unit": "pnpm --filter @archflow/app test:unit",
+    "test:coverage": "pnpm -r test:coverage",
+    "test:e2e": "pnpm --filter @archflow/app test:e2e",
+    "generate:schema": "pnpm --filter @archflow/app generate:schema"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
