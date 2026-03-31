@@ -1,15 +1,16 @@
 # Archflow — Handoff Document
 
-> 最後更新：2026-03-30 | Phase 1a 完成
+> 最後更新：2026-03-31 | Phase 1a + 1b + 1c 完成
 
 ## 當前狀態
 
-Phase 1a **已完成**：專案骨架 + 三層架構視圖的核心路徑。
+Phase 1 **全部完成**：三層架構視圖 + 互動強化 + Analyzer CLI + 依賴視圖。
 
 已驗證：
-- `pnpm typecheck` — 通過
+- `pnpm typecheck` — 全部通過
+- `pnpm test` — 33 個測試全部通過（27 app + 6 analyzer）
 - `pnpm dev` — localhost:5173 正常啟動
-- 範例 config 結構完整（`examples/mayoform/archflow.config.json`）
+- Analyzer CLI — `archflow analyze --root ./src` 正常產出 JSON
 
 ## 已完成項目
 
@@ -35,31 +36,32 @@ Phase 1a **已完成**：專案骨架 + 三層架構視圖的核心路徑。
 
 ## 尚未完成（下一步）
 
-### Phase 1b — DetailPanel 互動完善
-- [ ] 節點選中時高亮 + 相關邊高亮
-- [ ] Zod error 顯示具體欄位 + 行號提示
-- [ ] DetailPanel 的 VSCode 跳轉需要完整檔案路徑（目前是 glob pattern）
+### Phase 1b — DetailPanel 互動完善 (DONE)
+- [x] 節點選中時高亮 + 相關邊高亮（animated + color + opacity）
+- [x] Zod error 顯示具體欄位路徑 + 錯誤計數
+- [x] 27 個單元測試（Schema 18 + Transform 9）
 
-### Phase 1c — 靜態分析 + 依賴視圖
-- [ ] `packages/analyzer/` 完整實作（ts-morph 解析 import/export）
-- [ ] CLI: `archflow analyze --root ./src --tsconfig ./tsconfig.json -o deps.json`
-- [ ] 依賴視圖頁面 (`DependencyViewPage.tsx`)
-- [ ] FileNode 自訂節點
-- [ ] Analyzer fixture tests
+### Phase 1c — 靜態分析 + 依賴視圖 (DONE)
+- [x] Analyzer CLI 完整實作（ts-morph 解析 import/export + re-export）
+- [x] CLI 支援 --root / --tsconfig / --include / --exclude / -o / --verbose
+- [x] DependencyViewPage（獨立拖入 analysis JSON）
+- [x] FileNode 自訂節點（檔案類型圖示 + 色彩）
+- [x] 6 個 Analyzer fixture tests
 
-### Phase 2 — 路由 + 狀態 + 搜尋
+### Phase 2 — 路由 + 狀態 + 搜尋（下一步）
 - [ ] RouteViewPage + RouteNode + RouteGroupNode
 - [ ] StateFlowViewPage + StateStoreNode
 - [ ] Cmd+K 搜尋
 - [ ] 篩選（層級、tags）
+- [ ] VSCode 跳轉（`vscode://file/...` URI）
 
 ## 已知問題 & 注意事項
 
 1. **Zod v4**：專案安裝的是 Zod 4.3（非 v3），API 大致相容但若遇到型別推導問題，參考 [Zod v4 migration](https://zod.dev/v4)
 2. **dagre 佈局目前未在三層視圖中使用**：`configToLayerNodes.ts` 用手動計算位置（因為三層是固定橫向排列），dagre 工具保留給依賴視圖使用
-3. **Vitest 尚未安裝在 app package**：`package.json` 有 test scripts 但 vitest 還未加入 devDependencies，Phase 1b 開始測試前需 `pnpm add -D vitest`
-4. **shadcn/ui 元件尚未安裝**：目前手寫 Tailwind CSS，shadcn CLI init 尚未執行。若需要 Sheet/Command/Dialog 等元件，需先跑 shadcn init
-5. **`pnpm build` 在 analyzer 會失敗**：因為 `dist/index.js` 不存在，bin 連結會 warn（不影響 app）
+3. **Vitest 已安裝**：app 和 analyzer 均已設定，33 個測試全部通過
+4. **shadcn/ui 元件尚未安裝**：目前手寫 Tailwind CSS，shadcn CLI init 尚未執行。Phase 2 的 Command (Cmd+K) 需要 shadcn
+5. **Analyzer build 正常**：`pnpm --filter @archflow/analyzer build` 可產生 `dist/`
 
 ## 架構決策記錄
 
