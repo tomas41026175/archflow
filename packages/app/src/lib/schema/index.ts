@@ -25,3 +25,11 @@ export type {
   StateFlowDirection,
   ProjectInfo,
 } from './config'
+
+export { analysisResultSchema } from './analysis'
+
+export type {
+  AnalysisResult,
+  AnalysisDependencyNode,
+  AnalysisDependencyEdge,
+} from './analysis'

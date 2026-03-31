@@ -33,13 +33,13 @@ export function Sidebar() {
           <button
             key={item.id}
             type="button"
-            disabled={!config}
+            disabled={!config && item.id !== 'dependencies'}
             className={cn(
               'flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors',
-              activeView === item.id && config
+              activeView === item.id
                 ? 'bg-accent text-accent-foreground font-medium'
                 : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
-              !config && 'opacity-50 cursor-not-allowed',
+              !config && item.id !== 'dependencies' && 'opacity-50 cursor-not-allowed',
             )}
             onClick={() => setActiveView(item.id)}
           >

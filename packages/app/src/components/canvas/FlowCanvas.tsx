@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import {
   ReactFlow,
   Controls,
@@ -13,28 +13,94 @@ import '@xyflow/react/dist/style.css'
 
 import { LayerGroupNode } from '../nodes/LayerGroupNode'
 import { ModuleNode } from '../nodes/ModuleNode'
+import { FileNode } from '../nodes/FileNode'
 
 interface FlowCanvasProps {
   nodes: Node[]
   edges: Edge[]
+  selectedNodeId: string | null
   onNodeClick?: (nodeId: string) => void
+  onPaneClick?: () => void
 }
 
-export function FlowCanvas({ nodes, edges, onNodeClick }: FlowCanvasProps) {
+/** Apply highlight styles to edges connected to the selected node */
+function applyEdgeHighlight(
+  edges: Edge[],
+  selectedNodeId: string | null,
+): Edge[] {
+  if (!selectedNodeId) return edges
+
+  return edges.map((edge) => {
+    const isConnected =
+      edge.source === selectedNodeId || edge.target === selectedNodeId
+    return {
+      ...edge,
+      animated: isConnected,
+      style: {
+        ...edge.style,
+        stroke: isConnected ? 'var(--color-primary)' : 'var(--color-border)',
+        strokeWidth: isConnected ? 2 : 1,
+        opacity: isConnected ? 1 : 0.3,
+      },
+    }
+  })
+}
+
+/** Apply selected state to nodes */
+function applyNodeSelection(
+  nodes: Node[],
+  selectedNodeId: string | null,
+): Node[] {
+  if (!selectedNodeId) return nodes
+
+  return nodes.map((node) => ({
+    ...node,
+    selected: node.id === selectedNodeId,
+  }))
+}
+
+export function FlowCanvas({
+  nodes,
+  edges,
+  selectedNodeId,
+  onNodeClick,
+  onPaneClick,
+}: FlowCanvasProps) {
   const nodeTypes: NodeTypes = useMemo(
     () => ({
       layerGroup: LayerGroupNode,
       module: ModuleNode,
+      file: FileNode,
     }),
     [],
   )
 
+  const styledEdges = useMemo(
+    () => applyEdgeHighlight(edges, selectedNodeId),
+    [edges, selectedNodeId],
+  )
+
+  const styledNodes = useMemo(
+    () => applyNodeSelection(nodes, selectedNodeId),
+    [nodes, selectedNodeId],
+  )
+
+  const handleNodeClick = useCallback(
+    (_event: React.MouseEvent, node: Node) => {
+      // Ignore clicks on layer group nodes
+      if (node.type === 'layerGroup') return
+      onNodeClick?.(node.id)
+    },
+    [onNodeClick],
+  )
+
   return (
     <ReactFlow
-      nodes={nodes}
-      edges={edges}
+      nodes={styledNodes}
+      edges={styledEdges}
       nodeTypes={nodeTypes}
-      onNodeClick={(_event, node) => onNodeClick?.(node.id)}
+      onNodeClick={handleNodeClick}
+      onPaneClick={onPaneClick}
       fitView
       fitViewOptions={{ padding: 0.2 }}
       minZoom={0.1}

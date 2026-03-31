@@ -1,15 +1,26 @@
 import { useCallback } from 'react'
 import { archflowConfigSchema } from '../lib/schema'
 import { useProjectStore } from '../stores/useProjectStore'
-import type { ZodError } from 'zod'
+import type { ZodError, ZodIssue } from 'zod'
+
+function formatIssue(issue: ZodIssue): string {
+  const path = issue.path.length > 0 ? issue.path.join('.') : 'root'
+  const code = issue.code
+  let detail = issue.message
+
+  if (code === 'invalid_type') {
+    const typed = issue as ZodIssue & { expected: string; received: string }
+    detail = `expected ${typed.expected}, got ${typed.received}`
+  }
+
+  return `  ${path}  →  ${detail}`
+}
 
 function formatZodError(error: ZodError): string {
-  return error.issues
-    .map((issue) => {
-      const path = issue.path.length > 0 ? issue.path.join('.') : 'root'
-      return `[${path}] ${issue.message}`
-    })
-    .join('\n')
+  const count = error.issues.length
+  const header = `${count} validation error${count > 1 ? 's' : ''} found:\n`
+  const details = error.issues.map(formatIssue).join('\n')
+  return header + details
 }
 
 export function useConfigLoader() {
@@ -29,8 +40,12 @@ export function useConfigLoader() {
 
         loadConfig(result.data)
         return true
-      } catch {
-        setError('Invalid JSON format')
+      } catch (e) {
+        const msg =
+          e instanceof SyntaxError
+            ? `JSON syntax error: ${e.message}`
+            : 'Invalid JSON format'
+        setError(msg)
         return false
       }
     },

@@ -3,6 +3,7 @@ import { Sidebar } from './components/layout/Sidebar'
 import { ConfigDropZone } from './components/panels/ConfigDropZone'
 import { ErrorBanner } from './components/panels/ErrorBanner'
 import { LayerViewPage } from './pages/LayerViewPage'
+import { DependencyViewPage } from './pages/DependencyViewPage'
 import { useProjectStore } from './stores/useProjectStore'
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
       <Sidebar />
       <main className="relative flex-1">
         <ErrorBanner />
-        {!config ? (
+        {!config && activeView !== 'dependencies' ? (
           <div className="flex h-full items-center justify-center p-8">
             <ConfigDropZone />
           </div>
@@ -23,7 +24,7 @@ export default function App() {
             {activeView === 'layers' && <LayerViewPage />}
             {activeView === 'routes' && <ComingSoon view="Routes" />}
             {activeView === 'stateFlows' && <ComingSoon view="State Flows" />}
-            {activeView === 'dependencies' && <ComingSoon view="Dependencies" />}
+            {activeView === 'dependencies' && <DependencyViewPage />}
           </ReactFlowProvider>
         )}
       </main>

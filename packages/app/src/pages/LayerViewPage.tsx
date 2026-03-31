@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useProjectStore } from '../stores/useProjectStore'
 import { configToLayerNodes } from '../lib/transforms/configToLayerNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
@@ -22,12 +22,21 @@ export function LayerViewPage() {
     return null
   }, [selectedNodeId, config])
 
+  const handleNodeClick = useCallback(
+    (nodeId: string) => {
+      setSelectedNodeId((prev) => (prev === nodeId ? null : nodeId))
+    },
+    [],
+  )
+
   return (
     <div className="relative h-full w-full">
       <FlowCanvas
         nodes={nodes}
         edges={edges}
-        onNodeClick={setSelectedNodeId}
+        selectedNodeId={selectedNodeId}
+        onNodeClick={handleNodeClick}
+        onPaneClick={() => setSelectedNodeId(null)}
       />
       {selectedModule && (
         <DetailPanel
