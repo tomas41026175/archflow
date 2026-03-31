@@ -132,14 +132,14 @@
           "id": "api-layer",
           "name": "API Layer",
           "type": "api",
-          "description": "Axios HTTP 客戶端與 TanStack Query hooks",
+          "description": "Axios HTTP 客戶端",
           "files": [
             "src/api/**",
             "src/hooks/api/**"
           ],
           "tags": [
             "http",
-            "tanstack-query"
+            "axios"
           ],
           "endpoints": [
             "POST /api/form",
