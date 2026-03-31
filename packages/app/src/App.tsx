@@ -22,6 +22,7 @@ function ViewLoading() {
 
 export default function App() {
   const config = useProjectStore((s) => s.config)
+  const configVersion = useProjectStore((s) => s.configVersion)
   const activeView = useProjectStore((s) => s.activeView)
   const selectNode = useProjectStore((s) => s.selectNode)
 
@@ -42,7 +43,7 @@ export default function App() {
             <ConfigDropZone />
           </div>
         ) : (
-          <ReactFlowProvider>
+          <ReactFlowProvider key={configVersion}>
             <Suspense fallback={<ViewLoading />}>
               {activeView === 'layers' && <LayerViewPage />}
               {activeView === 'routes' && <RouteViewPage />}

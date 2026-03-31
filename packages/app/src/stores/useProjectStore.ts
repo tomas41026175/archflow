@@ -24,6 +24,7 @@ function loadPersistedView(): ViewType {
 
 interface ProjectState {
   config: ArchflowConfig | null
+  configVersion: number
   activeView: ViewType
   error: string | null
   pendingNodeId: string | null
@@ -40,13 +41,14 @@ interface ProjectActions {
 
 export const useProjectStore = create<ProjectState & ProjectActions>((set, get) => ({
   config: loadPersistedConfig(),
+  configVersion: 0,
   activeView: loadPersistedView(),
   error: null,
   pendingNodeId: null,
 
   loadConfig: (config) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(config))
-    set({ config, error: null })
+    set((s) => ({ config, configVersion: s.configVersion + 1, error: null }))
   },
 
   setActiveView: (activeView) => {
@@ -69,6 +71,6 @@ export const useProjectStore = create<ProjectState & ProjectActions>((set, get) 
   reset: () => {
     localStorage.removeItem(STORAGE_KEY)
     localStorage.removeItem(VIEW_KEY)
-    set({ config: null, activeView: 'layers', error: null, pendingNodeId: null })
+    set((s) => ({ config: null, configVersion: s.configVersion + 1, activeView: 'layers', error: null, pendingNodeId: null }))
   },
 }))
