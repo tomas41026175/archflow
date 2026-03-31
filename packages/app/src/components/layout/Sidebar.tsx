@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
-import { Layers, GitBranch, Activity, Network, FolderOpen, FolderCheck } from 'lucide-react'
+import { Layers, GitBranch, Activity, Network, FolderOpen, FolderCheck, FileUp } from 'lucide-react'
 import { useProjectStore } from '../../stores/useProjectStore'
 import { useFileSystemStore } from '../../stores/useFileSystemStore'
+import { useConfigLoader } from '../../hooks/useConfigLoader'
 import { cn } from '../../lib/utils'
 import type { ViewType } from '../../types/canvas'
 
@@ -18,21 +19,43 @@ export function Sidebar() {
   const setActiveView = useProjectStore((s) => s.setActiveView)
   const rootName = useFileSystemStore((s) => s.rootName)
   const setDirectoryHandle = useFileSystemStore((s) => s.setDirectoryHandle)
+  const { loadFromFile } = useConfigLoader()
 
   const handlePickDirectory = useCallback(async () => {
     try {
       const handle = await window.showDirectoryPicker({ mode: 'readwrite' })
       setDirectoryHandle(handle)
     } catch {
-      // User cancelled the picker
+      // User cancelled
     }
   }, [setDirectoryHandle])
+
+  const handleSwitchConfig = useCallback(() => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = async () => {
+      const file = input.files?.[0]
+      if (file) await loadFromFile(file)
+    }
+    input.click()
+  }, [loadFromFile])
 
   return (
     <aside className="flex w-60 flex-col border-r border-border bg-card">
       {/* Header */}
       <div className="border-b border-border p-4">
-        <h1 className="text-lg font-semibold">Archflow</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-semibold">Archflow</h1>
+          <button
+            type="button"
+            className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+            onClick={handleSwitchConfig}
+            title="Load / switch config"
+          >
+            <FileUp className="h-4 w-4" />
+          </button>
+        </div>
         {config && (
           <p className="mt-0.5 truncate text-sm text-muted-foreground">
             {config.project.name}

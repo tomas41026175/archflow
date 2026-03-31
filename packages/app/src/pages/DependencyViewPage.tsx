@@ -69,17 +69,32 @@ export default function DependencyViewPage() {
 
   const loadAnalysis = useCallback((jsonString: string, fileName: string) => {
     try {
-      const raw: unknown = JSON.parse(jsonString)
-      const result = analysisResultSchema.safeParse(raw)
-      if (!result.success) {
-        setError('Invalid analysis JSON format')
+      const raw = JSON.parse(jsonString) as Record<string, unknown>
+
+      // Try 1: raw analysis JSON (from archflow analyze -o)
+      const directResult = analysisResultSchema.safeParse(raw)
+      if (directResult.success) {
+        const label = fileName.replace(/\.json$/, '')
+        addAnalysis(label, directResult.data)
+        setError(null)
         return
       }
-      const label = fileName.replace(/\.json$/, '')
-      addAnalysis(label, result.data)
-      setError(null)
+
+      // Try 2: archflow.config.json with embedded analysis
+      if (raw['analysis']) {
+        const embeddedResult = analysisResultSchema.safeParse(raw['analysis'])
+        if (embeddedResult.success) {
+          const label = (raw['project'] as { name?: string } | undefined)?.name
+            ?? fileName.replace(/\.json$/, '')
+          addAnalysis(label, embeddedResult.data)
+          setError(null)
+          return
+        }
+      }
+
+      setError('No valid analysis data found. Drop an analysis JSON or a config with embedded analysis.')
     } catch {
-      setError('Invalid JSON')
+      setError('Invalid JSON file')
     }
   }, [addAnalysis])
 
