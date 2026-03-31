@@ -14,6 +14,10 @@ import '@xyflow/react/dist/style.css'
 import { LayerGroupNode } from '../nodes/LayerGroupNode'
 import { ModuleNode } from '../nodes/ModuleNode'
 import { FileNode } from '../nodes/FileNode'
+import { RouteNode } from '../nodes/RouteNode'
+import { RouteGroupNode } from '../nodes/RouteGroupNode'
+import { StateStoreNode } from '../nodes/StateStoreNode'
+import { StateConsumerNode } from '../nodes/StateConsumerNode'
 
 interface FlowCanvasProps {
   nodes: Node[]
@@ -71,6 +75,10 @@ export function FlowCanvas({
       layerGroup: LayerGroupNode,
       module: ModuleNode,
       file: FileNode,
+      route: RouteNode,
+      routeGroup: RouteGroupNode,
+      stateStore: StateStoreNode,
+      stateConsumer: StateConsumerNode,
     }),
     [],
   )

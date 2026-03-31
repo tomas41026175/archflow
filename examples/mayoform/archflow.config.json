@@ -114,5 +114,81 @@
         }
       ]
     }
-  ]
+  ],
+  "routes": {
+    "framework": "nextjs",
+    "basePath": "/",
+    "entries": [
+      {
+        "path": "/login",
+        "name": "Login",
+        "handler": "src/app/[lng]/login/page.tsx",
+        "tags": ["public"]
+      },
+      {
+        "path": "/[lng]/[appCode]",
+        "name": "App Shell",
+        "guard": "RoutePermissionAuth",
+        "children": [
+          {
+            "path": "/[lng]/[appCode]/designer",
+            "name": "Form Designer",
+            "handler": "src/app/[lng]/[appCode]/(interface)/designer/page.tsx",
+            "tags": ["designer"],
+            "children": [
+              {
+                "path": "/[lng]/[appCode]/designer/flow",
+                "name": "Flow Designer",
+                "handler": "src/app/.../FlowDesignSettingV3/index.tsx"
+              }
+            ]
+          },
+          {
+            "path": "/[lng]/[appCode]/form/:formId",
+            "name": "Form Fill",
+            "handler": "src/app/[lng]/[appCode]/(interface)/form/page.tsx",
+            "tags": ["form"]
+          },
+          {
+            "path": "/[lng]/[appCode]/form/:formId/review",
+            "name": "Form Review",
+            "handler": "src/app/[lng]/[appCode]/(interface)/form/review/page.tsx",
+            "tags": ["form", "approval"]
+          }
+        ]
+      },
+      {
+        "path": "/api/log",
+        "name": "Log Endpoint",
+        "handler": "src/app/api/log/route.ts",
+        "method": "POST",
+        "tags": ["api"]
+      }
+    ]
+  },
+  "stateFlows": {
+    "library": "jotai",
+    "stores": [
+      {
+        "id": "designer-atoms",
+        "name": "Designer Flow Atoms",
+        "file": "src/lib/jotai/designer/flow.ts",
+        "atoms": ["closeEdgeActionTooltipAtom", "setCurrentConnectingTypeAtom", "setOpenContextNodeIDAtom"]
+      },
+      {
+        "id": "form-atoms",
+        "name": "Form State Atoms",
+        "file": "src/lib/jotai/form/index.ts",
+        "atoms": ["formDataAtom", "formValidationAtom", "formMetaAtom"]
+      }
+    ],
+    "flows": [
+      { "from": "designer-atoms", "to": "designer-pages", "direction": "read", "description": "Designer 頁面讀取流程設計狀態" },
+      { "from": "designer-pages", "to": "designer-atoms", "direction": "write", "description": "Designer 頁面寫入流程連接狀態" },
+      { "from": "form-atoms", "to": "form-pages", "direction": "read", "description": "表單頁面讀取表單資料" },
+      { "from": "form-pages", "to": "form-atoms", "direction": "write", "description": "表單頁面寫入表單資料" },
+      { "from": "form-atoms", "to": "form-components", "direction": "read", "description": "表單元件讀取驗證狀態" },
+      { "from": "form-hooks", "to": "form-atoms", "direction": "read-write", "description": "表單 hooks 讀寫表單狀態" }
+    ]
+  }
 }
