@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T04:05:12.438Z",
+      "analyzedAt": "2026-03-31T04:10:07.494Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
-      "fileCount": 43,
-      "nodeCount": 38,
-      "edgeCount": 81
+      "fileCount": 48,
+      "nodeCount": 43,
+      "edgeCount": 95
     },
     "nodes": [
       {
@@ -391,6 +391,18 @@
         "filePath": "main.tsx",
         "type": "unknown",
         "exports": []
+      },
+      {
+        "id": "hooks/useAnalysisLoader.ts",
+        "label": "useAnalysisLoader",
+        "filePath": "hooks/useAnalysisLoader.ts",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "useAnalysisLoader",
+            "kind": "function"
+          }
+        ]
       },
       {
         "id": "hooks/useConfigLoader.ts",
@@ -794,45 +806,29 @@
         "type": "unknown",
         "exports": [
           {
-            "name": "moduleTypeSchema",
+            "name": "projectInfoSchema",
             "kind": "variable"
           },
           {
-            "name": "moduleSchema",
+            "name": "archflowConfigSchema",
             "kind": "variable"
           },
           {
-            "name": "layerSchema",
-            "kind": "variable"
+            "name": "ProjectInfo",
+            "kind": "type"
           },
           {
-            "name": "httpMethodSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "routeEntrySchema",
-            "kind": "variable"
-          },
-          {
-            "name": "routeConfigSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "stateStoreSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "stateFlowDirectionSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "stateFlowSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "stateFlowConfigSchema",
-            "kind": "variable"
-          },
+            "name": "ArchflowConfig",
+            "kind": "type"
+          }
+        ]
+      },
+      {
+        "id": "lib/schema/connection.ts",
+        "label": "connection",
+        "filePath": "lib/schema/connection.ts",
+        "type": "unknown",
+        "exports": [
           {
             "name": "connectionProtocolSchema",
             "kind": "variable"
@@ -846,67 +842,11 @@
             "kind": "variable"
           },
           {
-            "name": "projectInfoSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "archflowConfigSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "ModuleType",
-            "kind": "type"
-          },
-          {
-            "name": "Module",
-            "kind": "type"
-          },
-          {
-            "name": "Layer",
-            "kind": "type"
-          },
-          {
-            "name": "HttpMethod",
-            "kind": "type"
-          },
-          {
-            "name": "RouteEntry",
-            "kind": "interface"
-          },
-          {
-            "name": "RouteConfig",
-            "kind": "type"
-          },
-          {
-            "name": "StateStore",
-            "kind": "type"
-          },
-          {
-            "name": "StateFlowDirection",
-            "kind": "type"
-          },
-          {
-            "name": "StateFlow",
-            "kind": "type"
-          },
-          {
-            "name": "StateFlowConfig",
-            "kind": "type"
-          },
-          {
             "name": "Connection",
             "kind": "type"
           },
           {
             "name": "ConnectionProtocol",
-            "kind": "type"
-          },
-          {
-            "name": "ProjectInfo",
-            "kind": "type"
-          },
-          {
-            "name": "ArchflowConfig",
             "kind": "type"
           }
         ]
@@ -917,10 +857,6 @@
         "filePath": "lib/schema/index.ts",
         "type": "unknown",
         "exports": [
-          {
-            "name": "archflowConfigSchema",
-            "kind": "variable"
-          },
           {
             "name": "layerSchema",
             "kind": "variable"
@@ -934,12 +870,40 @@
             "kind": "variable"
           },
           {
+            "name": "Layer",
+            "kind": "type"
+          },
+          {
+            "name": "Module",
+            "kind": "type"
+          },
+          {
+            "name": "ModuleType",
+            "kind": "type"
+          },
+          {
             "name": "routeConfigSchema",
             "kind": "variable"
           },
           {
             "name": "routeEntrySchema",
             "kind": "variable"
+          },
+          {
+            "name": "httpMethodSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "RouteConfig",
+            "kind": "type"
+          },
+          {
+            "name": "RouteEntry",
+            "kind": "interface"
+          },
+          {
+            "name": "HttpMethod",
+            "kind": "type"
           },
           {
             "name": "stateFlowConfigSchema",
@@ -954,38 +918,6 @@
             "kind": "variable"
           },
           {
-            "name": "projectInfoSchema",
-            "kind": "variable"
-          },
-          {
-            "name": "ArchflowConfig",
-            "kind": "type"
-          },
-          {
-            "name": "Layer",
-            "kind": "type"
-          },
-          {
-            "name": "Module",
-            "kind": "type"
-          },
-          {
-            "name": "ModuleType",
-            "kind": "type"
-          },
-          {
-            "name": "RouteConfig",
-            "kind": "type"
-          },
-          {
-            "name": "RouteEntry",
-            "kind": "interface"
-          },
-          {
-            "name": "HttpMethod",
-            "kind": "type"
-          },
-          {
             "name": "StateFlowConfig",
             "kind": "type"
           },
@@ -999,6 +931,34 @@
           },
           {
             "name": "StateFlowDirection",
+            "kind": "type"
+          },
+          {
+            "name": "connectionSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "connectionsConfigSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "Connection",
+            "kind": "type"
+          },
+          {
+            "name": "ConnectionProtocol",
+            "kind": "type"
+          },
+          {
+            "name": "archflowConfigSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "projectInfoSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "ArchflowConfig",
             "kind": "type"
           },
           {
@@ -1019,6 +979,110 @@
           },
           {
             "name": "AnalysisDependencyEdge",
+            "kind": "type"
+          }
+        ]
+      },
+      {
+        "id": "lib/schema/layer.ts",
+        "label": "layer",
+        "filePath": "lib/schema/layer.ts",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "moduleTypeSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "moduleSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "layerSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "ModuleType",
+            "kind": "type"
+          },
+          {
+            "name": "Module",
+            "kind": "type"
+          },
+          {
+            "name": "Layer",
+            "kind": "type"
+          }
+        ]
+      },
+      {
+        "id": "lib/schema/route.ts",
+        "label": "route",
+        "filePath": "lib/schema/route.ts",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "httpMethodSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "HttpMethod",
+            "kind": "type"
+          },
+          {
+            "name": "RouteEntry",
+            "kind": "interface"
+          },
+          {
+            "name": "routeEntrySchema",
+            "kind": "variable"
+          },
+          {
+            "name": "routeConfigSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "RouteConfig",
+            "kind": "type"
+          }
+        ]
+      },
+      {
+        "id": "lib/schema/stateFlow.ts",
+        "label": "stateFlow",
+        "filePath": "lib/schema/stateFlow.ts",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "stateStoreSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "stateFlowDirectionSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "stateFlowSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "stateFlowConfigSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "StateStore",
+            "kind": "type"
+          },
+          {
+            "name": "StateFlowDirection",
+            "kind": "type"
+          },
+          {
+            "name": "StateFlow",
+            "kind": "type"
+          },
+          {
+            "name": "StateFlowConfig",
             "kind": "type"
           }
         ]
@@ -1181,6 +1245,34 @@
         ]
       },
       {
+        "source": "hooks/useAnalysisLoader.ts",
+        "target": "lib/schema/index.ts",
+        "imports": [
+          {
+            "name": "archflowConfigSchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "analysisResultSchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "AnalysisResult",
+            "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "hooks/useAnalysisLoader.ts",
+        "target": "stores/useProjectStore.ts",
+        "imports": [
+          {
+            "name": "useProjectStore",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
         "source": "hooks/useConfigLoader.ts",
         "target": "lib/schema/index.ts",
         "imports": [
@@ -1210,24 +1302,6 @@
           },
           {
             "name": "Module",
-            "isTypeOnly": true
-          }
-        ]
-      },
-      {
-        "source": "pages/DependencyViewPage.tsx",
-        "target": "lib/schema/index.ts",
-        "imports": [
-          {
-            "name": "archflowConfigSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "analysisResultSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "AnalysisResult",
             "isTypeOnly": true
           }
         ]
@@ -1264,10 +1338,10 @@
       },
       {
         "source": "pages/DependencyViewPage.tsx",
-        "target": "stores/useProjectStore.ts",
+        "target": "hooks/useAnalysisLoader.ts",
         "imports": [
           {
-            "name": "useProjectStore",
+            "name": "useAnalysisLoader",
             "isTypeOnly": false
           }
         ]
@@ -1821,13 +1895,59 @@
         ]
       },
       {
-        "source": "lib/schema/index.ts",
-        "target": "lib/schema/config.ts",
+        "source": "lib/schema/config.ts",
+        "target": "lib/schema/layer.ts",
         "imports": [
           {
-            "name": "archflowConfigSchema",
+            "name": "layerSchema",
             "isTypeOnly": false
-          },
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/config.ts",
+        "target": "lib/schema/route.ts",
+        "imports": [
+          {
+            "name": "routeConfigSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/config.ts",
+        "target": "lib/schema/stateFlow.ts",
+        "imports": [
+          {
+            "name": "stateFlowConfigSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/config.ts",
+        "target": "lib/schema/connection.ts",
+        "imports": [
+          {
+            "name": "connectionsConfigSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/connection.ts",
+        "target": "lib/schema/route.ts",
+        "imports": [
+          {
+            "name": "httpMethodSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/layer.ts",
+        "imports": [
           {
             "name": "layerSchema",
             "isTypeOnly": false
@@ -1839,41 +1959,13 @@
           {
             "name": "moduleTypeSchema",
             "isTypeOnly": false
-          },
-          {
-            "name": "routeConfigSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "routeEntrySchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "stateFlowConfigSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "stateFlowSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "stateStoreSchema",
-            "isTypeOnly": false
-          },
-          {
-            "name": "projectInfoSchema",
-            "isTypeOnly": false
           }
         ]
       },
       {
         "source": "lib/schema/index.ts",
-        "target": "lib/schema/config.ts",
+        "target": "lib/schema/layer.ts",
         "imports": [
-          {
-            "name": "ArchflowConfig",
-            "isTypeOnly": true
-          },
           {
             "name": "Layer",
             "isTypeOnly": true
@@ -1885,7 +1977,31 @@
           {
             "name": "ModuleType",
             "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/route.ts",
+        "imports": [
+          {
+            "name": "routeConfigSchema",
+            "isTypeOnly": false
           },
+          {
+            "name": "routeEntrySchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "httpMethodSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/route.ts",
+        "imports": [
           {
             "name": "RouteConfig",
             "isTypeOnly": true
@@ -1897,7 +2013,31 @@
           {
             "name": "HttpMethod",
             "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/stateFlow.ts",
+        "imports": [
+          {
+            "name": "stateFlowConfigSchema",
+            "isTypeOnly": false
           },
+          {
+            "name": "stateFlowSchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "stateStoreSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/stateFlow.ts",
+        "imports": [
           {
             "name": "StateFlowConfig",
             "isTypeOnly": true
@@ -1912,6 +2052,58 @@
           },
           {
             "name": "StateFlowDirection",
+            "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/connection.ts",
+        "imports": [
+          {
+            "name": "connectionSchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "connectionsConfigSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/connection.ts",
+        "imports": [
+          {
+            "name": "Connection",
+            "isTypeOnly": true
+          },
+          {
+            "name": "ConnectionProtocol",
+            "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/config.ts",
+        "imports": [
+          {
+            "name": "archflowConfigSchema",
+            "isTypeOnly": false
+          },
+          {
+            "name": "projectInfoSchema",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "lib/schema/index.ts",
+        "target": "lib/schema/config.ts",
+        "imports": [
+          {
+            "name": "ArchflowConfig",
             "isTypeOnly": true
           },
           {

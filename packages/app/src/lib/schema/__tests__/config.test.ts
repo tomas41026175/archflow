@@ -1,11 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import {
-  archflowConfigSchema,
-  layerSchema,
-  moduleSchema,
-  routeEntrySchema,
-  stateFlowSchema,
-} from '../config'
+import { archflowConfigSchema } from '../config'
+import { layerSchema, moduleSchema } from '../layer'
+import { routeEntrySchema } from '../route'
+import { stateFlowSchema } from '../stateFlow'
 
 describe('moduleSchema', () => {
   it('validates a minimal module', () => {

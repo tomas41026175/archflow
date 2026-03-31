@@ -1,43 +1,15 @@
-import { useCallback, useEffect, useMemo, useState, type DragEvent } from 'react'
+import { useCallback, useMemo, useState, type DragEvent } from 'react'
 import { Upload, RefreshCw } from 'lucide-react'
-import { archflowConfigSchema, analysisResultSchema, type AnalysisResult } from '../lib/schema'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
 import { FileDetailPanel } from '../components/panels/FileDetailPanel'
-import { useProjectStore } from '../stores/useProjectStore'
+import { useAnalysisLoader } from '../hooks/useAnalysisLoader'
 import { cn } from '../lib/utils'
 
-interface AnalysisEntry {
-  label: string
-  data: AnalysisResult
-}
-
 export default function DependencyViewPage() {
-  const config = useProjectStore((s) => s.config)
-  const configVersion = useProjectStore((s) => s.configVersion)
-  const [entries, setEntries] = useState<AnalysisEntry[]>([])
-  const [activeIndex, setActiveIndex] = useState(0)
+  const { entries, activeIndex, analysis, error, loadFromJson, switchTo } = useAnalysisLoader()
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-
-  // Reset entries when a new config is loaded, then load its analysis
-  useEffect(() => {
-    if (!config?.analysis) {
-      setEntries([])
-      setActiveIndex(0)
-      return
-    }
-    const result = analysisResultSchema.safeParse(config.analysis)
-    if (!result.success) return
-
-    const configLabel = config.project.name ?? 'Config'
-    setEntries([{ label: configLabel, data: result.data }])
-    setActiveIndex(0)
-    setSelectedNodeId(null)
-  }, [configVersion]) // eslint-disable-line react-hooks/exhaustive-deps -- intentionally reset on config change
-
-  const analysis = entries[activeIndex]?.data ?? null
 
   const { nodes, edges } = useMemo(() => {
     if (!analysis) return { nodes: [], edges: [] }
@@ -48,54 +20,12 @@ export default function DependencyViewPage() {
     if (!selectedNodeId || !analysis) return null
     const node = analysis.nodes.find((n) => n.id === selectedNodeId)
     if (!node) return null
-    const incomingEdges = analysis.edges.filter((e) => e.target === selectedNodeId)
-    const outgoingEdges = analysis.edges.filter((e) => e.source === selectedNodeId)
-    return { node, incomingEdges, outgoingEdges }
-  }, [selectedNodeId, analysis])
-
-  const addAnalysis = useCallback((label: string, data: AnalysisResult) => {
-    setEntries((prev) => {
-      const existing = prev.findIndex((e) => e.label === label)
-      if (existing >= 0) {
-        setActiveIndex(existing)
-        return prev.map((e, i) => i === existing ? { label, data } : e)
-      }
-      const next = [...prev, { label, data }]
-      setActiveIndex(next.length - 1)
-      return next
-    })
-    setSelectedNodeId(null)
-  }, [])
-
-  const loadConfig = useProjectStore((s) => s.loadConfig)
-
-  const loadAnalysis = useCallback((jsonString: string, fileName: string) => {
-    try {
-      const raw = JSON.parse(jsonString) as Record<string, unknown>
-
-      // Try 1: raw analysis JSON (from archflow analyze -o)
-      const directResult = analysisResultSchema.safeParse(raw)
-      if (directResult.success) {
-        const label = fileName.replace(/\.json$/, '')
-        addAnalysis(label, directResult.data)
-        setError(null)
-        return
-      }
-
-      // Try 2: full archflow.config.json — load entire config + extract analysis
-      const configResult = archflowConfigSchema.safeParse(raw)
-      if (configResult.success) {
-        loadConfig(configResult.data)
-        // analysis will be loaded via the useEffect on configVersion
-        setError(null)
-        return
-      }
-
-      setError('No valid analysis data found. Drop an analysis JSON or archflow.config.json.')
-    } catch {
-      setError('Invalid JSON file')
+    return {
+      node,
+      incomingEdges: analysis.edges.filter((e) => e.target === selectedNodeId),
+      outgoingEdges: analysis.edges.filter((e) => e.source === selectedNodeId),
     }
-  }, [addAnalysis, loadConfig])
+  }, [selectedNodeId, analysis])
 
   const handleDrop = useCallback(
     (e: DragEvent) => {
@@ -103,10 +33,10 @@ export default function DependencyViewPage() {
       setIsDragging(false)
       const file = e.dataTransfer.files[0]
       if (file?.name.endsWith('.json')) {
-        file.text().then((text) => loadAnalysis(text, file.name))
+        file.text().then((text) => loadFromJson(text, file.name))
       }
     },
-    [loadAnalysis],
+    [loadFromJson],
   )
 
   const handleBrowse = useCallback(() => {
@@ -115,10 +45,10 @@ export default function DependencyViewPage() {
     input.accept = '.json'
     input.onchange = () => {
       const file = input.files?.[0]
-      if (file) file.text().then((text) => loadAnalysis(text, file.name))
+      if (file) file.text().then((text) => loadFromJson(text, file.name))
     }
     input.click()
-  }, [loadAnalysis])
+  }, [loadFromJson])
 
   if (entries.length === 0) {
     return (
@@ -137,11 +67,7 @@ export default function DependencyViewPage() {
             <p className="text-sm font-medium">Drop analysis JSON here</p>
             <p className="mt-1 text-xs text-muted-foreground">
               or{' '}
-              <button
-                type="button"
-                className="text-primary underline underline-offset-2 hover:text-primary/80"
-                onClick={handleBrowse}
-              >
+              <button type="button" className="text-primary underline underline-offset-2 hover:text-primary/80" onClick={handleBrowse}>
                 browse files
               </button>
             </p>
@@ -154,9 +80,7 @@ export default function DependencyViewPage() {
 
   return (
     <div className="relative h-full w-full">
-      {/* Top bar: project tabs + stats + add */}
       <div className="absolute left-4 top-4 z-10 flex items-center gap-2">
-        {/* Project tabs */}
         <div className="flex items-center rounded-md border bg-card shadow-sm">
           {entries.map((entry, i) => (
             <button
@@ -168,23 +92,19 @@ export default function DependencyViewPage() {
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground hover:bg-accent',
                 i === 0 && 'rounded-l-md',
-                i === entries.length - 1 && !entries[i + 1] && 'rounded-r-md',
+                i === entries.length - 1 && 'rounded-r-md',
               )}
-              onClick={() => { setActiveIndex(i); setSelectedNodeId(null) }}
+              onClick={() => { switchTo(i); setSelectedNodeId(null) }}
             >
               {entry.label}
             </button>
           ))}
         </div>
-
-        {/* Stats */}
         {analysis && (
           <span className="rounded-md border bg-card px-2.5 py-1.5 text-[11px] text-muted-foreground shadow-sm">
             {analysis.metadata.nodeCount} files &middot; {analysis.metadata.edgeCount} deps
           </span>
         )}
-
-        {/* Add another project */}
         <button
           type="button"
           className="rounded-md border bg-card p-1.5 text-muted-foreground shadow-sm hover:text-foreground hover:bg-accent transition-colors"
@@ -194,7 +114,6 @@ export default function DependencyViewPage() {
           <RefreshCw className="h-3.5 w-3.5" />
         </button>
       </div>
-
       <FlowCanvas
         nodes={nodes}
         edges={edges}
