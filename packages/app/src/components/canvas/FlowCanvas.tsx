@@ -17,6 +17,7 @@ interface FlowCanvasProps {
   edges: Edge[]
   selectedNodeId: string | null
   onNodeClick?: (nodeId: string) => void
+  onNodeDoubleClick?: (nodeId: string) => void
   onPaneClick?: () => void
 }
 
@@ -61,6 +62,7 @@ export function FlowCanvas({
   edges,
   selectedNodeId,
   onNodeClick,
+  onNodeDoubleClick,
   onPaneClick,
 }: FlowCanvasProps) {
   const styledEdges = useMemo(
@@ -89,6 +91,7 @@ export function FlowCanvas({
       edges={styledEdges}
       nodeTypes={nodeTypes}
       onNodeClick={handleNodeClick}
+      onNodeDoubleClick={onNodeDoubleClick ? (_e, node) => onNodeDoubleClick(node.id) : undefined}
       onPaneClick={onPaneClick}
       onNodeDragStart={() => setHasDragged(true)}
       onMoveStart={() => setHasDragged(true)}

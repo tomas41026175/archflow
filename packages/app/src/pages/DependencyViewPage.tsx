@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState, type DragEvent } from 'react'
 import { Upload, RefreshCw } from 'lucide-react'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
+import { ViewToolbar } from '../components/canvas/ViewToolbar'
 import { FileDetailPanel } from '../components/panels/FileDetailPanel'
 import { useAnalysisLoader } from '../hooks/useAnalysisLoader'
 import { cn } from '../lib/utils'
@@ -9,12 +10,15 @@ import { cn } from '../lib/utils'
 export default function DependencyViewPage() {
   const { entries, activeIndex, analysis, error, loadFromJson, switchTo } = useAnalysisLoader()
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [focusNodeId, setFocusNodeId] = useState<string | null>(null)
+  const [granularity, setGranularity] = useState<'file' | 'directory'>('directory')
+  const [typeFilter, setTypeFilter] = useState<string[]>([])
   const [isDragging, setIsDragging] = useState(false)
 
-  const { nodes, edges } = useMemo(() => {
-    if (!analysis) return { nodes: [], edges: [] }
-    return analysisToDepNodes(analysis)
-  }, [analysis])
+  const { nodes, edges, availableTypes } = useMemo(() => {
+    if (!analysis) return { nodes: [], edges: [], availableTypes: [] }
+    return analysisToDepNodes(analysis, { granularity, typeFilter, focusNodeId })
+  }, [analysis, granularity, typeFilter, focusNodeId])
 
   const selectedDetail = useMemo(() => {
     if (!selectedNodeId || !analysis) return null
@@ -26,6 +30,29 @@ export default function DependencyViewPage() {
       outgoingEdges: analysis.edges.filter((e) => e.source === selectedNodeId),
     }
   }, [selectedNodeId, analysis])
+
+  const handleNodeClick = useCallback((id: string) => {
+    setSelectedNodeId((prev) => (prev === id ? null : id))
+  }, [])
+
+  const handleNodeDoubleClick = useCallback((id: string) => {
+    setFocusNodeId((prev) => (prev === id ? null : id))
+    setSelectedNodeId(null)
+  }, [])
+
+  const handleTypeToggle = useCallback((type: string) => {
+    setTypeFilter((prev) => {
+      if (prev.length === 0) {
+        // Nothing filtered → filter to only this type
+        return [type]
+      }
+      if (prev.includes(type)) {
+        const next = prev.filter((t) => t !== type)
+        return next // empty = show all
+      }
+      return [...prev, type]
+    })
+  }, [])
 
   const handleDrop = useCallback(
     (e: DragEvent) => {
@@ -78,47 +105,70 @@ export default function DependencyViewPage() {
     )
   }
 
+  const stats = analysis
+    ? `${nodes.length} ${granularity === 'directory' ? 'dirs' : 'files'} · ${edges.length} deps`
+    : undefined
+
   return (
     <div className="relative h-full w-full">
-      <div className="absolute left-4 top-4 z-10 flex items-center gap-2">
-        <div className="flex items-center rounded-md border bg-card shadow-sm">
-          {entries.map((entry, i) => (
-            <button
-              key={entry.label}
-              type="button"
-              className={cn(
-                'px-3 py-1.5 text-xs font-medium transition-colors',
-                i === activeIndex
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent',
-                i === 0 && 'rounded-l-md',
-                i === entries.length - 1 && 'rounded-r-md',
-              )}
-              onClick={() => { switchTo(i); setSelectedNodeId(null) }}
-            >
-              {entry.label}
-            </button>
-          ))}
+      {/* Project tabs */}
+      {entries.length > 1 && (
+        <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
+          <div className="flex items-center rounded-md border bg-card shadow-sm">
+            {entries.map((entry, i) => (
+              <button
+                key={entry.label}
+                type="button"
+                className={cn(
+                  'px-3 py-1.5 text-xs font-medium transition-colors',
+                  i === activeIndex
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent',
+                  i === 0 && 'rounded-l-md',
+                  i === entries.length - 1 && 'rounded-r-md',
+                )}
+                onClick={() => { switchTo(i); setSelectedNodeId(null); setFocusNodeId(null) }}
+              >
+                {entry.label}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="rounded-md border bg-card p-1.5 text-muted-foreground shadow-sm hover:text-foreground hover:bg-accent transition-colors"
+            onClick={handleBrowse}
+            title="Load another project"
+          >
+            <RefreshCw className="h-3.5 w-3.5" />
+          </button>
         </div>
-        {analysis && (
-          <span className="rounded-md border bg-card px-2.5 py-1.5 text-[11px] text-muted-foreground shadow-sm">
-            {analysis.metadata.nodeCount} files &middot; {analysis.metadata.edgeCount} deps
-          </span>
-        )}
-        <button
-          type="button"
-          className="rounded-md border bg-card p-1.5 text-muted-foreground shadow-sm hover:text-foreground hover:bg-accent transition-colors"
-          onClick={handleBrowse}
-          title="Load another project's analysis"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-        </button>
-      </div>
+      )}
+
+      {/* Toolbar */}
+      <ViewToolbar
+        stats={stats}
+        granularity={granularity}
+        onGranularityChange={(g) => { setGranularity(g); setFocusNodeId(null); setSelectedNodeId(null) }}
+        availableTypes={availableTypes}
+        activeTypes={typeFilter}
+        onTypeToggle={handleTypeToggle}
+        focusNodeId={focusNodeId}
+        onClearFocus={() => setFocusNodeId(null)}
+      />
+
+      {/* Hint */}
+      {!focusNodeId && nodes.length > 50 && (
+        <div className="absolute left-4 bottom-4 z-10 rounded-md border bg-card/80 px-3 py-1.5 text-[10px] text-muted-foreground shadow-sm backdrop-blur-sm">
+          Double-click a node to focus on its connections
+        </div>
+      )}
+
       <FlowCanvas
         nodes={nodes}
         edges={edges}
         selectedNodeId={selectedNodeId}
-        onNodeClick={(id) => setSelectedNodeId((prev) => prev === id ? null : id)}
+        onNodeClick={handleNodeClick}
+        onNodeDoubleClick={handleNodeDoubleClick}
         onPaneClick={() => setSelectedNodeId(null)}
       />
       {selectedDetail && (

@@ -30,7 +30,7 @@ const TYPE_COLORS: Record<string, string> = {
 }
 
 export function FileNode({ data, selected }: NodeProps) {
-  const { label, type, filePath, exportCount } = data as FileNodeData
+  const { label, type, filePath, exportCount, fileCount } = data as FileNodeData
   const Icon = TYPE_ICONS[type] ?? FileCode
   const colorClass = TYPE_COLORS[type] ?? 'text-muted-foreground'
 
@@ -45,11 +45,9 @@ export function FileNode({ data, selected }: NodeProps) {
       <Icon className={cn('h-4 w-4 shrink-0', colorClass)} />
       <div className="min-w-0 flex-1">
         <p className="truncate text-xs font-mono font-medium">{label}</p>
-        {exportCount > 0 && (
-          <p className="text-[10px] text-muted-foreground">
-            {exportCount} export{exportCount > 1 ? 's' : ''}
-          </p>
-        )}
+        <p className="text-[10px] text-muted-foreground">
+          {fileCount ? `${fileCount} files` : exportCount > 0 ? `${exportCount} exports` : ''}
+        </p>
       </div>
 
       <Handle type="target" position={Position.Left} className="!bg-border" />
