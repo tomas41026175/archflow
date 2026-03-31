@@ -33,6 +33,50 @@ async function resolveParent(
   return current
 }
 
+/** Try to read a file by exact path first, then search subdirectories */
+async function tryReadFile(
+  root: FileSystemDirectoryHandle,
+  relativePath: string,
+): Promise<{ content: string; resolvedPath: string } | null> {
+  const segments = relativePath.split('/').filter(Boolean)
+
+  // Attempt 1: exact path
+  try {
+    const parentDir = await resolveParent(root, segments.slice(0, -1), false)
+    const fileHandle = await parentDir.getFileHandle(segments[segments.length - 1])
+    const file = await fileHandle.getFile()
+    return { content: await file.text(), resolvedPath: relativePath }
+  } catch {
+    // exact path failed
+  }
+
+  // Attempt 2: search one level of subdirectories for the path
+  // e.g., "src/pages/X.tsx" might be at "packages/app/src/pages/X.tsx"
+  try {
+    for await (const entry of root.values()) {
+      if (entry.kind !== 'directory') continue
+      if (entry.name === 'node_modules' || entry.name === '.git') continue
+
+      try {
+        const subDir = await root.getDirectoryHandle(entry.name)
+        const parentDir = await resolveParent(subDir, segments.slice(0, -1), false)
+        const fileHandle = await parentDir.getFileHandle(segments[segments.length - 1])
+        const file = await fileHandle.getFile()
+        return {
+          content: await file.text(),
+          resolvedPath: `${entry.name}/${relativePath}`,
+        }
+      } catch {
+        // not in this subdirectory, try next
+      }
+    }
+  } catch {
+    // iteration failed
+  }
+
+  return null
+}
+
 export const useFileSystemStore = create<FileSystemState & FileSystemActions>(
   (set, get) => ({
     directoryHandle: null,
@@ -48,25 +92,22 @@ export const useFileSystemStore = create<FileSystemState & FileSystemActions>(
       const { directoryHandle } = get()
       if (!directoryHandle) return null
 
-      try {
-        const segments = relativePath.split('/').filter(Boolean)
-        const parentDir = await resolveParent(
-          directoryHandle,
-          segments.slice(0, -1),
-          false,
-        )
-        const fileHandle = await parentDir.getFileHandle(segments[segments.length - 1])
-        const file = await fileHandle.getFile()
-        return await file.text()
-      } catch {
-        return null
-      }
+      const result = await tryReadFile(directoryHandle, relativePath)
+      return result?.content ?? null
     },
 
     openFile: async (relativePath) => {
-      const content = await get().readFile(relativePath)
-      if (content === null) return false
-      set({ openFilePath: relativePath, openFileContent: content, isDirty: false })
+      const { directoryHandle } = get()
+      if (!directoryHandle) return false
+
+      const result = await tryReadFile(directoryHandle, relativePath)
+      if (!result) return false
+
+      set({
+        openFilePath: result.resolvedPath,
+        openFileContent: result.content,
+        isDirty: false,
+      })
       return true
     },
 

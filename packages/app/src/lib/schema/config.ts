@@ -101,6 +101,7 @@ export const archflowConfigSchema = z.object({
   layers: z.array(layerSchema).optional(),
   routes: routeConfigSchema.optional(),
   stateFlows: stateFlowConfigSchema.optional(),
+  analysis: z.any().optional(),  // Embedded AnalysisResult — validated separately via analysisResultSchema
 })
 
 // --- Inferred Types ---

@@ -5,9 +5,11 @@ import {
   MiniMap,
   Background,
   BackgroundVariant,
+  useReactFlow,
   type Node,
   type Edge,
   type NodeTypes,
+  type ReactFlowInstance,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
@@ -95,12 +97,16 @@ export function FlowCanvas({
 
   const handleNodeClick = useCallback(
     (_event: React.MouseEvent, node: Node) => {
-      // Ignore clicks on layer group nodes
       if (node.type === 'layerGroup') return
       onNodeClick?.(node.id)
     },
     [onNodeClick],
   )
+
+  const handleInit = useCallback((instance: ReactFlowInstance) => {
+    // Ensure fitView runs after initial render so MiniMap renders correctly
+    setTimeout(() => instance.fitView({ padding: 0.2 }), 50)
+  }, [])
 
   return (
     <ReactFlow
@@ -109,6 +115,7 @@ export function FlowCanvas({
       nodeTypes={nodeTypes}
       onNodeClick={handleNodeClick}
       onPaneClick={onPaneClick}
+      onInit={handleInit}
       fitView
       fitViewOptions={{ padding: 0.2 }}
       minZoom={0.1}

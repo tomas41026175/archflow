@@ -1,15 +1,28 @@
-import { useCallback, useMemo, useState, type DragEvent } from 'react'
+import { useCallback, useEffect, useMemo, useState, type DragEvent } from 'react'
 import { Upload } from 'lucide-react'
 import { analysisResultSchema, type AnalysisResult } from '../lib/schema'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
+import { useProjectStore } from '../stores/useProjectStore'
 import { cn } from '../lib/utils'
 
 export function DependencyViewPage() {
+  const config = useProjectStore((s) => s.config)
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+
+  // Auto-load from config.analysis if embedded
+  useEffect(() => {
+    if (analysis) return // already loaded from drop
+    if (!config?.analysis) return
+
+    const result = analysisResultSchema.safeParse(config.analysis)
+    if (result.success) {
+      setAnalysis(result.data)
+    }
+  }, [config?.analysis, analysis])
 
   const { nodes, edges } = useMemo(() => {
     if (!analysis) return { nodes: [], edges: [] }
@@ -59,7 +72,7 @@ export function DependencyViewPage() {
           <div className="text-center">
             <p className="text-sm font-medium">Drop analysis JSON here</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Generate with: archflow analyze --root ./src -o deps.json
+              Or embed &quot;analysis&quot; in archflow.config.json
             </p>
           </div>
           {error && (
