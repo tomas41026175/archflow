@@ -1,15 +1,13 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
   ReactFlow,
   Controls,
   MiniMap,
   Background,
   BackgroundVariant,
-  useReactFlow,
   type Node,
   type Edge,
   type NodeTypes,
-  type ReactFlowInstance,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
@@ -103,10 +101,7 @@ export function FlowCanvas({
     [onNodeClick],
   )
 
-  const handleInit = useCallback((instance: ReactFlowInstance) => {
-    // Ensure fitView runs after initial render so MiniMap renders correctly
-    setTimeout(() => instance.fitView({ padding: 0.2 }), 50)
-  }, [])
+  const [hasDragged, setHasDragged] = useState(false)
 
   return (
     <ReactFlow
@@ -115,7 +110,8 @@ export function FlowCanvas({
       nodeTypes={nodeTypes}
       onNodeClick={handleNodeClick}
       onPaneClick={onPaneClick}
-      onInit={handleInit}
+      onNodeDragStart={() => setHasDragged(true)}
+      onMoveStart={() => setHasDragged(true)}
       fitView
       fitViewOptions={{ padding: 0.2 }}
       minZoom={0.1}
@@ -123,12 +119,14 @@ export function FlowCanvas({
       proOptions={{ hideAttribution: true }}
     >
       <Controls position="bottom-right" />
-      <MiniMap
-        position="bottom-left"
-        pannable
-        zoomable
-        className="!bg-card !border-border"
-      />
+      {hasDragged && (
+        <MiniMap
+          position="bottom-left"
+          pannable
+          zoomable
+          className="!bg-card !border-border"
+        />
+      )}
       <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
     </ReactFlow>
   )
