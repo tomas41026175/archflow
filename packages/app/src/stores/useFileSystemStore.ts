@@ -33,14 +33,16 @@ async function resolveParent(
   return current
 }
 
-/** Try to read a file by exact path first, then search subdirectories */
+const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', '.next', '.vite', 'coverage'])
+
+/** Try exact path, then recursively search subdirectories (max 3 levels deep) */
 async function tryReadFile(
   root: FileSystemDirectoryHandle,
   relativePath: string,
 ): Promise<{ content: string; resolvedPath: string } | null> {
   const segments = relativePath.split('/').filter(Boolean)
 
-  // Attempt 1: exact path
+  // Attempt 1: exact path from root
   try {
     const parentDir = await resolveParent(root, segments.slice(0, -1), false)
     const fileHandle = await parentDir.getFileHandle(segments[segments.length - 1])
@@ -50,25 +52,41 @@ async function tryReadFile(
     // exact path failed
   }
 
-  // Attempt 2: search one level of subdirectories for the path
-  // e.g., "src/pages/X.tsx" might be at "packages/app/src/pages/X.tsx"
-  try {
-    for await (const entry of root.values()) {
-      if (entry.kind !== 'directory') continue
-      if (entry.name === 'node_modules' || entry.name === '.git') continue
+  // Attempt 2: recursive search in subdirectories
+  return searchInSubdirs(root, segments, '', 0)
+}
 
+async function searchInSubdirs(
+  dir: FileSystemDirectoryHandle,
+  segments: string[],
+  prefix: string,
+  depth: number,
+): Promise<{ content: string; resolvedPath: string } | null> {
+  if (depth > 3) return null
+
+  try {
+    for await (const entry of dir.values()) {
+      if (entry.kind !== 'directory') continue
+      if (SKIP_DIRS.has(entry.name)) continue
+
+      const subDir = await dir.getDirectoryHandle(entry.name)
+      const subPrefix = prefix ? `${prefix}/${entry.name}` : entry.name
+
+      // Try resolving the full path from this subdirectory
       try {
-        const subDir = await root.getDirectoryHandle(entry.name)
         const parentDir = await resolveParent(subDir, segments.slice(0, -1), false)
         const fileHandle = await parentDir.getFileHandle(segments[segments.length - 1])
         const file = await fileHandle.getFile()
         return {
           content: await file.text(),
-          resolvedPath: `${entry.name}/${relativePath}`,
+          resolvedPath: `${subPrefix}/${segments.join('/')}`,
         }
       } catch {
-        // not in this subdirectory, try next
+        // not here, recurse deeper
       }
+
+      const found = await searchInSubdirs(subDir, segments, subPrefix, depth + 1)
+      if (found) return found
     }
   } catch {
     // iteration failed

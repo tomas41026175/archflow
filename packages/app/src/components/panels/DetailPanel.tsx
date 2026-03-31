@@ -25,10 +25,12 @@ export function DetailPanel({
   const openFile = useFileSystemStore((s) => s.openFile)
 
   const handleFileClick = useCallback(
-    (filePath: string) => {
-      // Strip glob patterns for opening (e.g., src/api/** → can't open directly)
+    async (filePath: string) => {
       if (filePath.includes('*')) return
-      openFile(filePath)
+      const ok = await openFile(filePath)
+      if (!ok) {
+        alert(`File not found: ${filePath}\n\nMake sure the Project Root directory contains this file.`)
+      }
     },
     [openFile],
   )
