@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type DragEvent } from 'react'
+import { useCallback, useEffect, useMemo, useState, useTransition, type DragEvent } from 'react'
 import { Upload, RefreshCw } from 'lucide-react'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
@@ -14,11 +14,21 @@ export default function DependencyViewPage() {
   const [granularity, setGranularity] = useState<'file' | 'directory'>('directory')
   const [typeFilter, setTypeFilter] = useState<string[]>([])
   const [isDragging, setIsDragging] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [layoutResult, setLayoutResult] = useState<{ nodes: import('@xyflow/react').Node[]; edges: import('@xyflow/react').Edge[]; availableTypes: string[] }>({ nodes: [], edges: [], availableTypes: [] })
 
-  const { nodes, edges, availableTypes } = useMemo(() => {
-    if (!analysis) return { nodes: [], edges: [], availableTypes: [] }
-    return analysisToDepNodes(analysis, { granularity, typeFilter, focusNodeId })
+  useEffect(() => {
+    if (!analysis) {
+      setLayoutResult({ nodes: [], edges: [], availableTypes: [] })
+      return
+    }
+    startTransition(() => {
+      const result = analysisToDepNodes(analysis, { granularity, typeFilter, focusNodeId })
+      setLayoutResult(result)
+    })
   }, [analysis, granularity, typeFilter, focusNodeId])
+
+  const { nodes, edges, availableTypes } = layoutResult
 
   const selectedDetail = useMemo(() => {
     if (!selectedNodeId || !analysis) return null
@@ -106,7 +116,9 @@ export default function DependencyViewPage() {
   }
 
   const stats = analysis
-    ? `${nodes.length} ${granularity === 'directory' ? 'dirs' : 'files'} · ${edges.length} deps`
+    ? isPending
+      ? 'Computing layout...'
+      : `${nodes.length} ${granularity === 'directory' ? 'dirs' : 'files'} · ${edges.length} deps`
     : undefined
 
   return (
