@@ -99,8 +99,6 @@ export function FlowCanvas({
       minZoom={0.05}
       maxZoom={3}
       panOnScroll
-      selectionOnDrag
-      panOnDrag={[1, 2]}
       nodeDragThreshold={3}
       proOptions={{ hideAttribution: true }}
     >
