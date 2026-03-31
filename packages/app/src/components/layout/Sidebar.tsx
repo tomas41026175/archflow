@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Layers, GitBranch, Activity, Network, FolderOpen, FolderCheck, FileUp } from 'lucide-react'
+import { Layers, GitBranch, Activity, Network, FolderOpen, FolderCheck, FileUp, Sun, Moon } from 'lucide-react'
 import { useProjectStore } from '../../stores/useProjectStore'
 import { useFileSystemStore } from '../../stores/useFileSystemStore'
 import { useConfigLoader } from '../../hooks/useConfigLoader'
@@ -17,6 +17,8 @@ export function Sidebar() {
   const config = useProjectStore((s) => s.config)
   const activeView = useProjectStore((s) => s.activeView)
   const setActiveView = useProjectStore((s) => s.setActiveView)
+  const theme = useProjectStore((s) => s.theme)
+  const toggleTheme = useProjectStore((s) => s.toggleTheme)
   const rootName = useFileSystemStore((s) => s.rootName)
   const setDirectoryHandle = useFileSystemStore((s) => s.setDirectoryHandle)
   const { loadFromFile } = useConfigLoader()
@@ -117,10 +119,18 @@ export function Sidebar() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-border px-4 py-3">
+      <div className="flex items-center justify-between border-t border-border px-4 py-3">
         <p className="text-[10px] text-muted-foreground">
           Archflow v0.1.0
         </p>
+        <button
+          type="button"
+          className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+          onClick={toggleTheme}
+          title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+        >
+          {theme === 'light' ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
+        </button>
       </div>
     </aside>
   )

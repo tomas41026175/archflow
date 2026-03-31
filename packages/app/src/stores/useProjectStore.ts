@@ -4,6 +4,21 @@ import type { ViewType } from '../types/canvas'
 
 const STORAGE_KEY = 'archflow:config'
 const VIEW_KEY = 'archflow:activeView'
+const THEME_KEY = 'archflow:theme'
+
+export type Theme = 'light' | 'dark'
+
+function loadPersistedTheme(): Theme {
+  const raw = localStorage.getItem(THEME_KEY)
+  return raw === 'dark' ? 'dark' : 'light'
+}
+
+function applyTheme(theme: Theme): void {
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+}
+
+// Apply on load
+applyTheme(loadPersistedTheme())
 
 function loadPersistedConfig(): ArchflowConfig | null {
   try {
@@ -26,6 +41,7 @@ interface ProjectState {
   config: ArchflowConfig | null
   configVersion: number
   activeView: ViewType
+  theme: Theme
   error: string | null
   pendingNodeId: string | null
 }
@@ -33,6 +49,7 @@ interface ProjectState {
 interface ProjectActions {
   loadConfig: (config: ArchflowConfig) => void
   setActiveView: (view: ViewType) => void
+  toggleTheme: () => void
   setError: (error: string | null) => void
   selectNode: (nodeId: string) => void
   consumePendingNode: () => string | null
@@ -43,6 +60,7 @@ export const useProjectStore = create<ProjectState & ProjectActions>((set, get) 
   config: loadPersistedConfig(),
   configVersion: 0,
   activeView: loadPersistedView(),
+  theme: loadPersistedTheme(),
   error: null,
   pendingNodeId: null,
 
@@ -54,6 +72,13 @@ export const useProjectStore = create<ProjectState & ProjectActions>((set, get) 
   setActiveView: (activeView) => {
     localStorage.setItem(VIEW_KEY, activeView)
     set({ activeView })
+  },
+
+  toggleTheme: () => {
+    const next = get().theme === 'light' ? 'dark' : 'light'
+    localStorage.setItem(THEME_KEY, next)
+    applyTheme(next)
+    set({ theme: next })
   },
 
   setError: (error) =>

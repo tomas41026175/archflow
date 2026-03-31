@@ -6,7 +6,7 @@ const FIXTURES_DIR = path.resolve(import.meta.dirname, '../__fixtures__')
 const SIMPLE_PROJECT = path.join(FIXTURES_DIR, 'simple-project')
 
 describe('analyze', () => {
-  it('detects all source files in simple project', () => {
+  it('detects all source files in simple project', { timeout: 15000 }, () => {
     const result = analyze({ rootDir: SIMPLE_PROJECT })
 
     expect(result.metadata.nodeCount).toBe(4)

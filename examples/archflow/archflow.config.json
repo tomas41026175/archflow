@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T04:10:07.494Z",
+      "analyzedAt": "2026-03-31T07:02:17.874Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
-      "fileCount": 48,
-      "nodeCount": 43,
-      "edgeCount": 95
+      "fileCount": 49,
+      "nodeCount": 44,
+      "edgeCount": 100
     },
     "nodes": [
       {
@@ -383,14 +383,22 @@
             "name": "default",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 59,
+          "anyCount": 0
+        }
       },
       {
         "id": "main.tsx",
         "label": "main",
         "filePath": "main.tsx",
         "type": "unknown",
-        "exports": []
+        "exports": [],
+        "metrics": {
+          "lineCount": 11,
+          "anyCount": 0
+        }
       },
       {
         "id": "hooks/useAnalysisLoader.ts",
@@ -402,7 +410,11 @@
             "name": "useAnalysisLoader",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 84,
+          "anyCount": 0
+        }
       },
       {
         "id": "hooks/useConfigLoader.ts",
@@ -414,7 +426,11 @@
             "name": "useConfigLoader",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 65,
+          "anyCount": 0
+        }
       },
       {
         "id": "hooks/useNodeSearch.ts",
@@ -430,7 +446,11 @@
             "name": "SearchResult",
             "kind": "interface"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 65,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/utils.ts",
@@ -442,7 +462,11 @@
             "name": "cn",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 7,
+          "anyCount": 0
+        }
       },
       {
         "id": "pages/DependencyViewPage.tsx",
@@ -454,7 +478,11 @@
             "name": "default",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 197,
+          "anyCount": 0
+        }
       },
       {
         "id": "pages/LayerViewPage.tsx",
@@ -466,7 +494,11 @@
             "name": "default",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 97,
+          "anyCount": 0
+        }
       },
       {
         "id": "pages/RouteViewPage.tsx",
@@ -478,7 +510,11 @@
             "name": "default",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 121,
+          "anyCount": 0
+        }
       },
       {
         "id": "pages/StateFlowViewPage.tsx",
@@ -490,7 +526,11 @@
             "name": "default",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 106,
+          "anyCount": 0
+        }
       },
       {
         "id": "stores/useFileSystemStore.ts",
@@ -502,7 +542,11 @@
             "name": "useFileSystemStore",
             "kind": "variable"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 238,
+          "anyCount": 0
+        }
       },
       {
         "id": "stores/useProjectStore.ts",
@@ -511,10 +555,18 @@
         "type": "unknown",
         "exports": [
           {
+            "name": "Theme",
+            "kind": "type"
+          },
+          {
             "name": "useProjectStore",
             "kind": "variable"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 102,
+          "anyCount": 0
+        }
       },
       {
         "id": "types/canvas.ts",
@@ -534,14 +586,22 @@
             "name": "ViewType",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 20,
+          "anyCount": 0
+        }
       },
       {
         "id": "types/file-system.d.ts",
         "label": "file-system.d",
         "filePath": "types/file-system.d.ts",
         "type": "unknown",
-        "exports": []
+        "exports": [],
+        "metrics": {
+          "lineCount": 21,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/canvas/FlowCanvas.tsx",
@@ -553,7 +613,11 @@
             "name": "FlowCanvas",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 123,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/canvas/Legend.tsx",
@@ -565,7 +629,27 @@
             "name": "Legend",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 32,
+          "anyCount": 0
+        }
+      },
+      {
+        "id": "components/canvas/ViewToolbar.tsx",
+        "label": "ViewToolbar",
+        "filePath": "components/canvas/ViewToolbar.tsx",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "ViewToolbar",
+            "kind": "function"
+          }
+        ],
+        "metrics": {
+          "lineCount": 161,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/layout/Sidebar.tsx",
@@ -577,7 +661,11 @@
             "name": "Sidebar",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 138,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/FileNode.tsx",
@@ -589,7 +677,11 @@
             "name": "FileNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 83,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/LayerGroupNode.tsx",
@@ -601,7 +693,11 @@
             "name": "LayerGroupNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 35,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/ModuleNode.tsx",
@@ -613,7 +709,11 @@
             "name": "ModuleNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 50,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/registry.ts",
@@ -625,7 +725,11 @@
             "name": "nodeTypes",
             "kind": "variable"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 19,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/RouteGroupNode.tsx",
@@ -637,7 +741,11 @@
             "name": "RouteGroupNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 33,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/RouteNode.tsx",
@@ -649,7 +757,11 @@
             "name": "RouteNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 41,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/StateConsumerNode.tsx",
@@ -661,7 +773,11 @@
             "name": "StateConsumerNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 24,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/nodes/StateStoreNode.tsx",
@@ -673,7 +789,11 @@
             "name": "StateStoreNode",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 43,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/CodeEditor.tsx",
@@ -685,7 +805,11 @@
             "name": "CodeEditor",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 134,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/ConfigDropZone.tsx",
@@ -697,7 +821,11 @@
             "name": "ConfigDropZone",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 123,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/DetailPanel.tsx",
@@ -709,7 +837,11 @@
             "name": "DetailPanel",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 187,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/ErrorBanner.tsx",
@@ -721,7 +853,11 @@
             "name": "ErrorBanner",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 50,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/FileDetailPanel.tsx",
@@ -733,7 +869,11 @@
             "name": "FileDetailPanel",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 191,
+          "anyCount": 0
+        }
       },
       {
         "id": "components/panels/SearchPanel.tsx",
@@ -745,7 +885,11 @@
             "name": "SearchPanel",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 151,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/layout/dagre.ts",
@@ -757,7 +901,11 @@
             "name": "applyDagreLayout",
             "kind": "function"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 59,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/analysis.ts",
@@ -771,6 +919,10 @@
           },
           {
             "name": "importDetailSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "fileMetricsSchema",
             "kind": "variable"
           },
           {
@@ -797,7 +949,11 @@
             "name": "AnalysisDependencyEdge",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 53,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/config.ts",
@@ -821,7 +977,11 @@
             "name": "ArchflowConfig",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 26,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/connection.ts",
@@ -849,7 +1009,11 @@
             "name": "ConnectionProtocol",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 20,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/index.ts",
@@ -981,7 +1145,11 @@
             "name": "AnalysisDependencyEdge",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 18,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/layer.ts",
@@ -1013,7 +1181,11 @@
             "name": "Layer",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 30,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/route.ts",
@@ -1045,7 +1217,11 @@
             "name": "RouteConfig",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 36,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/schema/stateFlow.ts",
@@ -1085,7 +1261,11 @@
             "name": "StateFlowConfig",
             "kind": "type"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 32,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/transforms/analysisToDepNodes.ts",
@@ -1102,10 +1282,18 @@
             "kind": "interface"
           },
           {
+            "name": "DepViewOptions",
+            "kind": "interface"
+          },
+          {
             "name": "DepViewResult",
             "kind": "interface"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 265,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/transforms/configToLayerNodes.ts",
@@ -1121,7 +1309,11 @@
             "name": "LayerViewResult",
             "kind": "interface"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 156,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/transforms/configToRouteNodes.ts",
@@ -1141,7 +1333,11 @@
             "name": "RouteViewResult",
             "kind": "interface"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 86,
+          "anyCount": 0
+        }
       },
       {
         "id": "lib/transforms/configToStateNodes.ts",
@@ -1169,7 +1365,11 @@
             "name": "StateViewResult",
             "kind": "interface"
           }
-        ]
+        ],
+        "metrics": {
+          "lineCount": 112,
+          "anyCount": 0
+        }
       }
     ],
     "edges": [
@@ -1328,6 +1528,16 @@
       },
       {
         "source": "pages/DependencyViewPage.tsx",
+        "target": "components/canvas/ViewToolbar.tsx",
+        "imports": [
+          {
+            "name": "ViewToolbar",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/DependencyViewPage.tsx",
         "target": "components/panels/FileDetailPanel.tsx",
         "imports": [
           {
@@ -1398,6 +1608,16 @@
       },
       {
         "source": "pages/LayerViewPage.tsx",
+        "target": "components/canvas/ViewToolbar.tsx",
+        "imports": [
+          {
+            "name": "ViewToolbar",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/LayerViewPage.tsx",
         "target": "components/panels/DetailPanel.tsx",
         "imports": [
           {
@@ -1423,6 +1643,10 @@
           {
             "name": "configToRouteNodes",
             "isTypeOnly": false
+          },
+          {
+            "name": "RouteNodeData",
+            "isTypeOnly": true
           }
         ]
       },
@@ -1432,6 +1656,16 @@
         "imports": [
           {
             "name": "FlowCanvas",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/RouteViewPage.tsx",
+        "target": "components/canvas/ViewToolbar.tsx",
+        "imports": [
+          {
+            "name": "ViewToolbar",
             "isTypeOnly": false
           }
         ]
@@ -1462,6 +1696,16 @@
         "imports": [
           {
             "name": "FlowCanvas",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/StateFlowViewPage.tsx",
+        "target": "components/canvas/ViewToolbar.tsx",
+        "imports": [
+          {
+            "name": "ViewToolbar",
             "isTypeOnly": false
           }
         ]
@@ -1502,6 +1746,16 @@
         "imports": [
           {
             "name": "nodeTypes",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "components/canvas/ViewToolbar.tsx",
+        "target": "lib/utils.ts",
+        "imports": [
+          {
+            "name": "cn",
             "isTypeOnly": false
           }
         ]

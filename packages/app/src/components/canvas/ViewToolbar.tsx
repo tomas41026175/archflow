@@ -1,4 +1,5 @@
-import { Layers, File, Focus, X } from 'lucide-react'
+import { Layers, File, Focus, X, Download } from 'lucide-react'
+import { toPng, toSvg } from 'html-to-image'
 import { cn } from '../../lib/utils'
 
 const TYPE_COLORS: Record<string, string> = {
@@ -27,6 +28,23 @@ interface ViewToolbarProps {
   /** Focus mode */
   focusNodeId?: string | null
   onClearFocus?: () => void
+}
+
+function handleExport(format: 'png' | 'svg'): void {
+  const viewport = document.querySelector('.react-flow__viewport') as HTMLElement | null
+  if (!viewport) return
+
+  const fn = format === 'png' ? toPng : toSvg
+  fn(viewport, { backgroundColor: 'white' })
+    .then((dataUrl) => {
+      const a = document.createElement('a')
+      a.href = dataUrl
+      a.download = `archflow-export.${format}`
+      a.click()
+    })
+    .catch(() => {
+      // export failed silently
+    })
 }
 
 export function ViewToolbar({
@@ -116,6 +134,27 @@ export function ViewToolbar({
           <X className="h-3 w-3" />
         </button>
       )}
+
+      {/* Export */}
+      <div className="flex items-center rounded-md border bg-card shadow-sm">
+        <button
+          type="button"
+          className="flex items-center gap-1 px-2 py-1.5 text-[11px] text-muted-foreground hover:text-foreground transition-colors rounded-l-md"
+          onClick={() => handleExport('png')}
+          title="Export as PNG"
+        >
+          <Download className="h-3 w-3" />
+          PNG
+        </button>
+        <button
+          type="button"
+          className="px-2 py-1.5 text-[11px] text-muted-foreground hover:text-foreground transition-colors border-l rounded-r-md"
+          onClick={() => handleExport('svg')}
+          title="Export as SVG"
+        >
+          SVG
+        </button>
+      </div>
     </div>
   )
 }
