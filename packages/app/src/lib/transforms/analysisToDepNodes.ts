@@ -46,25 +46,25 @@ export function analysisToDepNodes(analysis: AnalysisResult): DepViewResult {
       id: `dep-${i}`,
       source: edge.source,
       target: edge.target,
+      type: 'smoothstep',
+      markerEnd: { type: 'arrowclosed' as const, width: 12, height: 12 },
       style: {
         strokeDasharray: isTypeOnly ? '5 5' : undefined,
+        strokeWidth: isTypeOnly ? 1 : 1.5,
         stroke: isTypeOnly
           ? 'var(--color-edge-type-only)'
           : 'var(--color-edge-default)',
       },
-      label: edge.imports.length > 1
-        ? `${edge.imports.length} imports`
-        : undefined,
     }
   })
 
-  // Apply dagre layout
+  // Apply dagre layout with increased spacing
   const layoutedNodes = applyDagreLayout(nodes, edges, {
     direction: 'LR',
     nodeWidth: 180,
     nodeHeight: 60,
-    nodesep: 30,
-    ranksep: 80,
+    nodesep: 50,
+    ranksep: 120,
   })
 
   return { nodes: layoutedNodes, edges }

@@ -19,10 +19,15 @@ export interface StateConsumerNodeData {
 
 export type StateNodeData = StateStoreNodeData | StateConsumerNodeData
 
-const DIRECTION_STYLES: Record<StateFlowDirection, { animated: boolean; strokeDasharray?: string; label: string }> = {
-  read: { animated: true, label: 'read' },
-  write: { animated: true, strokeDasharray: '5 5', label: 'write' },
-  'read-write': { animated: true, label: 'read-write' },
+const DIRECTION_STYLES: Record<StateFlowDirection, {
+  animated: boolean
+  strokeDasharray?: string
+  stroke: string
+  label: string
+}> = {
+  read: { animated: true, stroke: '#3B82F6', label: '← read' },
+  write: { animated: true, stroke: '#F59E0B', strokeDasharray: '6 4', label: 'write →' },
+  'read-write': { animated: true, stroke: '#8B5CF6', label: '⇄ read-write' },
 }
 
 export interface StateViewResult {
@@ -73,15 +78,20 @@ export function configToStateNodes(config: ArchflowConfig): StateViewResult {
 
   // Create edges
   const edges: Edge[] = stateFlows.flows.map((flow, i) => {
-    const style = DIRECTION_STYLES[flow.direction]
+    const dirStyle = DIRECTION_STYLES[flow.direction]
     return {
       id: `state-edge-${i}`,
       source: flow.from,
       target: flow.to,
-      animated: style.animated,
-      label: style.label,
+      type: 'smoothstep',
+      animated: dirStyle.animated,
+      label: dirStyle.label,
+      labelStyle: { fontSize: 11, fontWeight: 500, fill: dirStyle.stroke },
+      markerEnd: { type: 'arrowclosed' as const, color: dirStyle.stroke, width: 16, height: 16 },
       style: {
-        strokeDasharray: style.strokeDasharray,
+        stroke: dirStyle.stroke,
+        strokeWidth: 2,
+        strokeDasharray: dirStyle.strokeDasharray,
       },
       data: { description: flow.description },
     }

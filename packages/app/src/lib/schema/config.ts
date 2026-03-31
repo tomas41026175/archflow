@@ -84,6 +84,22 @@ export const stateFlowConfigSchema = z.object({
   flows: z.array(stateFlowSchema),
 })
 
+// --- Connection Schema (cross-system API contracts) ---
+
+export const connectionProtocolSchema = z.enum(['REST', 'GraphQL', 'gRPC', 'WebSocket', 'other'])
+
+export const connectionSchema = z.object({
+  from: z.string().min(1),
+  to: z.string().min(1),
+  protocol: connectionProtocolSchema.optional(),
+  endpoint: z.string().optional(),
+  method: httpMethodSchema.optional(),
+  description: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+})
+
+export const connectionsConfigSchema = z.array(connectionSchema)
+
 // --- Project Schema ---
 
 export const projectInfoSchema = z.object({
@@ -101,6 +117,7 @@ export const archflowConfigSchema = z.object({
   layers: z.array(layerSchema).optional(),
   routes: routeConfigSchema.optional(),
   stateFlows: stateFlowConfigSchema.optional(),
+  connections: connectionsConfigSchema.optional(),
   analysis: z.any().optional(),  // Embedded AnalysisResult — validated separately via analysisResultSchema
 })
 
@@ -128,5 +145,7 @@ export type StateStore = z.infer<typeof stateStoreSchema>
 export type StateFlowDirection = z.infer<typeof stateFlowDirectionSchema>
 export type StateFlow = z.infer<typeof stateFlowSchema>
 export type StateFlowConfig = z.infer<typeof stateFlowConfigSchema>
+export type Connection = z.infer<typeof connectionSchema>
+export type ConnectionProtocol = z.infer<typeof connectionProtocolSchema>
 export type ProjectInfo = z.infer<typeof projectInfoSchema>
 export type ArchflowConfig = z.infer<typeof archflowConfigSchema>

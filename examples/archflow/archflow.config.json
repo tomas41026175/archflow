@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T01:42:04.881Z",
+      "analyzedAt": "2026-03-31T02:00:33.639Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
-      "fileCount": 41,
-      "nodeCount": 36,
-      "edgeCount": 76
+      "fileCount": 42,
+      "nodeCount": 37,
+      "edgeCount": 77
     },
     "nodes": [
       {
@@ -539,6 +539,18 @@
         "exports": [
           {
             "name": "FlowCanvas",
+            "kind": "function"
+          }
+        ]
+      },
+      {
+        "id": "components/canvas/Legend.tsx",
+        "label": "Legend",
+        "filePath": "components/canvas/Legend.tsx",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "Legend",
             "kind": "function"
           }
         ]
@@ -810,6 +822,18 @@
             "kind": "variable"
           },
           {
+            "name": "connectionProtocolSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "connectionSchema",
+            "kind": "variable"
+          },
+          {
+            "name": "connectionsConfigSchema",
+            "kind": "variable"
+          },
+          {
             "name": "projectInfoSchema",
             "kind": "variable"
           },
@@ -855,6 +879,14 @@
           },
           {
             "name": "StateFlowConfig",
+            "kind": "type"
+          },
+          {
+            "name": "Connection",
+            "kind": "type"
+          },
+          {
+            "name": "ConnectionProtocol",
             "kind": "type"
           },
           {
@@ -1250,6 +1282,16 @@
         "imports": [
           {
             "name": "FlowCanvas",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/LayerViewPage.tsx",
+        "target": "components/canvas/Legend.tsx",
+        "imports": [
+          {
+            "name": "Legend",
             "isTypeOnly": false
           }
         ]

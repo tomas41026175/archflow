@@ -2,13 +2,13 @@ import type { Node, Edge } from '@xyflow/react'
 import type { ArchflowConfig, Layer } from '../schema'
 import type { LayerGroupNodeData, ModuleNodeData } from '../../types/canvas'
 
-const LAYER_WIDTH = 280
-const LAYER_PADDING = 24
-const MODULE_WIDTH = 232
-const MODULE_HEIGHT = 80
-const MODULE_GAP = 16
-const LAYER_GAP = 60
-const LAYER_HEADER_HEIGHT = 44
+const LAYER_WIDTH = 320
+const LAYER_PADDING = 28
+const MODULE_WIDTH = 264
+const MODULE_HEIGHT = 90
+const MODULE_GAP = 20
+const LAYER_GAP = 80
+const LAYER_HEADER_HEIGHT = 48
 
 function buildLayerGroupNode(
   layer: Layer,
@@ -119,9 +119,34 @@ export function configToLayerNodes(config: ArchflowConfig): LayerViewResult {
             source: mod.id,
             target: depId,
             animated: false,
+            type: 'smoothstep',
+            markerEnd: { type: 'arrowclosed' as const, width: 16, height: 16 },
+            style: { strokeWidth: 1.5 },
           })
         }
       }
+    }
+  }
+
+  // Build edges from connections (cross-system API contracts)
+  for (const conn of config.connections ?? []) {
+    if (allModuleIds.has(conn.from) && allModuleIds.has(conn.to)) {
+      const label = [conn.method, conn.endpoint].filter(Boolean).join(' ') || conn.protocol
+      edges.push({
+        id: `conn-${conn.from}-${conn.to}`,
+        source: conn.from,
+        target: conn.to,
+        animated: true,
+        type: 'smoothstep',
+        markerEnd: { type: 'arrowclosed' as const, width: 16, height: 16, color: '#EF4444' },
+        label: label || undefined,
+        labelStyle: { fontSize: 10, fontWeight: 600, fill: '#EF4444' },
+        style: {
+          stroke: '#EF4444',
+          strokeWidth: 2,
+          strokeDasharray: '8 4',
+        },
+      })
     }
   }
 

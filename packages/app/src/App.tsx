@@ -23,15 +23,11 @@ function ViewLoading() {
 export default function App() {
   const config = useProjectStore((s) => s.config)
   const activeView = useProjectStore((s) => s.activeView)
-  const setActiveView = useProjectStore((s) => s.setActiveView)
+  const selectNode = useProjectStore((s) => s.selectNode)
 
   const handleSearchSelect = useCallback(
-    (_id: string) => {
-      if (activeView !== 'layers') {
-        setActiveView('layers')
-      }
-    },
-    [activeView, setActiveView],
+    (id: string) => selectNode(id),
+    [selectNode],
   )
 
   return (
