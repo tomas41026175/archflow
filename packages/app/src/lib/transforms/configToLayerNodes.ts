@@ -129,11 +129,12 @@ export function configToLayerNodes(config: ArchflowConfig): LayerViewResult {
   }
 
   // Build edges from connections (cross-system API contracts)
-  for (const conn of config.connections ?? []) {
+  for (let ci = 0; ci < (config.connections ?? []).length; ci++) {
+    const conn = config.connections![ci]
     if (allModuleIds.has(conn.from) && allModuleIds.has(conn.to)) {
       const label = [conn.method, conn.endpoint].filter(Boolean).join(' ') || conn.protocol
       edges.push({
-        id: `conn-${conn.from}-${conn.to}`,
+        id: `conn-${ci}-${conn.from}-${conn.to}`,
         source: conn.from,
         target: conn.to,
         animated: true,
