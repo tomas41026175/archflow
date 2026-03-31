@@ -1,5 +1,6 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
+import type { AnalysisResult } from './types.js'
 
 // ─── Package.json scanning ───
 
@@ -10,7 +11,6 @@ interface PackageInfo {
 }
 
 function readPackageJson(rootDir: string): PackageInfo | null {
-  // Walk up to find package.json
   let dir = path.resolve(rootDir)
   for (let i = 0; i < 5; i++) {
     const candidate = path.join(dir, 'package.json')
@@ -41,34 +41,22 @@ interface TechStack {
 }
 
 const TECH_DETECTORS: { pkg: string; label: string; category: keyof TechStack }[] = [
-  // Frameworks
   { pkg: 'next', label: 'Next.js', category: 'framework' },
   { pkg: 'react', label: 'React', category: 'framework' },
   { pkg: 'vue', label: 'Vue', category: 'framework' },
   { pkg: '@angular/core', label: 'Angular', category: 'framework' },
-  // HTTP
   { pkg: 'axios', label: 'Axios', category: 'httpClient' },
   { pkg: 'ky', label: 'Ky', category: 'httpClient' },
-  // State
   { pkg: 'jotai', label: 'Jotai', category: 'stateManagement' },
   { pkg: 'zustand', label: 'Zustand', category: 'stateManagement' },
   { pkg: '@reduxjs/toolkit', label: 'Redux Toolkit', category: 'stateManagement' },
-  { pkg: 'redux', label: 'Redux', category: 'stateManagement' },
   { pkg: '@tanstack/react-query', label: 'TanStack Query', category: 'stateManagement' },
-  { pkg: 'swr', label: 'SWR', category: 'stateManagement' },
-  // UI
   { pkg: 'tailwindcss', label: 'Tailwind CSS', category: 'styling' },
   { pkg: '@chakra-ui/react', label: 'Chakra UI', category: 'uiLibrary' },
   { pkg: '@mui/material', label: 'MUI', category: 'uiLibrary' },
-  { pkg: 'antd', label: 'Ant Design', category: 'uiLibrary' },
-  // Forms
   { pkg: 'react-hook-form', label: 'React Hook Form', category: 'forms' },
-  { pkg: 'formik', label: 'Formik', category: 'forms' },
-  // Rich editors
   { pkg: 'lexical', label: 'Lexical', category: 'other' },
   { pkg: '@xyflow/react', label: 'React Flow', category: 'other' },
-  { pkg: 'reactflow', label: 'React Flow', category: 'other' },
-  // Testing
   { pkg: 'vitest', label: 'Vitest', category: 'testing' },
   { pkg: 'jest', label: 'Jest', category: 'testing' },
   { pkg: '@playwright/test', label: 'Playwright', category: 'testing' },
@@ -76,62 +64,22 @@ const TECH_DETECTORS: { pkg: string; label: string; category: keyof TechStack }[
 
 function detectTechStack(pkg: PackageInfo): TechStack {
   const allDeps = { ...pkg.dependencies, ...pkg.devDependencies }
-  const stack: TechStack = {
-    stateManagement: [],
-    testing: [],
-    other: [],
-  }
+  const stack: TechStack = { stateManagement: [], testing: [], other: [] }
 
   for (const detector of TECH_DETECTORS) {
     const version = allDeps[detector.pkg]
     if (!version) continue
-
-    const labelWithVersion = `${detector.label} ${version.replace(/[\^~]/, '')}`
+    const label = `${detector.label} ${version.replace(/[\^~]/, '')}`
     const cat = detector.category
-
     if (cat === 'stateManagement' || cat === 'testing' || cat === 'other') {
-      stack[cat].push(labelWithVersion)
-    } else if (cat === 'framework') {
-      stack.framework = labelWithVersion
-    } else if (cat === 'httpClient') {
-      stack.httpClient = labelWithVersion
-    } else if (cat === 'uiLibrary') {
-      stack.uiLibrary = labelWithVersion
-    } else if (cat === 'styling') {
-      stack.styling = labelWithVersion
-    } else if (cat === 'forms') {
-      stack.forms = labelWithVersion
-    }
+      stack[cat].push(label)
+    } else if (cat === 'framework') stack.framework = label
+    else if (cat === 'httpClient') stack.httpClient = label
+    else if (cat === 'uiLibrary') stack.uiLibrary = label
+    else if (cat === 'styling') stack.styling = label
+    else if (cat === 'forms') stack.forms = label
   }
-
   return stack
-}
-
-// ─── Directory structure scanning ───
-
-interface DirEntry {
-  name: string
-  isDir: boolean
-  children?: DirEntry[]
-}
-
-function scanDir(dir: string, depth: number): DirEntry[] {
-  if (depth <= 0 || !existsSync(dir)) return []
-
-  const SKIP = new Set(['node_modules', '.git', '.next', 'dist', 'coverage', '__tests__', '__mocks__', '__fixtures__'])
-
-  return readdirSync(dir)
-    .filter((name) => !SKIP.has(name) && !name.startsWith('.'))
-    .map((name) => {
-      const full = path.join(dir, name)
-      const isDir = statSync(full).isDirectory()
-      return {
-        name,
-        isDir,
-        children: isDir ? scanDir(full, depth - 1) : undefined,
-      }
-    })
-    .filter((e) => e.isDir || /\.(ts|tsx|js|jsx)$/.test(e.name))
 }
 
 // ─── Layer inference ───
@@ -143,6 +91,7 @@ interface InferredModule {
   description: string
   files: string[]
   tags: string[]
+  dependsOn?: string[]
 }
 
 interface InferredLayer {
@@ -152,6 +101,8 @@ interface InferredLayer {
   order: number
   modules: InferredModule[]
 }
+
+const SKIP_DIRS = new Set(['node_modules', '.git', '.next', 'dist', 'coverage', '__tests__', '__mocks__', '__mock__', '_tests_', 'mocks'])
 
 const LAYER_PATTERNS: {
   dirPattern: RegExp
@@ -164,22 +115,26 @@ const LAYER_PATTERNS: {
   { dirPattern: /^(pages?|app|views?)$/, layerId: 'presentation', label: 'Presentation', color: '#3B82F6', order: 0, moduleType: 'page' },
   { dirPattern: /^(components?)$/, layerId: 'ui-components', label: 'UI Components', color: '#8B5CF6', order: 1, moduleType: 'component' },
   { dirPattern: /^(hooks?)$/, layerId: 'business-logic', label: 'Business Logic', color: '#10B981', order: 2, moduleType: 'hook' },
+  { dirPattern: /^(feature|features|modules?)$/, layerId: 'features', label: 'Features', color: '#14B8A6', order: 2, moduleType: 'service' },
   { dirPattern: /^(api|services?)$/, layerId: 'data-access', label: 'Data Access', color: '#F59E0B', order: 3, moduleType: 'api' },
-  { dirPattern: /^(store|stores?|atoms?|lib\/jotai|lib\/zustand|lib\/redux)$/, layerId: 'state', label: 'State Management', color: '#F97316', order: 4, moduleType: 'store' },
+  { dirPattern: /^(store|stores?|context)$/, layerId: 'state', label: 'State Management', color: '#F97316', order: 4, moduleType: 'store' },
   { dirPattern: /^(utils?|lib|helpers?)$/, layerId: 'utilities', label: 'Utilities', color: '#6B7280', order: 5, moduleType: 'util' },
   { dirPattern: /^(types?|interfaces?)$/, layerId: 'types', label: 'Types', color: '#06B6D4', order: 6, moduleType: 'type' },
   { dirPattern: /^(constants?|config)$/, layerId: 'config', label: 'Configuration', color: '#84CC16', order: 7, moduleType: 'config' },
 ]
 
 function inferLayers(rootDir: string): InferredLayer[] {
-  const entries = scanDir(rootDir, 2)
+  if (!existsSync(rootDir)) return []
+  const entries = readdirSync(rootDir)
   const layers = new Map<string, InferredLayer>()
 
   for (const entry of entries) {
-    if (!entry.isDir) continue
+    const fullPath = path.join(rootDir, entry)
+    if (!statSync(fullPath).isDirectory()) continue
+    if (SKIP_DIRS.has(entry) || entry.startsWith('.')) continue
 
     for (const pattern of LAYER_PATTERNS) {
-      if (!pattern.dirPattern.test(entry.name)) continue
+      if (!pattern.dirPattern.test(entry)) continue
 
       const layer = layers.get(pattern.layerId) ?? {
         id: pattern.layerId,
@@ -189,28 +144,30 @@ function inferLayers(rootDir: string): InferredLayer[] {
         modules: [],
       }
 
-      // Each subdirectory becomes a module
-      const subDirs = entry.children?.filter((c) => c.isDir) ?? []
+      const subDirs = readdirSync(fullPath)
+        .filter((c) => {
+          const cp = path.join(fullPath, c)
+          return statSync(cp).isDirectory() && !SKIP_DIRS.has(c) && !c.startsWith('.')
+        })
 
       if (subDirs.length > 0) {
         for (const sub of subDirs) {
           layer.modules.push({
-            id: `${entry.name}-${sub.name}`,
-            name: sub.name,
+            id: `${entry}/${sub}`,
+            name: sub,
             type: pattern.moduleType,
-            description: `${pattern.label} — ${sub.name}`,
-            files: [`src/${entry.name}/${sub.name}/**`],
+            description: `${pattern.label} — ${sub}`,
+            files: [`src/${entry}/${sub}/**`],
             tags: [pattern.moduleType],
           })
         }
       } else {
-        // Directory itself is a module (no subdirs)
         layer.modules.push({
-          id: entry.name,
-          name: entry.name,
+          id: entry,
+          name: entry,
           type: pattern.moduleType,
           description: pattern.label,
-          files: [`src/${entry.name}/**`],
+          files: [`src/${entry}/**`],
           tags: [pattern.moduleType],
         })
       }
@@ -225,7 +182,7 @@ function inferLayers(rootDir: string): InferredLayer[] {
     .sort((a, b) => a.order - b.order)
 }
 
-// ─── Route scanning (Next.js App Router) ───
+// ─── Route scanning (Next.js App Router) — tree structure ───
 
 interface InferredRoute {
   path: string
@@ -237,47 +194,57 @@ interface InferredRoute {
 function scanNextAppRoutes(appDir: string, basePath: string = ''): InferredRoute[] {
   if (!existsSync(appDir)) return []
 
-  const routes: InferredRoute[] = []
   const entries = readdirSync(appDir)
+  const result: InferredRoute[] = []
 
-  // Check for page.tsx / route.ts in current dir
-  const hasPage = entries.some((e) => /^page\.(tsx?|jsx?)$/.test(e))
-  const hasRoute = entries.some((e) => /^route\.(tsx?|jsx?)$/.test(e))
+  const pageFile = entries.find((e) => /^page\.(tsx?|jsx?)$/.test(e))
+  const routeFile = entries.find((e) => /^route\.(tsx?|jsx?)$/.test(e))
 
-  if (hasPage) {
-    const pageFile = entries.find((e) => /^page\.(tsx?|jsx?)$/.test(e))
-    routes.push({
-      path: basePath || '/',
-      name: basePath.split('/').pop() || 'Home',
-      handler: path.join(appDir, pageFile!).replace(/.*\/src\//, 'src/'),
-    })
-  }
+  // Collect child directories
+  const childDirs = entries.filter((e) => {
+    const fp = path.join(appDir, e)
+    return statSync(fp).isDirectory() && !e.startsWith('_') && e !== 'node_modules'
+  })
 
-  if (hasRoute) {
-    const routeFile = entries.find((e) => /^route\.(tsx?|jsx?)$/.test(e))
-    routes.push({
-      path: `${basePath} (API)`,
-      name: `${basePath.split('/').pop()} API`,
-      handler: path.join(appDir, routeFile!).replace(/.*\/src\//, 'src/'),
-    })
-  }
-
-  // Recurse into subdirectories
-  for (const entry of entries) {
-    const fullPath = path.join(appDir, entry)
-    if (!statSync(fullPath).isDirectory()) continue
-    if (entry.startsWith('_') || entry === 'node_modules') continue
-
-    // Next.js route group: (groupName) → skip in path
-    const isGroup = entry.startsWith('(') && entry.endsWith(')')
-    const segment = isGroup ? '' : `/${entry}`
+  // Recurse and collect child routes
+  const childRoutes: InferredRoute[] = []
+  for (const dir of childDirs) {
+    const isGroup = dir.startsWith('(') && dir.endsWith(')')
+    const segment = isGroup ? '' : `/${dir}`
     const childPath = `${basePath}${segment}`
-
-    const children = scanNextAppRoutes(fullPath, childPath)
-    routes.push(...children)
+    const sub = scanNextAppRoutes(path.join(appDir, dir), childPath)
+    childRoutes.push(...sub)
   }
 
-  return routes
+  // Build current route node
+  if (pageFile) {
+    const handler = path.join(appDir, pageFile).replace(/.*\/src\//, 'src/')
+    const name = basePath.split('/').filter(Boolean).pop() ?? 'Home'
+    const route: InferredRoute = {
+      path: basePath || '/',
+      name,
+      handler,
+    }
+    if (childRoutes.length > 0) {
+      route.children = childRoutes
+    }
+    result.push(route)
+  } else if (childRoutes.length > 0) {
+    // No page at this level, but has children — pass through
+    result.push(...childRoutes)
+  }
+
+  // API route
+  if (routeFile) {
+    const handler = path.join(appDir, routeFile).replace(/.*\/src\//, 'src/')
+    result.push({
+      path: basePath || '/',
+      name: `${basePath.split('/').filter(Boolean).pop() ?? 'root'} (API)`,
+      handler,
+    })
+  }
+
+  return result
 }
 
 // ─── State flow scanning ───
@@ -289,8 +256,15 @@ interface InferredStore {
   atoms: string[]
 }
 
+interface InferredFlow {
+  from: string
+  to: string
+  direction: 'read' | 'write' | 'read-write'
+  description: string
+}
+
 function scanStores(rootDir: string): { library?: string; stores: InferredStore[] } {
-  const storesDirs = ['store', 'stores', 'lib/jotai', 'lib/zustand', 'lib/redux']
+  const storesDirs = ['store', 'stores', 'lib/jotai', 'lib/zustand', 'lib/redux', 'context']
   const stores: InferredStore[] = []
   let library: string | undefined
 
@@ -309,24 +283,21 @@ function scanStores(rootDir: string): { library?: string; stores: InferredStore[
 }
 
 function scanStoreFiles(dir: string, rootDir: string, stores: InferredStore[]): void {
-  const entries = readdirSync(dir)
-
-  for (const entry of entries) {
+  for (const entry of readdirSync(dir)) {
     const fullPath = path.join(dir, entry)
-
     if (statSync(fullPath).isDirectory()) {
       scanStoreFiles(fullPath, rootDir, stores)
       continue
     }
-
     if (!/\.(ts|tsx|js|jsx)$/.test(entry)) continue
     if (/\.(test|spec|d)\.(ts|tsx)$/.test(entry)) continue
 
     const content = readFileSync(fullPath, 'utf-8')
     const relativePath = path.relative(rootDir, fullPath)
+    const parentDir = path.basename(path.dirname(fullPath))
     const baseName = path.basename(entry, path.extname(entry))
+    const id = baseName === 'index' ? parentDir : `${parentDir}/${baseName}`
 
-    // Extract exported atom/store names
     const atoms: string[] = []
     const exportRegex = /export\s+(?:const|function|let)\s+(\w+)/g
     let match: RegExpExecArray | null
@@ -336,8 +307,8 @@ function scanStoreFiles(dir: string, rootDir: string, stores: InferredStore[]): 
 
     if (atoms.length > 0) {
       stores.push({
-        id: baseName,
-        name: baseName,
+        id,
+        name: baseName === 'index' ? parentDir : baseName,
         file: `src/${relativePath}`,
         atoms,
       })
@@ -345,7 +316,65 @@ function scanStoreFiles(dir: string, rootDir: string, stores: InferredStore[]): 
   }
 }
 
-// ─── Main scan function ───
+// ─── Enrich with analysis edges ───
+
+function enrichWithAnalysis(
+  rootDir: string,
+  layers: InferredLayer[],
+  storeFlows: { library?: string; stores: InferredStore[] },
+  analysis: AnalysisResult,
+): { layers: InferredLayer[]; flows: InferredFlow[] } {
+  // Build module → files mapping (glob to set of file prefixes)
+  const moduleFileMap = new Map<string, string[]>()
+  for (const layer of layers) {
+    for (const mod of layer.modules) {
+      // Convert "src/hooks/api/**" → "hooks/api/"
+      const prefixes = mod.files.map((f) =>
+        f.replace(/^src\//, '').replace(/\/?\*\*$/, '/'),
+      )
+      moduleFileMap.set(mod.id, prefixes)
+    }
+  }
+
+  // For each analysis edge, find which module the source and target belong to
+  function findModuleForFile(filePath: string): string | null {
+    for (const [modId, prefixes] of moduleFileMap) {
+      if (prefixes.some((p) => filePath.startsWith(p))) {
+        return modId
+      }
+    }
+    return null
+  }
+
+  // Build module-level dependency edges
+  const moduleDeps = new Map<string, Set<string>>()
+  for (const edge of analysis.edges) {
+    const srcMod = findModuleForFile(edge.source)
+    const tgtMod = findModuleForFile(edge.target)
+    if (srcMod && tgtMod && srcMod !== tgtMod) {
+      const deps = moduleDeps.get(srcMod) ?? new Set()
+      deps.add(tgtMod)
+      moduleDeps.set(srcMod, deps)
+    }
+  }
+
+  // Apply dependsOn to modules
+  const enrichedLayers = layers.map((layer) => ({
+    ...layer,
+    modules: layer.modules.map((mod) => {
+      const deps = moduleDeps.get(mod.id)
+      return deps ? { ...mod, dependsOn: [...deps] } : mod
+    }),
+  }))
+
+  // Build store flows by scanning source files for store import statements
+  // (analysis edges may miss alias imports like @/lib/jotai/...)
+  const flows = scanStoreFlows(rootDir, storeFlows.stores, moduleFileMap)
+
+  return { layers: enrichedLayers, flows }
+}
+
+// ─── Main ───
 
 export interface ScanResult {
   projectName: string
@@ -353,21 +382,17 @@ export interface ScanResult {
   layers: InferredLayer[]
   routes: InferredRoute[]
   stateFlows: { library?: string; stores: InferredStore[] }
+  rootDir: string
 }
 
 export function scanProject(rootDir: string): ScanResult {
   const resolvedRoot = path.resolve(rootDir)
   const pkg = readPackageJson(resolvedRoot)
   const projectName = pkg?.name ?? path.basename(resolvedRoot)
-  const techStack = pkg ? detectTechStack(pkg) : {
-    stateManagement: [],
-    testing: [],
-    other: [],
-  }
+  const techStack = pkg ? detectTechStack(pkg) : { stateManagement: [], testing: [], other: [] }
 
   const layers = inferLayers(resolvedRoot)
 
-  // Detect routes
   let routes: InferredRoute[] = []
   const appDir = path.join(resolvedRoot, 'app')
   if (existsSync(appDir)) {
@@ -376,7 +401,6 @@ export function scanProject(rootDir: string): ScanResult {
 
   const stateFlows = scanStores(resolvedRoot)
 
-  // Auto-detect state library from package.json if not found from dirs
   if (!stateFlows.library && pkg) {
     const allDeps = { ...pkg.dependencies, ...pkg.devDependencies }
     if (allDeps['jotai']) stateFlows.library = 'jotai'
@@ -384,15 +408,103 @@ export function scanProject(rootDir: string): ScanResult {
     else if (allDeps['@reduxjs/toolkit'] || allDeps['redux']) stateFlows.library = 'redux'
   }
 
-  return { projectName, techStack, layers, routes, stateFlows }
+  return { projectName, techStack, layers, routes, stateFlows, rootDir: resolvedRoot }
 }
 
-// ─── Config generation ───
+/** Scan source files for import statements that reference store paths */
+function scanStoreFlows(
+  rootDir: string,
+  stores: InferredStore[],
+  moduleFileMap: Map<string, string[]>,
+): InferredFlow[] {
+  const flows: InferredFlow[] = []
+
+  // Build import path patterns from store files
+  // "src/lib/jotai/designer/index.ts" → ["@/lib/jotai/designer", "lib/jotai/designer", "jotai/designer"]
+  const storePatterns = stores.map((s) => {
+    const p = s.file
+      .replace(/^src\//, '')
+      .replace(/\/index\.(ts|tsx|js|jsx)$/, '')
+      .replace(/\.(ts|tsx|js|jsx)$/, '')
+    return { storeId: s.id, patterns: [p, `@/${p}`] }
+  })
+
+  function findModuleForFile(filePath: string): string | null {
+    for (const [modId, prefixes] of moduleFileMap) {
+      if (prefixes.some((p) => filePath.startsWith(p))) return modId
+    }
+    return null
+  }
+
+  const storeConsumers = new Map<string, Set<string>>()
+  const resolvedRoot = path.resolve(rootDir)
+
+  // Recursively scan source files
+  function walkAndScan(dir: string): void {
+    if (!existsSync(dir)) return
+    for (const entry of readdirSync(dir)) {
+      if (SKIP_DIRS.has(entry) || entry.startsWith('.')) continue
+      const fullPath = path.join(dir, entry)
+      if (statSync(fullPath).isDirectory()) {
+        walkAndScan(fullPath)
+        continue
+      }
+      if (!/\.(ts|tsx|js|jsx)$/.test(entry)) continue
+      if (/\.(test|spec|d)\.(ts|tsx)$/.test(entry)) continue
+
+      const relativePath = path.relative(resolvedRoot, fullPath)
+
+      // Skip files that ARE store files
+      const isStoreFile = stores.some((s) => s.file === `src/${relativePath}`)
+      if (isStoreFile) continue
+
+      const content = readFileSync(fullPath, 'utf-8')
+      const mod = findModuleForFile(relativePath)
+      if (!mod) continue
+
+      // Check import statements
+      for (const sp of storePatterns) {
+        for (const pattern of sp.patterns) {
+          if (content.includes(`from '${pattern}'`) || content.includes(`from "${pattern}"`)) {
+            const consumers = storeConsumers.get(sp.storeId) ?? new Set()
+            consumers.add(mod)
+            storeConsumers.set(sp.storeId, consumers)
+          }
+        }
+      }
+    }
+  }
+
+  walkAndScan(resolvedRoot)
+
+  for (const [storeId, consumers] of storeConsumers) {
+    for (const consumer of consumers) {
+      flows.push({
+        from: storeId,
+        to: consumer,
+        direction: 'read',
+        description: `${consumer} imports from ${storeId}`,
+      })
+    }
+  }
+
+  return flows
+}
 
 export function generateConfig(
   scan: ScanResult,
-  analysis?: unknown,
+  analysis?: AnalysisResult,
 ): Record<string, unknown> {
+  let layers = scan.layers
+  let flows: InferredFlow[] = []
+
+  // Enrich with analysis if available
+  if (analysis) {
+    const enriched = enrichWithAnalysis(scan.rootDir, layers, scan.stateFlows, analysis)
+    layers = enriched.layers
+    flows = enriched.flows
+  }
+
   const config: Record<string, unknown> = {
     version: 1,
     project: {
@@ -401,8 +513,8 @@ export function generateConfig(
     },
   }
 
-  if (scan.layers.length > 0) {
-    config['layers'] = scan.layers
+  if (layers.length > 0) {
+    config['layers'] = layers
   }
 
   if (scan.routes.length > 0) {
@@ -416,7 +528,7 @@ export function generateConfig(
     config['stateFlows'] = {
       library: scan.stateFlows.library ?? 'unknown',
       stores: scan.stateFlows.stores,
-      flows: [], // Cannot auto-detect data flow direction
+      flows,
     }
   }
 

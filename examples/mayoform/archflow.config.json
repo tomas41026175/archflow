@@ -12,7 +12,7 @@
       "order": 0,
       "modules": [
         {
-          "id": "app-[lng]",
+          "id": "app/[lng]",
           "name": "[lng]",
           "type": "page",
           "description": "Presentation — [lng]",
@@ -21,10 +21,15 @@
           ],
           "tags": [
             "page"
+          ],
+          "dependsOn": [
+            "components/Auth",
+            "hooks/devTool",
+            "utils/devTool"
           ]
         },
         {
-          "id": "app-api",
+          "id": "app/api",
           "name": "api",
           "type": "page",
           "description": "Presentation — api",
@@ -36,7 +41,7 @@
           ]
         },
         {
-          "id": "app-i18n",
+          "id": "app/i18n",
           "name": "i18n",
           "type": "page",
           "description": "Presentation — i18n",
@@ -56,7 +61,7 @@
       "order": 1,
       "modules": [
         {
-          "id": "components-Action",
+          "id": "components/Action",
           "name": "Action",
           "type": "component",
           "description": "UI Components — Action",
@@ -68,7 +73,7 @@
           ]
         },
         {
-          "id": "components-Auth",
+          "id": "components/Auth",
           "name": "Auth",
           "type": "component",
           "description": "UI Components — Auth",
@@ -77,10 +82,13 @@
           ],
           "tags": [
             "component"
+          ],
+          "dependsOn": [
+            "hooks/devTool"
           ]
         },
         {
-          "id": "components-ConditionBuilder",
+          "id": "components/ConditionBuilder",
           "name": "ConditionBuilder",
           "type": "component",
           "description": "UI Components — ConditionBuilder",
@@ -92,7 +100,7 @@
           ]
         },
         {
-          "id": "components-DescriptionArea",
+          "id": "components/DescriptionArea",
           "name": "DescriptionArea",
           "type": "component",
           "description": "UI Components — DescriptionArea",
@@ -104,7 +112,7 @@
           ]
         },
         {
-          "id": "components-Designs",
+          "id": "components/Designs",
           "name": "Designs",
           "type": "component",
           "description": "UI Components — Designs",
@@ -116,7 +124,7 @@
           ]
         },
         {
-          "id": "components-DevTools",
+          "id": "components/DevTools",
           "name": "DevTools",
           "type": "component",
           "description": "UI Components — DevTools",
@@ -128,7 +136,7 @@
           ]
         },
         {
-          "id": "components-EmployeeAndUnitAttributeConditionBuilder",
+          "id": "components/EmployeeAndUnitAttributeConditionBuilder",
           "name": "EmployeeAndUnitAttributeConditionBuilder",
           "type": "component",
           "description": "UI Components — EmployeeAndUnitAttributeConditionBuilder",
@@ -140,7 +148,7 @@
           ]
         },
         {
-          "id": "components-ErrorHandle",
+          "id": "components/ErrorHandle",
           "name": "ErrorHandle",
           "type": "component",
           "description": "UI Components — ErrorHandle",
@@ -149,10 +157,13 @@
           ],
           "tags": [
             "component"
+          ],
+          "dependsOn": [
+            "components/ui"
           ]
         },
         {
-          "id": "components-FocusLock",
+          "id": "components/FocusLock",
           "name": "FocusLock",
           "type": "component",
           "description": "UI Components — FocusLock",
@@ -164,7 +175,7 @@
           ]
         },
         {
-          "id": "components-Form",
+          "id": "components/Form",
           "name": "Form",
           "type": "component",
           "description": "UI Components — Form",
@@ -176,7 +187,7 @@
           ]
         },
         {
-          "id": "components-FormCard",
+          "id": "components/FormCard",
           "name": "FormCard",
           "type": "component",
           "description": "UI Components — FormCard",
@@ -185,10 +196,13 @@
           ],
           "tags": [
             "component"
+          ],
+          "dependsOn": [
+            "components/ui"
           ]
         },
         {
-          "id": "components-FormPage",
+          "id": "components/FormPage",
           "name": "FormPage",
           "type": "component",
           "description": "UI Components — FormPage",
@@ -200,7 +214,7 @@
           ]
         },
         {
-          "id": "components-JoyRide",
+          "id": "components/JoyRide",
           "name": "JoyRide",
           "type": "component",
           "description": "UI Components — JoyRide",
@@ -209,10 +223,13 @@
           ],
           "tags": [
             "component"
+          ],
+          "dependsOn": [
+            "components/ui"
           ]
         },
         {
-          "id": "components-Modals",
+          "id": "components/Modals",
           "name": "Modals",
           "type": "component",
           "description": "UI Components — Modals",
@@ -224,7 +241,7 @@
           ]
         },
         {
-          "id": "components-ProgressBarProvider",
+          "id": "components/ProgressBarProvider",
           "name": "ProgressBarProvider",
           "type": "component",
           "description": "UI Components — ProgressBarProvider",
@@ -236,7 +253,7 @@
           ]
         },
         {
-          "id": "components-RouterListener",
+          "id": "components/RouterListener",
           "name": "RouterListener",
           "type": "component",
           "description": "UI Components — RouterListener",
@@ -248,7 +265,7 @@
           ]
         },
         {
-          "id": "components-Skeletons",
+          "id": "components/Skeletons",
           "name": "Skeletons",
           "type": "component",
           "description": "UI Components — Skeletons",
@@ -260,7 +277,7 @@
           ]
         },
         {
-          "id": "components-SystemInfo",
+          "id": "components/SystemInfo",
           "name": "SystemInfo",
           "type": "component",
           "description": "UI Components — SystemInfo",
@@ -272,7 +289,7 @@
           ]
         },
         {
-          "id": "components-Tag",
+          "id": "components/Tag",
           "name": "Tag",
           "type": "component",
           "description": "UI Components — Tag",
@@ -284,7 +301,7 @@
           ]
         },
         {
-          "id": "components-Titles",
+          "id": "components/Titles",
           "name": "Titles",
           "type": "component",
           "description": "UI Components — Titles",
@@ -296,7 +313,7 @@
           ]
         },
         {
-          "id": "components-Trace",
+          "id": "components/Trace",
           "name": "Trace",
           "type": "component",
           "description": "UI Components — Trace",
@@ -308,7 +325,7 @@
           ]
         },
         {
-          "id": "components-common",
+          "id": "components/common",
           "name": "common",
           "type": "component",
           "description": "UI Components — common",
@@ -320,7 +337,7 @@
           ]
         },
         {
-          "id": "components-composite",
+          "id": "components/composite",
           "name": "composite",
           "type": "component",
           "description": "UI Components — composite",
@@ -329,10 +346,13 @@
           ],
           "tags": [
             "component"
+          ],
+          "dependsOn": [
+            "components/ui"
           ]
         },
         {
-          "id": "components-tables",
+          "id": "components/tables",
           "name": "tables",
           "type": "component",
           "description": "UI Components — tables",
@@ -344,7 +364,7 @@
           ]
         },
         {
-          "id": "components-ui",
+          "id": "components/ui",
           "name": "ui",
           "type": "component",
           "description": "UI Components — ui",
@@ -358,13 +378,49 @@
       ]
     },
     {
+      "id": "features",
+      "label": "Features",
+      "color": "#14B8A6",
+      "order": 2,
+      "modules": [
+        {
+          "id": "feature/designer",
+          "name": "designer",
+          "type": "service",
+          "description": "Features — designer",
+          "files": [
+            "src/feature/designer/**"
+          ],
+          "tags": [
+            "service"
+          ]
+        },
+        {
+          "id": "feature/form",
+          "name": "form",
+          "type": "service",
+          "description": "Features — form",
+          "files": [
+            "src/feature/form/**"
+          ],
+          "tags": [
+            "service"
+          ],
+          "dependsOn": [
+            "types/enums",
+            "utils/common"
+          ]
+        }
+      ]
+    },
+    {
       "id": "business-logic",
       "label": "Business Logic",
       "color": "#10B981",
       "order": 2,
       "modules": [
         {
-          "id": "hooks-TimeZone",
+          "id": "hooks/TimeZone",
           "name": "TimeZone",
           "type": "hook",
           "description": "Business Logic — TimeZone",
@@ -376,7 +432,7 @@
           ]
         },
         {
-          "id": "hooks-api",
+          "id": "hooks/api",
           "name": "api",
           "type": "hook",
           "description": "Business Logic — api",
@@ -388,7 +444,7 @@
           ]
         },
         {
-          "id": "hooks-dataSource",
+          "id": "hooks/dataSource",
           "name": "dataSource",
           "type": "hook",
           "description": "Business Logic — dataSource",
@@ -397,10 +453,14 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/useI18n"
           ]
         },
         {
-          "id": "hooks-devTool",
+          "id": "hooks/devTool",
           "name": "devTool",
           "type": "hook",
           "description": "Business Logic — devTool",
@@ -409,10 +469,13 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "utils/devTool"
           ]
         },
         {
-          "id": "hooks-file",
+          "id": "hooks/file",
           "name": "file",
           "type": "hook",
           "description": "Business Logic — file",
@@ -421,10 +484,16 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/useAppBridge",
+            "hooks/useCancelToken",
+            "hooks/useFeatureToggle"
           ]
         },
         {
-          "id": "hooks-flowAction",
+          "id": "hooks/flowAction",
           "name": "flowAction",
           "type": "hook",
           "description": "Business Logic — flowAction",
@@ -433,10 +502,14 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/useI18n"
           ]
         },
         {
-          "id": "hooks-form",
+          "id": "hooks/form",
           "name": "form",
           "type": "hook",
           "description": "Business Logic — form",
@@ -448,7 +521,7 @@
           ]
         },
         {
-          "id": "hooks-modal",
+          "id": "hooks/modal",
           "name": "modal",
           "type": "hook",
           "description": "Business Logic — modal",
@@ -460,7 +533,7 @@
           ]
         },
         {
-          "id": "hooks-pathname",
+          "id": "hooks/pathname",
           "name": "pathname",
           "type": "hook",
           "description": "Business Logic — pathname",
@@ -472,7 +545,7 @@
           ]
         },
         {
-          "id": "hooks-table",
+          "id": "hooks/table",
           "name": "table",
           "type": "hook",
           "description": "Business Logic — table",
@@ -484,7 +557,7 @@
           ]
         },
         {
-          "id": "hooks-useAppBridge",
+          "id": "hooks/useAppBridge",
           "name": "useAppBridge",
           "type": "hook",
           "description": "Business Logic — useAppBridge",
@@ -496,7 +569,7 @@
           ]
         },
         {
-          "id": "hooks-useAxios",
+          "id": "hooks/useAxios",
           "name": "useAxios",
           "type": "hook",
           "description": "Business Logic — useAxios",
@@ -505,10 +578,16 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/useCancelToken",
+            "hooks/useI18n",
+            "hooks/api",
+            "hooks/pathname"
           ]
         },
         {
-          "id": "hooks-useCancelToken",
+          "id": "hooks/useCancelToken",
           "name": "useCancelToken",
           "type": "hook",
           "description": "Business Logic — useCancelToken",
@@ -520,7 +599,7 @@
           ]
         },
         {
-          "id": "hooks-useCheckRoutePermissions",
+          "id": "hooks/useCheckRoutePermissions",
           "name": "useCheckRoutePermissions",
           "type": "hook",
           "description": "Business Logic — useCheckRoutePermissions",
@@ -529,10 +608,14 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/pathname"
           ]
         },
         {
-          "id": "hooks-useClickOutside",
+          "id": "hooks/useClickOutside",
           "name": "useClickOutside",
           "type": "hook",
           "description": "Business Logic — useClickOutside",
@@ -544,7 +627,7 @@
           ]
         },
         {
-          "id": "hooks-useDefinitionHandler",
+          "id": "hooks/useDefinitionHandler",
           "name": "useDefinitionHandler",
           "type": "hook",
           "description": "Business Logic — useDefinitionHandler",
@@ -553,10 +636,13 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/useFeatureToggle"
           ]
         },
         {
-          "id": "hooks-useElementHeight",
+          "id": "hooks/useElementHeight",
           "name": "useElementHeight",
           "type": "hook",
           "description": "Business Logic — useElementHeight",
@@ -568,7 +654,7 @@
           ]
         },
         {
-          "id": "hooks-useFeatureToggle",
+          "id": "hooks/useFeatureToggle",
           "name": "useFeatureToggle",
           "type": "hook",
           "description": "Business Logic — useFeatureToggle",
@@ -580,7 +666,7 @@
           ]
         },
         {
-          "id": "hooks-useFileUpload",
+          "id": "hooks/useFileUpload",
           "name": "useFileUpload",
           "type": "hook",
           "description": "Business Logic — useFileUpload",
@@ -589,10 +675,13 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api"
           ]
         },
         {
-          "id": "hooks-useFormPageFlowRecordsTable",
+          "id": "hooks/useFormPageFlowRecordsTable",
           "name": "useFormPageFlowRecordsTable",
           "type": "hook",
           "description": "Business Logic — useFormPageFlowRecordsTable",
@@ -601,10 +690,14 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/useI18n"
           ]
         },
         {
-          "id": "hooks-useGlobalErrorModal",
+          "id": "hooks/useGlobalErrorModal",
           "name": "useGlobalErrorModal",
           "type": "hook",
           "description": "Business Logic — useGlobalErrorModal",
@@ -613,10 +706,14 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/api",
+            "hooks/useI18n"
           ]
         },
         {
-          "id": "hooks-useGlobalModal",
+          "id": "hooks/useGlobalModal",
           "name": "useGlobalModal",
           "type": "hook",
           "description": "Business Logic — useGlobalModal",
@@ -628,7 +725,7 @@
           ]
         },
         {
-          "id": "hooks-useI18n",
+          "id": "hooks/useI18n",
           "name": "useI18n",
           "type": "hook",
           "description": "Business Logic — useI18n",
@@ -640,7 +737,7 @@
           ]
         },
         {
-          "id": "hooks-useIntervalAction",
+          "id": "hooks/useIntervalAction",
           "name": "useIntervalAction",
           "type": "hook",
           "description": "Business Logic — useIntervalAction",
@@ -652,7 +749,7 @@
           ]
         },
         {
-          "id": "hooks-useLoading",
+          "id": "hooks/useLoading",
           "name": "useLoading",
           "type": "hook",
           "description": "Business Logic — useLoading",
@@ -664,7 +761,7 @@
           ]
         },
         {
-          "id": "hooks-useModal",
+          "id": "hooks/useModal",
           "name": "useModal",
           "type": "hook",
           "description": "Business Logic — useModal",
@@ -673,10 +770,13 @@
           ],
           "tags": [
             "hook"
+          ],
+          "dependsOn": [
+            "hooks/useI18n"
           ]
         },
         {
-          "id": "hooks-useOpen",
+          "id": "hooks/useOpen",
           "name": "useOpen",
           "type": "hook",
           "description": "Business Logic — useOpen",
@@ -688,7 +788,7 @@
           ]
         },
         {
-          "id": "hooks-usePagination",
+          "id": "hooks/usePagination",
           "name": "usePagination",
           "type": "hook",
           "description": "Business Logic — usePagination",
@@ -700,7 +800,7 @@
           ]
         },
         {
-          "id": "hooks-usePersistedAtom",
+          "id": "hooks/usePersistedAtom",
           "name": "usePersistedAtom",
           "type": "hook",
           "description": "Business Logic — usePersistedAtom",
@@ -712,7 +812,7 @@
           ]
         },
         {
-          "id": "hooks-usePrevious",
+          "id": "hooks/usePrevious",
           "name": "usePrevious",
           "type": "hook",
           "description": "Business Logic — usePrevious",
@@ -724,7 +824,7 @@
           ]
         },
         {
-          "id": "hooks-useScrollIntoView",
+          "id": "hooks/useScrollIntoView",
           "name": "useScrollIntoView",
           "type": "hook",
           "description": "Business Logic — useScrollIntoView",
@@ -736,7 +836,7 @@
           ]
         },
         {
-          "id": "hooks-useUserDeviceInfo",
+          "id": "hooks/useUserDeviceInfo",
           "name": "useUserDeviceInfo",
           "type": "hook",
           "description": "Business Logic — useUserDeviceInfo",
@@ -748,7 +848,7 @@
           ]
         },
         {
-          "id": "hooks-useWebView",
+          "id": "hooks/useWebView",
           "name": "useWebView",
           "type": "hook",
           "description": "Business Logic — useWebView",
@@ -760,7 +860,7 @@
           ]
         },
         {
-          "id": "hooks-useWindowResize",
+          "id": "hooks/useWindowResize",
           "name": "useWindowResize",
           "type": "hook",
           "description": "Business Logic — useWindowResize",
@@ -794,13 +894,84 @@
       ]
     },
     {
+      "id": "state",
+      "label": "State Management",
+      "color": "#F97316",
+      "order": 4,
+      "modules": [
+        {
+          "id": "context/RetryMountContext",
+          "name": "RetryMountContext",
+          "type": "store",
+          "description": "State Management — RetryMountContext",
+          "files": [
+            "src/context/RetryMountContext/**"
+          ],
+          "tags": [
+            "store"
+          ]
+        },
+        {
+          "id": "context/ShowComponentContext",
+          "name": "ShowComponentContext",
+          "type": "store",
+          "description": "State Management — ShowComponentContext",
+          "files": [
+            "src/context/ShowComponentContext/**"
+          ],
+          "tags": [
+            "store"
+          ],
+          "dependsOn": [
+            "context/layout"
+          ]
+        },
+        {
+          "id": "context/builder",
+          "name": "builder",
+          "type": "store",
+          "description": "State Management — builder",
+          "files": [
+            "src/context/builder/**"
+          ],
+          "tags": [
+            "store"
+          ]
+        },
+        {
+          "id": "context/common",
+          "name": "common",
+          "type": "store",
+          "description": "State Management — common",
+          "files": [
+            "src/context/common/**"
+          ],
+          "tags": [
+            "store"
+          ]
+        },
+        {
+          "id": "context/layout",
+          "name": "layout",
+          "type": "store",
+          "description": "State Management — layout",
+          "files": [
+            "src/context/layout/**"
+          ],
+          "tags": [
+            "store"
+          ]
+        }
+      ]
+    },
+    {
       "id": "utilities",
       "label": "Utilities",
       "color": "#6B7280",
       "order": 5,
       "modules": [
         {
-          "id": "lib-firebase",
+          "id": "lib/firebase",
           "name": "firebase",
           "type": "util",
           "description": "Utilities — firebase",
@@ -812,7 +983,7 @@
           ]
         },
         {
-          "id": "lib-jotai",
+          "id": "lib/jotai",
           "name": "jotai",
           "type": "util",
           "description": "Utilities — jotai",
@@ -824,7 +995,7 @@
           ]
         },
         {
-          "id": "lib-logger",
+          "id": "lib/logger",
           "name": "logger",
           "type": "util",
           "description": "Utilities — logger",
@@ -836,7 +1007,7 @@
           ]
         },
         {
-          "id": "lib-observable",
+          "id": "lib/observable",
           "name": "observable",
           "type": "util",
           "description": "Utilities — observable",
@@ -848,7 +1019,7 @@
           ]
         },
         {
-          "id": "lib-postRobot",
+          "id": "lib/postRobot",
           "name": "postRobot",
           "type": "util",
           "description": "Utilities — postRobot",
@@ -860,7 +1031,7 @@
           ]
         },
         {
-          "id": "utils-Auth",
+          "id": "utils/Auth",
           "name": "Auth",
           "type": "util",
           "description": "Utilities — Auth",
@@ -872,7 +1043,7 @@
           ]
         },
         {
-          "id": "utils-api",
+          "id": "utils/api",
           "name": "api",
           "type": "util",
           "description": "Utilities — api",
@@ -881,10 +1052,15 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/Auth",
+            "utils/localStorageOperator",
+            "utils/sessionStorageOperator"
           ]
         },
         {
-          "id": "utils-common",
+          "id": "utils/common",
           "name": "common",
           "type": "util",
           "description": "Utilities — common",
@@ -893,10 +1069,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/localStorageOperator"
           ]
         },
         {
-          "id": "utils-demo",
+          "id": "utils/demo",
           "name": "demo",
           "type": "util",
           "description": "Utilities — demo",
@@ -908,7 +1087,7 @@
           ]
         },
         {
-          "id": "utils-devTool",
+          "id": "utils/devTool",
           "name": "devTool",
           "type": "util",
           "description": "Utilities — devTool",
@@ -917,10 +1096,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "app/[lng]"
           ]
         },
         {
-          "id": "utils-device",
+          "id": "utils/device",
           "name": "device",
           "type": "util",
           "description": "Utilities — device",
@@ -932,7 +1114,7 @@
           ]
         },
         {
-          "id": "utils-expression",
+          "id": "utils/expression",
           "name": "expression",
           "type": "util",
           "description": "Utilities — expression",
@@ -944,7 +1126,7 @@
           ]
         },
         {
-          "id": "utils-fireBase",
+          "id": "utils/fireBase",
           "name": "fireBase",
           "type": "util",
           "description": "Utilities — fireBase",
@@ -956,7 +1138,7 @@
           ]
         },
         {
-          "id": "utils-form",
+          "id": "utils/form",
           "name": "form",
           "type": "util",
           "description": "Utilities — form",
@@ -968,7 +1150,7 @@
           ]
         },
         {
-          "id": "utils-i18n",
+          "id": "utils/i18n",
           "name": "i18n",
           "type": "util",
           "description": "Utilities — i18n",
@@ -977,10 +1159,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/common"
           ]
         },
         {
-          "id": "utils-jsLogic",
+          "id": "utils/jsLogic",
           "name": "jsLogic",
           "type": "util",
           "description": "Utilities — jsLogic",
@@ -992,7 +1177,7 @@
           ]
         },
         {
-          "id": "utils-layout",
+          "id": "utils/layout",
           "name": "layout",
           "type": "util",
           "description": "Utilities — layout",
@@ -1001,10 +1186,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/common"
           ]
         },
         {
-          "id": "utils-localStorageOperator",
+          "id": "utils/localStorageOperator",
           "name": "localStorageOperator",
           "type": "util",
           "description": "Utilities — localStorageOperator",
@@ -1016,7 +1204,7 @@
           ]
         },
         {
-          "id": "utils-logger",
+          "id": "utils/logger",
           "name": "logger",
           "type": "util",
           "description": "Utilities — logger",
@@ -1028,7 +1216,7 @@
           ]
         },
         {
-          "id": "utils-managerPages",
+          "id": "utils/managerPages",
           "name": "managerPages",
           "type": "util",
           "description": "Utilities — managerPages",
@@ -1037,10 +1225,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/common"
           ]
         },
         {
-          "id": "utils-metaData",
+          "id": "utils/metaData",
           "name": "metaData",
           "type": "util",
           "description": "Utilities — metaData",
@@ -1052,7 +1243,7 @@
           ]
         },
         {
-          "id": "utils-modalList",
+          "id": "utils/modalList",
           "name": "modalList",
           "type": "util",
           "description": "Utilities — modalList",
@@ -1064,7 +1255,7 @@
           ]
         },
         {
-          "id": "utils-sessionStorageOperator",
+          "id": "utils/sessionStorageOperator",
           "name": "sessionStorageOperator",
           "type": "util",
           "description": "Utilities — sessionStorageOperator",
@@ -1073,10 +1264,13 @@
           ],
           "tags": [
             "util"
+          ],
+          "dependsOn": [
+            "utils/localStorageOperator"
           ]
         },
         {
-          "id": "utils-sourcemap",
+          "id": "utils/sourcemap",
           "name": "sourcemap",
           "type": "util",
           "description": "Utilities — sourcemap",
@@ -1088,7 +1282,7 @@
           ]
         },
         {
-          "id": "utils-table",
+          "id": "utils/table",
           "name": "table",
           "type": "util",
           "description": "Utilities — table",
@@ -1100,7 +1294,7 @@
           ]
         },
         {
-          "id": "utils-timeZone",
+          "id": "utils/timeZone",
           "name": "timeZone",
           "type": "util",
           "description": "Utilities — timeZone",
@@ -1120,7 +1314,7 @@
       "order": 6,
       "modules": [
         {
-          "id": "types-enums",
+          "id": "types/enums",
           "name": "enums",
           "type": "type",
           "description": "Types — enums",
@@ -1132,7 +1326,7 @@
           ]
         },
         {
-          "id": "types-interface",
+          "id": "types/interface",
           "name": "interface",
           "type": "type",
           "description": "Types — interface",
@@ -1152,7 +1346,7 @@
       "order": 7,
       "modules": [
         {
-          "id": "constants-devtool",
+          "id": "constants/devtool",
           "name": "devtool",
           "type": "config",
           "description": "Configuration — devtool",
@@ -1164,7 +1358,7 @@
           ]
         },
         {
-          "id": "constants-form",
+          "id": "constants/form",
           "name": "form",
           "type": "config",
           "description": "Configuration — form",
@@ -1184,37 +1378,39 @@
       {
         "path": "/[lng]/[appCode]/insidedemo",
         "name": "insidedemo",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/FormContent",
-        "name": "FormContent",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/FormContent/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/TestFileDownLoad",
-        "name": "TestFileDownLoad",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestFileDownLoad/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/TestPage",
-        "name": "TestPage",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestPage/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/iconHome",
-        "name": "iconHome",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/iconHome/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/orgtree",
-        "name": "orgtree",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/orgtree/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/insidedemo/transpage",
-        "name": "transpage",
-        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/transpage/page.tsx"
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/page.tsx",
+        "children": [
+          {
+            "path": "/[lng]/[appCode]/insidedemo/FormContent",
+            "name": "FormContent",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/FormContent/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/insidedemo/TestFileDownLoad",
+            "name": "TestFileDownLoad",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestFileDownLoad/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/insidedemo/TestPage",
+            "name": "TestPage",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestPage/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/insidedemo/iconHome",
+            "name": "iconHome",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/iconHome/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/insidedemo/orgtree",
+            "name": "orgtree",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/orgtree/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/insidedemo/transpage",
+            "name": "transpage",
+            "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/transpage/page.tsx"
+          }
+        ]
       },
       {
         "path": "/[lng]/[appCode]/login",
@@ -1229,97 +1425,101 @@
       {
         "path": "/[lng]/[appCode]",
         "name": "[appCode]",
-        "handler": "src/app/[lng]/[appCode]/(interface)/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/apply/create/[typeCode]",
-        "name": "[typeCode]",
-        "handler": "src/app/[lng]/[appCode]/(interface)/apply/create/[typeCode]/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/apply/list",
-        "name": "list",
-        "handler": "src/app/[lng]/[appCode]/(interface)/apply/list/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/approves",
-        "name": "approves",
-        "handler": "src/app/[lng]/[appCode]/(interface)/approves/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/browse/[formNo]",
-        "name": "[formNo]",
-        "handler": "src/app/[lng]/[appCode]/(interface)/browse/[formNo]/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/demo/loadingtestpage",
-        "name": "loadingtestpage",
-        "handler": "src/app/[lng]/[appCode]/(interface)/demo/loadingtestpage/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/demo/testError",
-        "name": "testError",
-        "handler": "src/app/[lng]/[appCode]/(interface)/demo/testError/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/designer",
-        "name": "designer",
-        "handler": "src/app/[lng]/[appCode]/(interface)/designer/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/designs",
-        "name": "designs",
-        "handler": "src/app/[lng]/[appCode]/(interface)/designs/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/errorrecordreport",
-        "name": "errorrecordreport",
-        "handler": "src/app/[lng]/[appCode]/(interface)/errorrecordreport/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/formtemplate",
-        "name": "formtemplate",
-        "handler": "src/app/[lng]/[appCode]/(interface)/formtemplate/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/helpcenter",
-        "name": "helpcenter",
-        "handler": "src/app/[lng]/[appCode]/(interface)/helpcenter/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/manage",
-        "name": "manage",
-        "handler": "src/app/[lng]/[appCode]/(interface)/manage/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/oldformquery",
-        "name": "oldformquery",
-        "handler": "src/app/[lng]/[appCode]/(interface)/oldformquery/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/permissions/charsetting",
-        "name": "charsetting",
-        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/permissions/charsetting/editchar",
-        "name": "editchar",
-        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/editchar/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/permissions/formdesign",
-        "name": "formdesign",
-        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/formdesign/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/systemsetting/overduenotificationsettings",
-        "name": "overduenotificationsettings",
-        "handler": "src/app/[lng]/[appCode]/(interface)/systemsetting/overduenotificationsettings/page.tsx"
-      },
-      {
-        "path": "/[lng]/[appCode]/traces",
-        "name": "traces",
-        "handler": "src/app/[lng]/[appCode]/(interface)/traces/page.tsx"
+        "handler": "src/app/[lng]/[appCode]/(interface)/page.tsx",
+        "children": [
+          {
+            "path": "/[lng]/[appCode]/apply/create/[typeCode]",
+            "name": "[typeCode]",
+            "handler": "src/app/[lng]/[appCode]/(interface)/apply/create/[typeCode]/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/apply/list",
+            "name": "list",
+            "handler": "src/app/[lng]/[appCode]/(interface)/apply/list/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/approves",
+            "name": "approves",
+            "handler": "src/app/[lng]/[appCode]/(interface)/approves/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/browse/[formNo]",
+            "name": "[formNo]",
+            "handler": "src/app/[lng]/[appCode]/(interface)/browse/[formNo]/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/demo/loadingtestpage",
+            "name": "loadingtestpage",
+            "handler": "src/app/[lng]/[appCode]/(interface)/demo/loadingtestpage/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/demo/testError",
+            "name": "testError",
+            "handler": "src/app/[lng]/[appCode]/(interface)/demo/testError/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/designer",
+            "name": "designer",
+            "handler": "src/app/[lng]/[appCode]/(interface)/designer/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/designs",
+            "name": "designs",
+            "handler": "src/app/[lng]/[appCode]/(interface)/designs/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/errorrecordreport",
+            "name": "errorrecordreport",
+            "handler": "src/app/[lng]/[appCode]/(interface)/errorrecordreport/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/formtemplate",
+            "name": "formtemplate",
+            "handler": "src/app/[lng]/[appCode]/(interface)/formtemplate/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/helpcenter",
+            "name": "helpcenter",
+            "handler": "src/app/[lng]/[appCode]/(interface)/helpcenter/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/manage",
+            "name": "manage",
+            "handler": "src/app/[lng]/[appCode]/(interface)/manage/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/oldformquery",
+            "name": "oldformquery",
+            "handler": "src/app/[lng]/[appCode]/(interface)/oldformquery/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/permissions/charsetting",
+            "name": "charsetting",
+            "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/page.tsx",
+            "children": [
+              {
+                "path": "/[lng]/[appCode]/permissions/charsetting/editchar",
+                "name": "editchar",
+                "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/editchar/page.tsx"
+              }
+            ]
+          },
+          {
+            "path": "/[lng]/[appCode]/permissions/formdesign",
+            "name": "formdesign",
+            "handler": "src/app/[lng]/[appCode]/(interface)/permissions/formdesign/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/systemsetting/overduenotificationsettings",
+            "name": "overduenotificationsettings",
+            "handler": "src/app/[lng]/[appCode]/(interface)/systemsetting/overduenotificationsettings/page.tsx"
+          },
+          {
+            "path": "/[lng]/[appCode]/traces",
+            "name": "traces",
+            "handler": "src/app/[lng]/[appCode]/(interface)/traces/page.tsx"
+          }
+        ]
       },
       {
         "path": "/[lng]/[appCode]/auth",
@@ -1332,83 +1532,83 @@
         "handler": "src/app/[lng]/[appCode]/errorpage/page.tsx"
       },
       {
-        "path": "/api/buildTimeStamp (API)",
-        "name": "buildTimeStamp API",
+        "path": "/api/buildTimeStamp",
+        "name": "buildTimeStamp (API)",
         "handler": "src/app/api/buildTimeStamp/route.ts"
       },
       {
-        "path": "/api/checkCombineKey (API)",
-        "name": "checkCombineKey API",
+        "path": "/api/checkCombineKey",
+        "name": "checkCombineKey (API)",
         "handler": "src/app/api/checkCombineKey/route.ts"
       },
       {
-        "path": "/api/decryptWork (API)",
-        "name": "decryptWork API",
+        "path": "/api/decryptWork",
+        "name": "decryptWork (API)",
         "handler": "src/app/api/decryptWork/route.ts"
       },
       {
-        "path": "/api/directories (API)",
-        "name": "directories API",
+        "path": "/api/directories",
+        "name": "directories (API)",
         "handler": "src/app/api/directories/route.ts"
       },
       {
-        "path": "/api/encryptWork (API)",
-        "name": "encryptWork API",
+        "path": "/api/encryptWork",
+        "name": "encryptWork (API)",
         "handler": "src/app/api/encryptWork/route.ts"
       },
       {
-        "path": "/api/firebaseConfig (API)",
-        "name": "firebaseConfig API",
+        "path": "/api/firebaseConfig",
+        "name": "firebaseConfig (API)",
         "handler": "src/app/api/firebaseConfig/route.ts"
       },
       {
-        "path": "/api/form/adminFlowDeliver (API)",
-        "name": "adminFlowDeliver API",
+        "path": "/api/form/adminFlowDeliver",
+        "name": "adminFlowDeliver (API)",
         "handler": "src/app/api/form/adminFlowDeliver/route.ts"
       },
       {
-        "path": "/api/form/evaluateCalculations (API)",
-        "name": "evaluateCalculations API",
+        "path": "/api/form/evaluateCalculations",
+        "name": "evaluateCalculations (API)",
         "handler": "src/app/api/form/evaluateCalculations/route.ts"
       },
       {
-        "path": "/api/form/evaluateLogic (API)",
-        "name": "evaluateLogic API",
+        "path": "/api/form/evaluateLogic",
+        "name": "evaluateLogic (API)",
         "handler": "src/app/api/form/evaluateLogic/route.ts"
       },
       {
-        "path": "/api/form/executeDataSource (API)",
-        "name": "executeDataSource API",
+        "path": "/api/form/executeDataSource",
+        "name": "executeDataSource (API)",
         "handler": "src/app/api/form/executeDataSource/route.ts"
       },
       {
-        "path": "/api/form/flowDeliver (API)",
-        "name": "flowDeliver API",
+        "path": "/api/form/flowDeliver",
+        "name": "flowDeliver (API)",
         "handler": "src/app/api/form/flowDeliver/route.ts"
       },
       {
-        "path": "/api/form/getInitUserDataSession (API)",
-        "name": "getInitUserDataSession API",
+        "path": "/api/form/getInitUserDataSession",
+        "name": "getInitUserDataSession (API)",
         "handler": "src/app/api/form/getInitUserDataSession/route.ts"
       },
       {
-        "path": "/api/form/getMaskedUserData (API)",
-        "name": "getMaskedUserData API",
+        "path": "/api/form/getMaskedUserData",
+        "name": "getMaskedUserData (API)",
         "handler": "src/app/api/form/getMaskedUserData/route.ts"
       },
       {
-        "path": "/api/log (API)",
-        "name": "log API",
+        "path": "/api/log",
+        "name": "log (API)",
         "handler": "src/app/api/log/route.ts"
       },
       {
-        "path": "/api/login (API)",
-        "name": "login API",
+        "path": "/api/login",
+        "name": "login (API)",
         "handler": "src/app/api/login/route.ts"
       },
       {
-        "path": "/api/symbolicate (API)",
-        "name": "symbolicate API",
+        "path": "/api/symbolicate",
+        "name": "symbolicate (API)",
         "handler": "src/app/api/symbolicate/route.ts"
       }
     ]
@@ -1417,7 +1617,7 @@
     "library": "jotai",
     "stores": [
       {
-        "id": "designer",
+        "id": "designer/designer",
         "name": "designer",
         "file": "src/lib/jotai/designer/designer.tsx",
         "atoms": [
@@ -1430,7 +1630,7 @@
         ]
       },
       {
-        "id": "flow",
+        "id": "designer/flow",
         "name": "flow",
         "file": "src/lib/jotai/designer/flow.ts",
         "atoms": [
@@ -1444,8 +1644,8 @@
         ]
       },
       {
-        "id": "index",
-        "name": "index",
+        "id": "designer",
+        "name": "designer",
         "file": "src/lib/jotai/designer/index.ts",
         "atoms": [
           "DependedModulesByComponentKeyAtom",
@@ -1469,7 +1669,7 @@
         ]
       },
       {
-        "id": "loginAtom",
+        "id": "devTool/loginAtom",
         "name": "loginAtom",
         "file": "src/lib/jotai/devTool/loginAtom.ts",
         "atoms": [
@@ -1477,8 +1677,8 @@
         ]
       },
       {
-        "id": "index",
-        "name": "index",
+        "id": "errorHandle",
+        "name": "errorHandle",
         "file": "src/lib/jotai/errorHandle/index.tsx",
         "atoms": [
           "globalModalAtom",
@@ -1491,8 +1691,8 @@
         ]
       },
       {
-        "id": "index",
-        "name": "index",
+        "id": "layout",
+        "name": "layout",
         "file": "src/lib/jotai/layout/index.ts",
         "atoms": [
           "userInfoAtom",
@@ -1504,8 +1704,8 @@
         ]
       },
       {
-        "id": "index",
-        "name": "index",
+        "id": "managePages",
+        "name": "managePages",
         "file": "src/lib/jotai/managePages/index.ts",
         "atoms": [
           "initDateRange",
@@ -1513,20 +1713,537 @@
         ]
       },
       {
-        "id": "persistUtils",
+        "id": "managePages/persistUtils",
         "name": "persistUtils",
         "file": "src/lib/jotai/managePages/persistUtils.ts",
         "atoms": [
           "mergeDefaults",
           "stableStringify"
         ]
+      },
+      {
+        "id": "builder/BuilderContext",
+        "name": "BuilderContext",
+        "file": "src/context/builder/BuilderContext.tsx",
+        "atoms": [
+          "BuilderProvider",
+          "useBuilder",
+          "useCalculation"
+        ]
+      },
+      {
+        "id": "builder/BuilderTimeOffsetContext",
+        "name": "BuilderTimeOffsetContext",
+        "file": "src/context/builder/BuilderTimeOffsetContext.tsx",
+        "atoms": [
+          "BuilderTimezoneContext",
+          "useBuilderTimezone",
+          "BuilderTimezoneProvider",
+          "BuilderTimezoneProviderWithDefinition"
+        ]
+      },
+      {
+        "id": "common/DevTool",
+        "name": "DevTool",
+        "file": "src/context/common/DevTool.tsx",
+        "atoms": [
+          "DevToolContext",
+          "DevToolProvider",
+          "useDevTool"
+        ]
+      },
+      {
+        "id": "common/FeatureToggleProvider",
+        "name": "FeatureToggleProvider",
+        "file": "src/context/common/FeatureToggleProvider.tsx",
+        "atoms": [
+          "FeatureToggleContext",
+          "FeatureToggleProvider"
+        ]
+      },
+      {
+        "id": "common/LanguageProvider",
+        "name": "LanguageProvider",
+        "file": "src/context/common/LanguageProvider.tsx",
+        "atoms": [
+          "LanguageContext",
+          "LanguageProvider",
+          "useLanguage"
+        ]
+      },
+      {
+        "id": "common/NavigationConfigProvider",
+        "name": "NavigationConfigProvider",
+        "file": "src/context/common/NavigationConfigProvider.tsx",
+        "atoms": [
+          "NavigationConfigProvider",
+          "useNavigationConfigContext"
+        ]
+      },
+      {
+        "id": "common/TimerProvider",
+        "name": "TimerProvider",
+        "file": "src/context/common/TimerProvider.tsx",
+        "atoms": [
+          "TimerProvider",
+          "useTimer"
+        ]
+      },
+      {
+        "id": "common/UserActionPermissionProvider",
+        "name": "UserActionPermissionProvider",
+        "file": "src/context/common/UserActionPermissionProvider.tsx",
+        "atoms": [
+          "initialUserActionPermissions",
+          "UserActionPermissionContext",
+          "UserActionPermissionProvider",
+          "useUserActionPermissions",
+          "useHasUserActionPermission"
+        ]
+      },
+      {
+        "id": "common/i18nTranslate",
+        "name": "i18nTranslate",
+        "file": "src/context/common/i18nTranslate.tsx",
+        "atoms": [
+          "i18nTranslateContext"
+        ]
+      },
+      {
+        "id": "userActionLog/UserActionLoggerProvider",
+        "name": "UserActionLoggerProvider",
+        "file": "src/context/common/userActionLog/UserActionLoggerProvider.tsx",
+        "atoms": [
+          "UserActionLoggerContext",
+          "UserActionLoggerProvider",
+          "useUserActionLogger"
+        ]
+      },
+      {
+        "id": "useAutoFlush",
+        "name": "useAutoFlush",
+        "file": "src/context/common/userActionLog/hooks/useAutoFlush/index.ts",
+        "atoms": [
+          "useAutoFlush"
+        ]
+      },
+      {
+        "id": "useElementTracker",
+        "name": "useElementTracker",
+        "file": "src/context/common/userActionLog/hooks/useElementTracker/index.ts",
+        "atoms": [
+          "useElementTracker"
+        ]
+      },
+      {
+        "id": "useGlobalClickListener",
+        "name": "useGlobalClickListener",
+        "file": "src/context/common/userActionLog/hooks/useGlobalClickListener/index.ts",
+        "atoms": [
+          "useGlobalClickListener"
+        ]
+      },
+      {
+        "id": "useLoggerCore",
+        "name": "useLoggerCore",
+        "file": "src/context/common/userActionLog/hooks/useLoggerCore/index.ts",
+        "atoms": [
+          "useLoggerCore"
+        ]
+      },
+      {
+        "id": "usePageUnloadHandler",
+        "name": "usePageUnloadHandler",
+        "file": "src/context/common/userActionLog/hooks/usePageUnloadHandler/index.ts",
+        "atoms": [
+          "usePageUnloadHandler"
+        ]
+      },
+      {
+        "id": "useRouteChangeTracker",
+        "name": "useRouteChangeTracker",
+        "file": "src/context/common/userActionLog/hooks/useRouteChangeTracker/index.ts",
+        "atoms": [
+          "useRouteChangeTracker"
+        ]
+      },
+      {
+        "id": "utils/element-classifier",
+        "name": "element-classifier",
+        "file": "src/context/common/userActionLog/utils/element-classifier.ts",
+        "atoms": [
+          "isButton",
+          "isLink",
+          "isFormSubmit",
+          "isTab",
+          "isDownload",
+          "isSelect",
+          "isInput",
+          "isTextarea"
+        ]
+      },
+      {
+        "id": "utils/element-helpers",
+        "name": "element-helpers",
+        "file": "src/context/common/userActionLog/utils/element-helpers.ts",
+        "atoms": [
+          "getElementClassName",
+          "getElementKinds",
+          "getDataAttributes",
+          "generateElementName",
+          "mapFlowActionToUserAction",
+          "getButtonAction",
+          "getElementFallbackAction",
+          "inferAction",
+          "createNoLogInfo",
+          "buildAdditionalData",
+          "processDataLogElement",
+          "processFallbackElement",
+          "createButtonInfo",
+          "createLinkInfo",
+          "createTabInfo",
+          "createDownloadInfo",
+          "processRegularElement",
+          "getElementInfo"
+        ]
+      },
+      {
+        "id": "utils/url-helpers",
+        "name": "url-helpers",
+        "file": "src/context/common/userActionLog/utils/url-helpers.ts",
+        "atoms": [
+          "normalizeUrlForLogging",
+          "isSamePage",
+          "getCurrentNormalizedPageUrl"
+        ]
+      },
+      {
+        "id": "layout/EnvProvider",
+        "name": "EnvProvider",
+        "file": "src/context/layout/EnvProvider.tsx",
+        "atoms": [
+          "EnvProvider",
+          "useEnv"
+        ]
+      },
+      {
+        "id": "layout/MayoFormLayoutSizeProvider",
+        "name": "MayoFormLayoutSizeProvider",
+        "file": "src/context/layout/MayoFormLayoutSizeProvider.tsx",
+        "atoms": [
+          "MayoFormLayoutSizeProvider",
+          "useMayoFormLayoutSize",
+          "useMainLayoutSize",
+          "useObserveLayoutSize"
+        ]
       }
     ],
-    "flows": []
+    "flows": [
+      {
+        "from": "layout/EnvProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from layout/EnvProvider"
+      },
+      {
+        "from": "layout/EnvProvider",
+        "to": "hooks/devTool",
+        "direction": "read",
+        "description": "hooks/devTool imports from layout/EnvProvider"
+      },
+      {
+        "from": "builder/BuilderTimeOffsetContext",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from builder/BuilderTimeOffsetContext"
+      },
+      {
+        "from": "builder/BuilderTimeOffsetContext",
+        "to": "components/DevTools",
+        "direction": "read",
+        "description": "components/DevTools imports from builder/BuilderTimeOffsetContext"
+      },
+      {
+        "from": "builder/BuilderTimeOffsetContext",
+        "to": "components/FormPage",
+        "direction": "read",
+        "description": "components/FormPage imports from builder/BuilderTimeOffsetContext"
+      },
+      {
+        "from": "builder/BuilderTimeOffsetContext",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from builder/BuilderTimeOffsetContext"
+      },
+      {
+        "from": "builder/BuilderTimeOffsetContext",
+        "to": "utils/common",
+        "direction": "read",
+        "description": "utils/common imports from builder/BuilderTimeOffsetContext"
+      },
+      {
+        "from": "common/DevTool",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/DevTool"
+      },
+      {
+        "from": "common/DevTool",
+        "to": "components/DevTools",
+        "direction": "read",
+        "description": "components/DevTools imports from common/DevTool"
+      },
+      {
+        "from": "common/DevTool",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from common/DevTool"
+      },
+      {
+        "from": "common/DevTool",
+        "to": "hooks/dataSource",
+        "direction": "read",
+        "description": "hooks/dataSource imports from common/DevTool"
+      },
+      {
+        "from": "common/DevTool",
+        "to": "hooks/devTool",
+        "direction": "read",
+        "description": "hooks/devTool imports from common/DevTool"
+      },
+      {
+        "from": "managePages",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from managePages"
+      },
+      {
+        "from": "common/NavigationConfigProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/NavigationConfigProvider"
+      },
+      {
+        "from": "common/NavigationConfigProvider",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from common/NavigationConfigProvider"
+      },
+      {
+        "from": "common/NavigationConfigProvider",
+        "to": "lib/firebase",
+        "direction": "read",
+        "description": "lib/firebase imports from common/NavigationConfigProvider"
+      },
+      {
+        "from": "layout",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "components/FormCard",
+        "direction": "read",
+        "description": "components/FormCard imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "components/FormPage",
+        "direction": "read",
+        "description": "components/FormPage imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "components/RouterListener",
+        "direction": "read",
+        "description": "components/RouterListener imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "components/ui",
+        "direction": "read",
+        "description": "components/ui imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "context/layout",
+        "direction": "read",
+        "description": "context/layout imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "hooks/TimeZone",
+        "direction": "read",
+        "description": "hooks/TimeZone imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "hooks/useUserDeviceInfo",
+        "direction": "read",
+        "description": "hooks/useUserDeviceInfo imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "lib/firebase",
+        "direction": "read",
+        "description": "lib/firebase imports from layout"
+      },
+      {
+        "from": "layout",
+        "to": "utils/api",
+        "direction": "read",
+        "description": "utils/api imports from layout"
+      },
+      {
+        "from": "designer/designer",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from designer/designer"
+      },
+      {
+        "from": "designer",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from designer"
+      },
+      {
+        "from": "designer/flow",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from designer/flow"
+      },
+      {
+        "from": "common/UserActionPermissionProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/UserActionPermissionProvider"
+      },
+      {
+        "from": "common/LanguageProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/LanguageProvider"
+      },
+      {
+        "from": "layout/MayoFormLayoutSizeProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from layout/MayoFormLayoutSizeProvider"
+      },
+      {
+        "from": "errorHandle",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "components/ErrorHandle",
+        "direction": "read",
+        "description": "components/ErrorHandle imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "components/ui",
+        "direction": "read",
+        "description": "components/ui imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "hooks/useAxios",
+        "direction": "read",
+        "description": "hooks/useAxios imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "hooks/useGlobalErrorModal",
+        "direction": "read",
+        "description": "hooks/useGlobalErrorModal imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "hooks/useGlobalModal",
+        "direction": "read",
+        "description": "hooks/useGlobalModal imports from errorHandle"
+      },
+      {
+        "from": "errorHandle",
+        "to": "utils/api",
+        "direction": "read",
+        "description": "utils/api imports from errorHandle"
+      },
+      {
+        "from": "common/FeatureToggleProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/FeatureToggleProvider"
+      },
+      {
+        "from": "common/FeatureToggleProvider",
+        "to": "components/DevTools",
+        "direction": "read",
+        "description": "components/DevTools imports from common/FeatureToggleProvider"
+      },
+      {
+        "from": "common/FeatureToggleProvider",
+        "to": "hooks/useFeatureToggle",
+        "direction": "read",
+        "description": "hooks/useFeatureToggle imports from common/FeatureToggleProvider"
+      },
+      {
+        "from": "common/i18nTranslate",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from common/i18nTranslate"
+      },
+      {
+        "from": "common/i18nTranslate",
+        "to": "hooks/useI18n",
+        "direction": "read",
+        "description": "hooks/useI18n imports from common/i18nTranslate"
+      },
+      {
+        "from": "userActionLog/UserActionLoggerProvider",
+        "to": "app/[lng]",
+        "direction": "read",
+        "description": "app/[lng] imports from userActionLog/UserActionLoggerProvider"
+      },
+      {
+        "from": "userActionLog/UserActionLoggerProvider",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from userActionLog/UserActionLoggerProvider"
+      },
+      {
+        "from": "builder/BuilderContext",
+        "to": "components/ui",
+        "direction": "read",
+        "description": "components/ui imports from builder/BuilderContext"
+      },
+      {
+        "from": "builder/BuilderContext",
+        "to": "feature/form",
+        "direction": "read",
+        "description": "feature/form imports from builder/BuilderContext"
+      },
+      {
+        "from": "devTool/loginAtom",
+        "to": "hooks/devTool",
+        "direction": "read",
+        "description": "hooks/devTool imports from devTool/loginAtom"
+      }
+    ]
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T03:17:03.517Z",
+      "analyzedAt": "2026-03-31T04:02:05.710Z",
       "rootDir": "/Users/tomas_chang/work/MAYOFormAISolutions/MAYOForm-Web/src",
       "fileCount": 1403,
       "nodeCount": 1225,

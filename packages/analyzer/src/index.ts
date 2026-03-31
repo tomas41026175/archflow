@@ -159,7 +159,7 @@ program
         console.error(`  Stores: ${scan.stateFlows.stores.length}`)
       }
 
-      let analysis: unknown = undefined
+      let analysis: import('./types.js').AnalysisResult | undefined = undefined
       if (opts.withAnalysis) {
         if (opts.verbose) console.error(`  Running dependency analysis...`)
         analysis = analyze({
@@ -167,8 +167,7 @@ program
           tsconfigPath: opts.tsconfig,
           exclude: ['__tests__', '__fixtures__', '__mock__', '__mocks__', '_tests_', 'mocks', '.test.', '.spec.', '.d.ts'],
         })
-        const meta = (analysis as { metadata: { nodeCount: number; edgeCount: number } }).metadata
-        if (opts.verbose) console.error(`  Analysis: ${meta.nodeCount} nodes, ${meta.edgeCount} edges`)
+        if (opts.verbose) console.error(`  Analysis: ${analysis.metadata.nodeCount} nodes, ${analysis.metadata.edgeCount} edges`)
       }
 
       const config = generateConfig(scan, analysis)
