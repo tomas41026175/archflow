@@ -13,6 +13,11 @@ export const importDetailSchema = z.object({
   isTypeOnly: z.boolean(),
 })
 
+export const fileMetricsSchema = z.object({
+  lineCount: z.number(),
+  anyCount: z.number(),
+}).optional()
+
 export const dependencyNodeSchema = z.object({
   id: z.string(),
   label: z.string(),
@@ -21,6 +26,7 @@ export const dependencyNodeSchema = z.object({
     'page', 'component', 'hook', 'util', 'api', 'store', 'type', 'config', 'unknown',
   ]),
   exports: z.array(exportInfoSchema),
+  metrics: fileMetricsSchema,
 })
 
 export const dependencyEdgeSchema = z.object({

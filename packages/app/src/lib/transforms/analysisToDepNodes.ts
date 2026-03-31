@@ -9,8 +9,11 @@ export interface FileNodeData {
   type: string
   exportCount: number
   importCount: number
-  /** Number of files aggregated (directory mode) */
   fileCount?: number
+  lineCount?: number
+  anyCount?: number
+  /** Severity: 'critical' | 'warning' | 'ok' */
+  severity?: 'critical' | 'warning' | 'ok'
 }
 
 export interface DepViewOptions {
@@ -88,18 +91,29 @@ function buildFileView(
 
   const nodes: Node<FileNodeData>[] = depNodes
     .filter((n) => visibleSet.has(n.id))
-    .map((node) => ({
-      id: node.id,
-      type: 'file',
-      position: { x: 0, y: 0 },
-      data: {
-        filePath: node.filePath,
-        label: node.label,
-        type: node.type,
-        exportCount: node.exports.length,
-        importCount: incomingCount.get(node.id) ?? 0,
-      },
-    }))
+    .map((node) => {
+      const lines = node.metrics?.lineCount ?? 0
+      const anys = node.metrics?.anyCount ?? 0
+      const severity: 'critical' | 'warning' | 'ok' =
+        lines > 800 || anys > 10 ? 'critical' :
+        lines > 400 || anys > 3 ? 'warning' : 'ok'
+
+      return {
+        id: node.id,
+        type: 'file',
+        position: { x: 0, y: 0 },
+        data: {
+          filePath: node.filePath,
+          label: node.label,
+          type: node.type,
+          exportCount: node.exports.length,
+          importCount: incomingCount.get(node.id) ?? 0,
+          lineCount: lines,
+          anyCount: anys,
+          severity,
+        },
+      }
+    })
 
   const edgeIdSet = new Set(visibleEdges.map((e) => `${e.source}→${e.target}`))
   const edges: Edge[] = depEdges

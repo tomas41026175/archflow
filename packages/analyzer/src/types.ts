@@ -21,6 +21,12 @@ export interface ImportDetail {
   isTypeOnly: boolean
 }
 
+/** Code quality metrics for a file */
+export interface FileMetrics {
+  lineCount: number
+  anyCount: number
+}
+
 /** A node in the dependency graph */
 export interface DependencyNode {
   id: string
@@ -28,6 +34,7 @@ export interface DependencyNode {
   filePath: string
   type: 'page' | 'component' | 'hook' | 'util' | 'api' | 'store' | 'type' | 'config' | 'unknown'
   exports: ExportInfo[]
+  metrics?: FileMetrics
 }
 
 /** An edge (dependency) in the graph */

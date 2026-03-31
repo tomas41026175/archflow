@@ -64,6 +64,13 @@ function extractExports(sourceFile: SourceFile): ExportInfo[] {
   return exports
 }
 
+/** Extract quality metrics from a source file */
+function extractMetrics(sourceFile: SourceFile): { lineCount: number; anyCount: number } {
+  const lineCount = sourceFile.getEndLineNumber()
+  const anyCount = sourceFile.getDescendantsOfKind(SyntaxKind.AnyKeyword).length
+  return { lineCount, anyCount }
+}
+
 /** Check if a file should be included based on glob patterns */
 function shouldInclude(
   filePath: string,
@@ -128,6 +135,7 @@ export function analyze(config: AnalyzerConfig): AnalysisResult {
       filePath,
       type: inferFileType(filePath),
       exports: extractExports(sf),
+      metrics: extractMetrics(sf),
     })
   }
 
