@@ -3,6 +3,7 @@
 import { Command } from 'commander'
 import { writeFileSync } from 'node:fs'
 import { analyze } from './analyzer.js'
+import { loadRcConfig, mergeWithRc } from './rc.js'
 
 const program = new Command()
 
@@ -14,40 +15,50 @@ program
 program
   .command('analyze')
   .description('Analyze a project and output dependency graph as JSON')
-  .requiredOption('--root <path>', 'Root directory of source files')
+  .option('--root <path>', 'Root directory of source files')
   .option('--tsconfig <path>', 'Path to tsconfig.json')
   .option('--include <patterns...>', 'Glob patterns to include')
   .option('--exclude <patterns...>', 'Additional patterns to exclude')
   .option('-o, --output <file>', 'Output file path (default: stdout)')
   .option('--verbose', 'Show progress information')
+  .option('--no-rc', 'Ignore .archflowrc.json')
   .action((opts: {
-    root: string
+    root?: string
     tsconfig?: string
     include?: string[]
     exclude?: string[]
     output?: string
     verbose?: boolean
+    rc?: boolean
   }) => {
+    const rc = opts.rc !== false ? loadRcConfig() : null
+
+    if (rc && opts.verbose) {
+      console.error('Using .archflowrc.json')
+    }
+
+    const merged = mergeWithRc(opts, rc)
+
     if (opts.verbose) {
-      console.error(`Analyzing ${opts.root}...`)
+      console.error(`Analyzing ${merged.root}...`)
     }
 
     try {
       const result = analyze({
-        rootDir: opts.root,
-        tsconfigPath: opts.tsconfig,
-        include: opts.include,
-        exclude: opts.exclude,
+        rootDir: merged.root,
+        tsconfigPath: merged.tsconfig,
+        include: merged.include,
+        exclude: merged.exclude,
         verbose: opts.verbose,
       })
 
       const json = JSON.stringify(result, null, 2)
 
-      if (opts.output) {
-        writeFileSync(opts.output, json, 'utf-8')
+      if (merged.output) {
+        writeFileSync(merged.output, json, 'utf-8')
         if (opts.verbose) {
           console.error(
-            `Done. ${result.metadata.nodeCount} nodes, ${result.metadata.edgeCount} edges → ${opts.output}`,
+            `Done. ${result.metadata.nodeCount} nodes, ${result.metadata.edgeCount} edges → ${merged.output}`,
           )
         }
       } else {

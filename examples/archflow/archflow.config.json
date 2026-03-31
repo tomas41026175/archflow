@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Archflow",
+    "description": "Interactive project architecture visualization tool",
+    "repository": "https://github.com/tomas41026175/archflow"
+  },
+  "layers": [
+    {
+      "id": "pages",
+      "label": "Pages",
+      "color": "#3B82F6",
+      "order": 0,
+      "modules": [
+        {
+          "id": "layer-view",
+          "name": "LayerViewPage",
+          "type": "page",
+          "description": "三層架構視圖 — 以分層容器 + 模組節點呈現專案架構",
+          "files": ["src/pages/LayerViewPage.tsx"],
+          "tags": ["view", "react-flow"],
+          "dependsOn": ["transforms", "canvas", "detail-panel"]
+        },
+        {
+          "id": "route-view",
+          "name": "RouteViewPage",
+          "type": "page",
+          "description": "路由視圖 — 樹狀結構呈現 routes 及 nested children",
+          "files": ["src/pages/RouteViewPage.tsx"],
+          "tags": ["view", "react-flow"],
+          "dependsOn": ["transforms", "canvas"]
+        },
+        {
+          "id": "state-flow-view",
+          "name": "StateFlowViewPage",
+          "type": "page",
+          "description": "狀態流動視圖 — stores 與 consumers 的資料流方向",
+          "files": ["src/pages/StateFlowViewPage.tsx"],
+          "tags": ["view", "react-flow"],
+          "dependsOn": ["transforms", "canvas"]
+        },
+        {
+          "id": "dependency-view",
+          "name": "DependencyViewPage",
+          "type": "page",
+          "description": "模組依賴視圖 — 讀取 Analyzer CLI 輸出的 JSON 並渲染依賴圖",
+          "files": ["src/pages/DependencyViewPage.tsx"],
+          "tags": ["view", "react-flow", "analyzer"],
+          "dependsOn": ["transforms", "canvas", "schema"]
+        }
+      ]
+    },
+    {
+      "id": "components",
+      "label": "Components",
+      "color": "#8B5CF6",
+      "order": 1,
+      "modules": [
+        {
+          "id": "canvas",
+          "name": "FlowCanvas",
+          "type": "component",
+          "description": "React Flow 畫布封裝 — 包含所有自訂節點註冊、邊高亮、Controls + MiniMap",
+          "files": ["src/components/canvas/FlowCanvas.tsx"],
+          "tags": ["react-flow", "core"]
+        },
+        {
+          "id": "custom-nodes",
+          "name": "Custom Nodes",
+          "type": "component",
+          "description": "8 種自訂節點：LayerGroup、Module、File、Route、RouteGroup、StateStore、StateConsumer",
+          "files": [
+            "src/components/nodes/LayerGroupNode.tsx",
+            "src/components/nodes/ModuleNode.tsx",
+            "src/components/nodes/FileNode.tsx",
+            "src/components/nodes/RouteNode.tsx",
+            "src/components/nodes/RouteGroupNode.tsx",
+            "src/components/nodes/StateStoreNode.tsx",
+            "src/components/nodes/StateConsumerNode.tsx"
+          ],
+          "tags": ["react-flow", "ui"]
+        },
+        {
+          "id": "detail-panel",
+          "name": "DetailPanel",
+          "type": "component",
+          "description": "右側詳細面板 — 顯示模組的 description、files、tags、endpoints，支援開啟檔案",
+          "files": ["src/components/panels/DetailPanel.tsx"],
+          "tags": ["ui", "file-system"],
+          "dependsOn": ["file-system-store"]
+        },
+        {
+          "id": "code-editor",
+          "name": "CodeEditor",
+          "type": "component",
+          "description": "內建程式碼編輯器 — CodeMirror 6 + 語法高亮 + CRUD",
+          "files": ["src/components/panels/CodeEditor.tsx"],
+          "tags": ["codemirror", "file-system"],
+          "dependsOn": ["file-system-store"]
+        },
+        {
+          "id": "panels",
+          "name": "Panels",
+          "type": "component",
+          "description": "ConfigDropZone（拖拉上傳）、ErrorBanner（驗證錯誤）、SearchPanel（Cmd+K）",
+          "files": [
+            "src/components/panels/ConfigDropZone.tsx",
+            "src/components/panels/ErrorBanner.tsx",
+            "src/components/panels/SearchPanel.tsx"
+          ],
+          "tags": ["ui"],
+          "dependsOn": ["hooks", "stores"]
+        },
+        {
+          "id": "sidebar",
+          "name": "Sidebar",
+          "type": "component",
+          "description": "左側導航 — 4 視圖切換 + Set Project Root 按鈕",
+          "files": ["src/components/layout/Sidebar.tsx"],
+          "tags": ["layout"],
+          "dependsOn": ["stores", "file-system-store"]
+        }
+      ]
+    },
+    {
+      "id": "logic",
+      "label": "Business Logic",
+      "color": "#10B981",
+      "order": 2,
+      "modules": [
+        {
+          "id": "transforms",
+          "name": "Transform Functions",
+          "type": "service",
+          "description": "純函式：config / analysis JSON → React Flow nodes + edges",
+          "files": [
+            "src/lib/transforms/configToLayerNodes.ts",
+            "src/lib/transforms/configToRouteNodes.ts",
+            "src/lib/transforms/configToStateNodes.ts",
+            "src/lib/transforms/analysisToDepNodes.ts"
+          ],
+          "tags": ["pure", "core"],
+          "dependsOn": ["schema", "layout"]
+        },
+        {
+          "id": "hooks",
+          "name": "Hooks",
+          "type": "hook",
+          "description": "useConfigLoader（Zod 驗證 + 載入）、useNodeSearch（搜尋）",
+          "files": [
+            "src/hooks/useConfigLoader.ts",
+            "src/hooks/useNodeSearch.ts"
+          ],
+          "tags": ["react"],
+          "dependsOn": ["schema", "stores"]
+        },
+        {
+          "id": "layout",
+          "name": "Layout Engine",
+          "type": "util",
+          "description": "dagre 佈局封裝 — 支援 TB / LR 方向的自動節點定位",
+          "files": ["src/lib/layout/dagre.ts"],
+          "tags": ["dagre", "algorithm"]
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "label": "Data Layer",
+      "color": "#F59E0B",
+      "order": 3,
+      "modules": [
+        {
+          "id": "stores",
+          "name": "Zustand Stores",
+          "type": "store",
+          "description": "useProjectStore（config + 視圖切換）、useCanvasStore（選中狀態）",
+          "files": [
+            "src/stores/useProjectStore.ts",
+            "src/stores/useCanvasStore.ts"
+          ],
+          "tags": ["zustand", "state"]
+        },
+        {
+          "id": "file-system-store",
+          "name": "File System Store",
+          "type": "store",
+          "description": "File System Access API 管理 — directory handle、檔案 CRUD、dirty 狀態",
+          "files": ["src/stores/useFileSystemStore.ts"],
+          "tags": ["zustand", "file-system"]
+        },
+        {
+          "id": "schema",
+          "name": "Zod Schemas",
+          "type": "config",
+          "description": "所有資料型別的唯一 SSOT — config schema + analysis schema",
+          "files": [
+            "src/lib/schema/config.ts",
+            "src/lib/schema/analysis.ts",
+            "src/lib/schema/index.ts"
+          ],
+          "tags": ["zod", "validation"]
+        }
+      ]
+    }
+  ],
+  "stateFlows": {
+    "library": "zustand",
+    "stores": [
+      {
+        "id": "project-store",
+        "name": "useProjectStore",
+        "file": "src/stores/useProjectStore.ts",
+        "atoms": ["config", "activeView", "error"]
+      },
+      {
+        "id": "canvas-store",
+        "name": "useCanvasStore",
+        "file": "src/stores/useCanvasStore.ts",
+        "atoms": ["selectedNodeId", "highlightedEdgeIds"]
+      },
+      {
+        "id": "fs-store",
+        "name": "useFileSystemStore",
+        "file": "src/stores/useFileSystemStore.ts",
+        "atoms": ["directoryHandle", "openFilePath", "openFileContent", "isDirty"]
+      }
+    ],
+    "flows": [
+      { "from": "project-store", "to": "layer-view", "direction": "read", "description": "讀取 config 轉換為 nodes" },
+      { "from": "project-store", "to": "sidebar", "direction": "read", "description": "讀取 activeView 控制導航高亮" },
+      { "from": "project-store", "to": "panels", "direction": "read-write", "description": "ConfigDropZone 寫入 config / ErrorBanner 讀取 error" },
+      { "from": "fs-store", "to": "code-editor", "direction": "read-write", "description": "讀取檔案內容、寫入編輯結果" },
+      { "from": "fs-store", "to": "detail-panel", "direction": "read", "description": "讀取 rootName 判斷檔案是否可開啟" },
+      { "from": "fs-store", "to": "sidebar", "direction": "read-write", "description": "顯示 rootName / 設定 directoryHandle" }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "analyzer": {
+    "root": "./packages/app/src",
+    "tsconfig": "./packages/app/tsconfig.app.json",
+    "output": "./examples/archflow/deps.json",
+    "exclude": ["__tests__", "__fixtures__", ".test.", ".spec.", "test-setup"]
+  },
+  "config": "./examples/archflow/archflow.config.json"
+}
