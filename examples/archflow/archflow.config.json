@@ -1973,48 +1973,5 @@
         ]
       }
     ]
-  },
-  "routes": {
-    "framework": "react-router",
-    "entries": [
-      {
-        "path": "/",
-        "name": "Home",
-        "description": "Config 拖入上傳頁"
-      },
-      {
-        "path": "/layers",
-        "name": "Architecture View",
-        "handler": "src/pages/LayerViewPage.tsx",
-        "tags": [
-          "view"
-        ]
-      },
-      {
-        "path": "/routes",
-        "name": "Routes View",
-        "handler": "src/pages/RouteViewPage.tsx",
-        "tags": [
-          "view"
-        ]
-      },
-      {
-        "path": "/state-flows",
-        "name": "State Flows View",
-        "handler": "src/pages/StateFlowViewPage.tsx",
-        "tags": [
-          "view"
-        ]
-      },
-      {
-        "path": "/dependencies",
-        "name": "Dependencies View",
-        "handler": "src/pages/DependencyViewPage.tsx",
-        "tags": [
-          "view",
-          "analyzer"
-        ]
-      }
-    ]
   }
 }
