@@ -1,86 +1,80 @@
 # Archflow — Handoff Document
 
-> 最後更新：2026-03-31 | Phase 1 + Phase 2 完成
+> 最後更新：2026-03-31 | Phase 1 + Phase 2 + UI/UX 優化 完成
 
 ## 當前狀態
 
-Phase 1 + 2 **全部完成**：4 個視圖 + Analyzer CLI + Cmd+K 搜尋。
+Phase 1 + 2 + UI/UX 優化 **全部完成**。
 
 已驗證：
 - `pnpm typecheck` — 全部通過
 - `pnpm test` — 47 個測試全部通過（41 app + 6 analyzer）
 - `pnpm dev` — localhost:5173 正常啟動
-- Analyzer CLI — `archflow analyze --root ./src` 正常產出 JSON
-- 4 個視圖全部可用（Architecture / Routes / State Flows / Dependencies）
+- `archflow embed` — 自動分析 + 嵌入 config
+- 4 個視圖全部可用 + localStorage 持久化
 
-## 已完成項目
+## 功能清單
 
-| 項目 | 狀態 | 關鍵檔案 |
-|------|------|---------|
-| pnpm workspace monorepo | Done | `pnpm-workspace.yaml`, root `package.json` |
-| Vite + React + TS 初始化 | Done | `packages/app/` |
-| Tailwind v4 + CSS variables | Done | `src/index.css` (使用 `@theme` 語法) |
-| Zod schema (config 型別定義) | Done | `src/lib/schema/config.ts` |
-| Zustand store | Done | `src/stores/useProjectStore.ts` |
-| Config 拖拉上傳 + 驗證 | Done | `src/hooks/useConfigLoader.ts`, `ConfigDropZone.tsx` |
-| 錯誤 toast | Done | `src/components/panels/ErrorBanner.tsx` |
-| React Flow 畫布 | Done | `src/components/canvas/FlowCanvas.tsx` |
-| LayerGroupNode | Done | `src/components/nodes/LayerGroupNode.tsx` |
-| ModuleNode | Done | `src/components/nodes/ModuleNode.tsx` |
-| configToLayerNodes transform | Done | `src/lib/transforms/configToLayerNodes.ts` |
-| dagre 佈局 | Done | `src/lib/layout/dagre.ts` |
-| DetailPanel | Done | `src/components/panels/DetailPanel.tsx` |
-| Sidebar (4 視圖導航) | Done | `src/components/layout/Sidebar.tsx` |
-| LayerViewPage | Done | `src/pages/LayerViewPage.tsx` |
-| 範例 config | Done | `examples/mayoform/archflow.config.json` |
-| analyzer package 骨架 | Done | `packages/analyzer/` (placeholder) |
+| 功能 | 說明 |
+|------|------|
+| Architecture 視圖 | 多層架構 + Legend + smoothstep 箭頭邊 + connections API 合約邊（紅色虛線） |
+| Routes 視圖 | 樹狀路由 + HTTP method badge + guard lock icon |
+| State Flows 視圖 | stores → consumers，邊色彩區分 read(藍)/write(橙)/read-write(紫) |
+| Dependencies 視圖 | 自動分析 import/export + 嵌入 config 或獨立拖入 |
+| File Editor | File System Access API + CodeMirror 6，支援 CRUD |
+| Cmd+K 搜尋 | 搜尋 modules/stores → 自動切視圖 + select 節點 |
+| localStorage | config + activeView 持久化，重新整理不遺失 |
+| .archflowrc.json | CLI 設定檔，零參數 `archflow embed` |
+| 範例一鍵載入 | 空狀態頁面「Load MAYOForm example」按鈕 |
+| Legend | Architecture 視圖右上角色塊圖例 |
 
-## 尚未完成（下一步）
+## CLI 命令
 
-### Phase 1b — DetailPanel 互動完善 (DONE)
-- [x] 節點選中時高亮 + 相關邊高亮（animated + color + opacity）
-- [x] Zod error 顯示具體欄位路徑 + 錯誤計數
-- [x] 27 個單元測試（Schema 18 + Transform 9）
+```bash
+archflow analyze --root ./src              # 分析 → stdout
+archflow analyze --root ./src -o deps.json # 分析 → 檔案
+archflow embed --verbose                   # 分析 + 嵌入 config（讀 .archflowrc.json）
+archflow embed --config ./path.json        # 指定 config 路徑
+```
 
-### Phase 1c — 靜態分析 + 依賴視圖 (DONE)
-- [x] Analyzer CLI 完整實作（ts-morph 解析 import/export + re-export）
-- [x] CLI 支援 --root / --tsconfig / --include / --exclude / -o / --verbose
-- [x] DependencyViewPage（獨立拖入 analysis JSON）
-- [x] FileNode 自訂節點（檔案類型圖示 + 色彩）
-- [x] 6 個 Analyzer fixture tests
+## Config Schema 摘要
 
-### Phase 2 — 路由 + 狀態 + 搜尋 (DONE)
-- [x] RouteViewPage + RouteNode + RouteGroupNode（dagre TB 佈局）
-- [x] StateFlowViewPage + StateStoreNode + StateConsumerNode（dagre LR 佈局 + 動畫邊）
-- [x] Cmd+K 搜尋面板（modules、stores、routes）
-- [x] 14 個新測試（Route 7 + State 7）
-- [x] 範例 config 加入 routes + stateFlows 完整資料
-
-### Phase 3 — 進階（下一步）
-- [ ] 多專案切換（localStorage + Sidebar dropdown）
-- [ ] 深色模式
-- [ ] PNG/SVG 匯出
-- [ ] 佈局持久化
-- [ ] VSCode 跳轉（`vscode://file/...` URI）
-- [ ] 層級/tags 篩選面板
-
-## 已知問題 & 注意事項
-
-1. **Zod v4**：專案安裝的是 Zod 4.3（非 v3），API 大致相容但若遇到型別推導問題，參考 [Zod v4 migration](https://zod.dev/v4)
-2. **dagre 佈局目前未在三層視圖中使用**：`configToLayerNodes.ts` 用手動計算位置（因為三層是固定橫向排列），dagre 工具保留給依賴視圖使用
-3. **Vitest 已安裝**：app 和 analyzer 均已設定，33 個測試全部通過
-4. **shadcn/ui 元件尚未安裝**：目前手寫 Tailwind CSS，shadcn CLI init 尚未執行。Phase 2 的 Command (Cmd+K) 需要 shadcn
-5. **Analyzer build 正常**：`pnpm --filter @archflow/analyzer build` 可產生 `dist/`
+```
+version: 1
+project: { name, description }
+layers[]: { id, label, color, order, modules[] }        → Architecture 視圖
+routes: { framework, entries[] }                         → Routes 視圖
+stateFlows: { library, stores[], flows[] }               → State Flows 視圖
+connections[]: { from, to, protocol, method, endpoint }  → Architecture 視圖（紅色 API 合約邊）
+analysis: { nodes[], edges[] }                           → Dependencies 視圖（archflow embed 自動產生）
+```
 
 ## 架構決策記錄
 
-| 決策 | 選擇 | 原因 | 替代方案 |
-|------|------|------|---------|
-| layers 結構 | 陣列（非固定 3 key） | 通用性：支援 2-N 層自訂 | 原 plan 為 `presentation/businessLogic/dataAccess` 三 key |
-| dagre fork | @dagrejs/dagre v3 | 原 dagre 已 archived (2018) | elkjs（更強但 API 複雜） |
-| Zod 版本 | v4 (pnpm 解析到 4.3) | 最新穩定版 | 可 pin 回 v3 若有相容問題 |
-| Schema SSOT | Zod → JSON Schema 自動生成 | 避免手動維護兩份 schema | 手動寫 JSON Schema |
-| 字體 | @fontsource self-hosted | 離線可用 | Google Fonts CDN |
+| 決策 | 選擇 | 原因 |
+|------|------|------|
+| layers | 陣列（非固定 key） | 支援 2-N 層自訂 |
+| connections | 獨立 section（非 dependsOn） | 語意區分同系統依賴 vs 跨系統 API |
+| dagre | @dagrejs/dagre v3（社群 fork） | 原 dagre archived。Fallback: elkjs |
+| 持久化 | localStorage（非 IndexedDB） | config JSON 大小可控 |
+| 檔案查看 | File System Access API + readwrite | 支援 CRUD，不需 backend |
+| 節點 registry | nodes/registry.ts 集中註冊 | FlowCanvas 不直接 import 節點 |
+| 頁面載入 | React.lazy + Suspense | 減少 App.tsx 依賴 |
+
+## 尚未完成（Phase 3）
+
+- [ ] 深色模式（CSS variables 已預留）
+- [ ] PNG/SVG 匯出
+- [ ] 佈局持久化（拖拉後的節點位置存 localStorage）
+- [ ] 層級/tags 篩選面板
+- [ ] 多專案切換（Sidebar dropdown）
+- [ ] AI 輔助生成 config 的 prompt template
+
+## 已知問題
+
+1. **Zod v4**：API 大致與 v3 相容，若遇型別推導問題參考 zod.dev/v4
+2. **shadcn/ui 尚未安裝**：目前手寫 Tailwind CSS，需要 Dialog/Sheet 元件時再 init
+3. **檔案查看路徑搜尋**：遞迴最多 3 層子目錄，超深巢狀可能找不到
 
 ## 快速上手
 
@@ -89,5 +83,5 @@ cd ~/work/archflow
 pnpm install
 pnpm dev
 # 開啟 http://localhost:5173
-# 拖入 examples/mayoform/archflow.config.json 測試
+# 點「Load MAYOForm example」或拖入 examples/archflow/archflow.config.json
 ```
