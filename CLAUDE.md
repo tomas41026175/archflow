@@ -114,5 +114,5 @@ The tool reads `archflow.config.json` files. Schema reference:
 - [x] Phase 1a — Core skeleton: config → layer architecture view
 - [x] Phase 1b — DetailPanel interaction + error UX + 27 unit tests
 - [x] Phase 1c — CLI static analysis (ts-morph) + dependency view + 6 analyzer tests
-- [ ] Phase 2 — Routes + state flows + search + VSCode jump
+- [x] Phase 2 — Routes + state flows + Cmd+K search (47 tests total)
 - [ ] Phase 3 — Multi-project, dark mode, export, AI config generation
