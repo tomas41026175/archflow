@@ -3,6 +3,7 @@ import path from 'node:path'
 import type {
   AnalyzerConfig,
   AnalysisResult,
+  CircularDependency,
   DependencyNode,
   DependencyEdge,
   ExportInfo,
@@ -234,6 +235,7 @@ export function analyze(config: AnalyzerConfig): AnalysisResult {
   }
 
   const nodes = [...nodesMap.values()]
+  const circular = detectCircularDependencies(edges)
 
   return {
     metadata: {
@@ -242,8 +244,73 @@ export function analyze(config: AnalyzerConfig): AnalysisResult {
       fileCount: sourceFiles.length,
       nodeCount: nodes.length,
       edgeCount: edges.length,
+      circularCount: circular.length,
     },
     nodes,
     edges,
+    circular,
   }
+}
+
+/** Detect circular dependencies using DFS cycle detection */
+function detectCircularDependencies(edges: DependencyEdge[]): CircularDependency[] {
+  // Build adjacency list
+  const graph = new Map<string, string[]>()
+  for (const edge of edges) {
+    const targets = graph.get(edge.source) ?? []
+    targets.push(edge.target)
+    graph.set(edge.source, targets)
+  }
+
+  const cycles: CircularDependency[] = []
+  const visited = new Set<string>()
+  const inStack = new Set<string>()
+  const seenCycles = new Set<string>()
+
+  function dfs(node: string, path: string[]): void {
+    if (inStack.has(node)) {
+      // Found a cycle — extract it
+      const cycleStart = path.indexOf(node)
+      if (cycleStart >= 0) {
+        const cycle = path.slice(cycleStart)
+        // Normalize: start from the lexically smallest node to dedupe
+        const minIdx = cycle.indexOf(
+          cycle.reduce((min, id) => (id < min ? id : min), cycle[0]),
+        )
+        const normalized = [...cycle.slice(minIdx), ...cycle.slice(0, minIdx)]
+        const key = normalized.join(' → ')
+
+        if (!seenCycles.has(key)) {
+          seenCycles.add(key)
+          const short = normalized.map((f) => f.split('/').pop()?.replace(/\.\w+$/, ''))
+          cycles.push({
+            cycle: normalized,
+            description: `無法互為來源：${short.join(' ⇄ ')} 存在互相計算的衝突`,
+          })
+        }
+      }
+      return
+    }
+
+    if (visited.has(node)) return
+
+    inStack.add(node)
+    path.push(node)
+
+    for (const neighbor of graph.get(node) ?? []) {
+      dfs(neighbor, path)
+    }
+
+    path.pop()
+    inStack.delete(node)
+    visited.add(node)
+  }
+
+  for (const node of graph.keys()) {
+    if (!visited.has(node)) {
+      dfs(node, [])
+    }
+  }
+
+  return cycles
 }
