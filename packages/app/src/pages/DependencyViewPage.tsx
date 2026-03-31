@@ -3,6 +3,7 @@ import { Upload } from 'lucide-react'
 import { analysisResultSchema, type AnalysisResult } from '../lib/schema'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
+import { FileDetailPanel } from '../components/panels/FileDetailPanel'
 import { useProjectStore } from '../stores/useProjectStore'
 import { cn } from '../lib/utils'
 
@@ -15,7 +16,7 @@ export default function DependencyViewPage() {
 
   // Auto-load from config.analysis if embedded
   useEffect(() => {
-    if (analysis) return // already loaded from drop
+    if (analysis) return
     if (!config?.analysis) return
 
     const result = analysisResultSchema.safeParse(config.analysis)
@@ -28,6 +29,17 @@ export default function DependencyViewPage() {
     if (!analysis) return { nodes: [], edges: [] }
     return analysisToDepNodes(analysis)
   }, [analysis])
+
+  // Find selected node + its edges from the raw analysis data
+  const selectedDetail = useMemo(() => {
+    if (!selectedNodeId || !analysis) return null
+    const node = analysis.nodes.find((n) => n.id === selectedNodeId)
+    if (!node) return null
+
+    const incomingEdges = analysis.edges.filter((e) => e.target === selectedNodeId)
+    const outgoingEdges = analysis.edges.filter((e) => e.source === selectedNodeId)
+    return { node, incomingEdges, outgoingEdges }
+  }, [selectedNodeId, analysis])
 
   const loadAnalysis = useCallback((jsonString: string) => {
     try {
@@ -111,6 +123,14 @@ export default function DependencyViewPage() {
         onNodeClick={(id) => setSelectedNodeId((prev) => prev === id ? null : id)}
         onPaneClick={() => setSelectedNodeId(null)}
       />
+      {selectedDetail && (
+        <FileDetailPanel
+          node={selectedDetail.node}
+          incomingEdges={selectedDetail.incomingEdges}
+          outgoingEdges={selectedDetail.outgoingEdges}
+          onClose={() => setSelectedNodeId(null)}
+        />
+      )}
     </div>
   )
 }

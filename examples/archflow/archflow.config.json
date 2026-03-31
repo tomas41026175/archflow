@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T02:00:33.639Z",
+      "analyzedAt": "2026-03-31T02:31:43.571Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
-      "fileCount": 42,
-      "nodeCount": 37,
-      "edgeCount": 77
+      "fileCount": 43,
+      "nodeCount": 38,
+      "edgeCount": 80
     },
     "nodes": [
       {
@@ -707,6 +707,18 @@
         "exports": [
           {
             "name": "ErrorBanner",
+            "kind": "function"
+          }
+        ]
+      },
+      {
+        "id": "components/panels/FileDetailPanel.tsx",
+        "label": "FileDetailPanel",
+        "filePath": "components/panels/FileDetailPanel.tsx",
+        "type": "unknown",
+        "exports": [
+          {
+            "name": "FileDetailPanel",
             "kind": "function"
           }
         ]
@@ -1238,6 +1250,16 @@
       },
       {
         "source": "pages/DependencyViewPage.tsx",
+        "target": "components/panels/FileDetailPanel.tsx",
+        "imports": [
+          {
+            "name": "FileDetailPanel",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/DependencyViewPage.tsx",
         "target": "stores/useProjectStore.ts",
         "imports": [
           {
@@ -1722,6 +1744,30 @@
         "imports": [
           {
             "name": "useProjectStore",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "components/panels/FileDetailPanel.tsx",
+        "target": "lib/schema/index.ts",
+        "imports": [
+          {
+            "name": "AnalysisDependencyNode",
+            "isTypeOnly": true
+          },
+          {
+            "name": "AnalysisDependencyEdge",
+            "isTypeOnly": true
+          }
+        ]
+      },
+      {
+        "source": "components/panels/FileDetailPanel.tsx",
+        "target": "stores/useFileSystemStore.ts",
+        "imports": [
+          {
+            "name": "useFileSystemStore",
             "isTypeOnly": false
           }
         ]

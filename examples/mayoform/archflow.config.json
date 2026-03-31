@@ -1,8 +1,8 @@
 {
   "version": 1,
   "project": {
-    "name": "MAYOForm-Web",
-    "description": "MAYOForm 表單管理系統前端",
+    "name": "MAYOForm System",
+    "description": "MAYOForm 表單管理系統（前端 + 後端）",
     "repository": "https://mayohr.visualstudio.com/MAYO-Form/_git/MAYOForm-Web"
   },
   "layers": [
@@ -113,6 +113,94 @@
           "tags": ["jotai", "state"]
         }
       ]
+    },
+    {
+      "id": "be-api",
+      "label": "Backend API (.NET 8)",
+      "color": "#EF4444",
+      "order": 3,
+      "modules": [
+        {
+          "id": "be-form-controller",
+          "name": "FormController",
+          "type": "api",
+          "description": "表單 CRUD API — 建立、查詢、更新表單",
+          "tags": ["asp.net", "controller"],
+          "endpoints": ["POST /api/form", "GET /api/form/:id", "PUT /api/form/:id"]
+        },
+        {
+          "id": "be-flow-controller",
+          "name": "FlowActionController",
+          "type": "api",
+          "description": "簽核流程 API — 審核、退回、加簽、會簽",
+          "tags": ["asp.net", "controller"],
+          "endpoints": ["POST /api/flowAction"]
+        },
+        {
+          "id": "be-auth",
+          "name": "AuthMiddleware",
+          "type": "service",
+          "description": "JWT 驗證 + 權限檢查中間件",
+          "tags": ["security", "middleware"]
+        }
+      ]
+    },
+    {
+      "id": "be-domain",
+      "label": "Backend Domain (Clean Architecture)",
+      "color": "#EC4899",
+      "order": 4,
+      "modules": [
+        {
+          "id": "be-form-handler",
+          "name": "FormCommandHandler",
+          "type": "service",
+          "description": "MediatR CQRS — CreateFormCommand, UpdateFormCommand, GetFormQuery",
+          "tags": ["mediatr", "cqrs"],
+          "dependsOn": ["be-form-repo"]
+        },
+        {
+          "id": "be-flow-handler",
+          "name": "FlowActionHandler",
+          "type": "service",
+          "description": "MediatR CQRS — 簽核流程動作處理",
+          "tags": ["mediatr", "cqrs"],
+          "dependsOn": ["be-form-repo"]
+        },
+        {
+          "id": "be-form-repo",
+          "name": "FormRepository",
+          "type": "store",
+          "description": "Entity Framework Core — 表單資料存取層",
+          "tags": ["ef-core", "sql-server"]
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "api-layer",
+      "to": "be-form-controller",
+      "protocol": "REST",
+      "method": "POST",
+      "endpoint": "/api/form",
+      "description": "前端送出表單到後端"
+    },
+    {
+      "from": "api-layer",
+      "to": "be-form-controller",
+      "protocol": "REST",
+      "method": "GET",
+      "endpoint": "/api/form/:id",
+      "description": "前端查詢表單資料"
+    },
+    {
+      "from": "api-layer",
+      "to": "be-flow-controller",
+      "protocol": "REST",
+      "method": "POST",
+      "endpoint": "/api/flowAction",
+      "description": "前端觸發簽核動作"
     }
   ],
   "routes": {
