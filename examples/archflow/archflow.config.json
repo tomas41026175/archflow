@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T02:38:28.597Z",
+      "analyzedAt": "2026-03-31T04:05:12.438Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
       "fileCount": 43,
       "nodeCount": 38,
-      "edgeCount": 80
+      "edgeCount": 81
     },
     "nodes": [
       {
@@ -1219,6 +1219,10 @@
         "target": "lib/schema/index.ts",
         "imports": [
           {
+            "name": "archflowConfigSchema",
+            "isTypeOnly": false
+          },
+          {
             "name": "analysisResultSchema",
             "isTypeOnly": false
           },
@@ -1444,6 +1448,16 @@
         "imports": [
           {
             "name": "useFileSystemStore",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "components/layout/Sidebar.tsx",
+        "target": "hooks/useConfigLoader.ts",
+        "imports": [
+          {
+            "name": "useConfigLoader",
             "isTypeOnly": false
           }
         ]
