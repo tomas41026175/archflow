@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type DragEvent } from 'react'
 import { Upload, RefreshCw } from 'lucide-react'
-import { analysisResultSchema, type AnalysisResult } from '../lib/schema'
+import { archflowConfigSchema, analysisResultSchema, type AnalysisResult } from '../lib/schema'
 import { analysisToDepNodes } from '../lib/transforms/analysisToDepNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
 import { FileDetailPanel } from '../components/panels/FileDetailPanel'
@@ -67,6 +67,8 @@ export default function DependencyViewPage() {
     setSelectedNodeId(null)
   }, [])
 
+  const loadConfig = useProjectStore((s) => s.loadConfig)
+
   const loadAnalysis = useCallback((jsonString: string, fileName: string) => {
     try {
       const raw = JSON.parse(jsonString) as Record<string, unknown>
@@ -80,23 +82,20 @@ export default function DependencyViewPage() {
         return
       }
 
-      // Try 2: archflow.config.json with embedded analysis
-      if (raw['analysis']) {
-        const embeddedResult = analysisResultSchema.safeParse(raw['analysis'])
-        if (embeddedResult.success) {
-          const label = (raw['project'] as { name?: string } | undefined)?.name
-            ?? fileName.replace(/\.json$/, '')
-          addAnalysis(label, embeddedResult.data)
-          setError(null)
-          return
-        }
+      // Try 2: full archflow.config.json — load entire config + extract analysis
+      const configResult = archflowConfigSchema.safeParse(raw)
+      if (configResult.success) {
+        loadConfig(configResult.data)
+        // analysis will be loaded via the useEffect on configVersion
+        setError(null)
+        return
       }
 
-      setError('No valid analysis data found. Drop an analysis JSON or a config with embedded analysis.')
+      setError('No valid analysis data found. Drop an analysis JSON or archflow.config.json.')
     } catch {
       setError('Invalid JSON file')
     }
-  }, [addAnalysis])
+  }, [addAnalysis, loadConfig])
 
   const handleDrop = useCallback(
     (e: DragEvent) => {
