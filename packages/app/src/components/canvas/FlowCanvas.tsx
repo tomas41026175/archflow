@@ -5,6 +5,7 @@ import {
   MiniMap,
   Background,
   BackgroundVariant,
+  Panel,
   type Node,
   type Edge,
 } from '@xyflow/react'
@@ -21,7 +22,6 @@ interface FlowCanvasProps {
   onPaneClick?: () => void
 }
 
-/** Apply highlight styles to edges connected to the selected node */
 function applyEdgeHighlight(
   edges: Edge[],
   selectedNodeId: string | null,
@@ -44,7 +44,6 @@ function applyEdgeHighlight(
   })
 }
 
-/** Apply selected state to nodes */
 function applyNodeSelection(
   nodes: Node[],
   selectedNodeId: string | null,
@@ -97,8 +96,12 @@ export function FlowCanvas({
       onMoveStart={() => setHasDragged(true)}
       fitView
       fitViewOptions={{ padding: 0.2 }}
-      minZoom={0.1}
-      maxZoom={2}
+      minZoom={0.05}
+      maxZoom={3}
+      panOnScroll
+      selectionOnDrag
+      panOnDrag={[1, 2]}
+      nodeDragThreshold={3}
       proOptions={{ hideAttribution: true }}
     >
       <Controls position="bottom-right" />
@@ -111,6 +114,11 @@ export function FlowCanvas({
         />
       )}
       <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
+      <Panel position="bottom-center">
+        <div className="rounded-md bg-card/70 px-3 py-1 text-[10px] text-muted-foreground/60 backdrop-blur-sm">
+          Scroll to zoom · Middle/Right click to pan · Left click to drag nodes
+        </div>
+      </Panel>
     </ReactFlow>
   )
 }
