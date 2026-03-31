@@ -72,7 +72,23 @@ export function DependencyViewPage() {
           <div className="text-center">
             <p className="text-sm font-medium">Drop analysis JSON here</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Or embed &quot;analysis&quot; in archflow.config.json
+              or{' '}
+              <button
+                type="button"
+                className="text-primary underline underline-offset-2 hover:text-primary/80"
+                onClick={() => {
+                  const input = document.createElement('input')
+                  input.type = 'file'
+                  input.accept = '.json'
+                  input.onchange = () => {
+                    const file = input.files?.[0]
+                    if (file) file.text().then(loadAnalysis)
+                  }
+                  input.click()
+                }}
+              >
+                browse files
+              </button>
             </p>
           </div>
           {error && (
