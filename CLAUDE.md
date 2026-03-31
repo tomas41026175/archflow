@@ -67,9 +67,18 @@ pnpm test:coverage              # Tests with coverage report
 
 ### Architecture Patterns
 - **Transform functions** (`lib/transforms/`): pure functions, config → nodes/edges
-- **Zustand stores**: project (config + view), canvas (nodes state), filter
+- **Zustand stores**: project (config + view), fileSystem (CRUD). No unused stores — delete immediately if not referenced
 - **Custom nodes**: extend `NodeProps` from @xyflow/react, use `cn()` for class merging
+- **Node types registry** (`nodes/registry.ts`): all node type registrations in one place, FlowCanvas imports registry only
+- **Lazy loading**: pages use `React.lazy` + `Suspense`, App.tsx should not directly import page components
 - **Schema as SSOT**: Zod schemas define all data shapes, JSON Schema auto-generated
+
+### Dependency Hygiene
+- Run `archflow embed --verbose` after structural changes to update self-analysis
+- `types/` must not contain unused interfaces — grep before committing
+- New custom node → add to `nodes/registry.ts`, not FlowCanvas
+- New page → add as `lazy(() => import(...))` in App.tsx, export as `default`
+- Config/example data must reflect real project state — never fabricate data to fill empty views
 
 ### Testing
 - Vitest for unit + component tests

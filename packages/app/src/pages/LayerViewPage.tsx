@@ -4,7 +4,7 @@ import { configToLayerNodes } from '../lib/transforms/configToLayerNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
 import { DetailPanel } from '../components/panels/DetailPanel'
 
-export function LayerViewPage() {
+export default function LayerViewPage() {
   const config = useProjectStore((s) => s.config)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
 

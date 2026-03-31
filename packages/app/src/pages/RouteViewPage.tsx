@@ -3,7 +3,7 @@ import { useProjectStore } from '../stores/useProjectStore'
 import { configToRouteNodes } from '../lib/transforms/configToRouteNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
 
-export function RouteViewPage() {
+export default function RouteViewPage() {
   const config = useProjectStore((s) => s.config)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
 

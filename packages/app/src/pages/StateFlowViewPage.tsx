@@ -3,7 +3,7 @@ import { useProjectStore } from '../stores/useProjectStore'
 import { configToStateNodes } from '../lib/transforms/configToStateNodes'
 import { FlowCanvas } from '../components/canvas/FlowCanvas'
 
-export function StateFlowViewPage() {
+export default function StateFlowViewPage() {
   const config = useProjectStore((s) => s.config)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
 

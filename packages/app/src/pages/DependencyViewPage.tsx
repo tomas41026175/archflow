@@ -6,7 +6,7 @@ import { FlowCanvas } from '../components/canvas/FlowCanvas'
 import { useProjectStore } from '../stores/useProjectStore'
 import { cn } from '../lib/utils'
 
-export function DependencyViewPage() {
+export default function DependencyViewPage() {
   const config = useProjectStore((s) => s.config)
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)

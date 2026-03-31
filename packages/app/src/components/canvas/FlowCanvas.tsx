@@ -7,17 +7,10 @@ import {
   BackgroundVariant,
   type Node,
   type Edge,
-  type NodeTypes,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
-import { LayerGroupNode } from '../nodes/LayerGroupNode'
-import { ModuleNode } from '../nodes/ModuleNode'
-import { FileNode } from '../nodes/FileNode'
-import { RouteNode } from '../nodes/RouteNode'
-import { RouteGroupNode } from '../nodes/RouteGroupNode'
-import { StateStoreNode } from '../nodes/StateStoreNode'
-import { StateConsumerNode } from '../nodes/StateConsumerNode'
+import { nodeTypes } from '../nodes/registry'
 
 interface FlowCanvasProps {
   nodes: Node[]
@@ -70,19 +63,6 @@ export function FlowCanvas({
   onNodeClick,
   onPaneClick,
 }: FlowCanvasProps) {
-  const nodeTypes: NodeTypes = useMemo(
-    () => ({
-      layerGroup: LayerGroupNode,
-      module: ModuleNode,
-      file: FileNode,
-      route: RouteNode,
-      routeGroup: RouteGroupNode,
-      stateStore: StateStoreNode,
-      stateConsumer: StateConsumerNode,
-    }),
-    [],
-  )
-
   const styledEdges = useMemo(
     () => applyEdgeHighlight(edges, selectedNodeId),
     [edges, selectedNodeId],
