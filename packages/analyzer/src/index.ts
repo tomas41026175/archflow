@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { analyze } from './analyzer.js'
 import { loadRcConfig, mergeWithRc } from './rc.js'
 
@@ -67,6 +67,57 @@ program
     } catch (err) {
       console.error(
         'Analysis failed:',
+        err instanceof Error ? err.message : String(err),
+      )
+      process.exit(1)
+    }
+  })
+
+program
+  .command('embed')
+  .description('Run analysis and embed result into archflow.config.json')
+  .option('--config <path>', 'Path to archflow.config.json')
+  .option('--verbose', 'Show progress information')
+  .action((opts: { config?: string; verbose?: boolean }) => {
+    const rc = loadRcConfig()
+    const configPath = opts.config ?? rc?.config
+
+    if (!configPath) {
+      console.error('No config path. Specify --config or set "config" in .archflowrc.json')
+      process.exit(1)
+    }
+
+    const merged = mergeWithRc({}, rc)
+
+    if (opts.verbose) {
+      console.error(`Analyzing ${merged.root}...`)
+    }
+
+    try {
+      const result = analyze({
+        rootDir: merged.root,
+        tsconfigPath: merged.tsconfig,
+        include: merged.include,
+        exclude: merged.exclude,
+        verbose: opts.verbose,
+      })
+
+      const configContent = readFileSync(configPath, 'utf-8')
+      const config = JSON.parse(configContent) as Record<string, unknown>
+      config['analysis'] = result
+
+      writeFileSync(configPath, JSON.stringify(config, null, 2) + '\n', 'utf-8')
+
+      if (opts.verbose) {
+        console.error(
+          `Embedded ${result.metadata.nodeCount} nodes, ${result.metadata.edgeCount} edges → ${configPath}`,
+        )
+      } else {
+        console.error(`Done → ${configPath}`)
+      }
+    } catch (err) {
+      console.error(
+        'Embed failed:',
         err instanceof Error ? err.message : String(err),
       )
       process.exit(1)

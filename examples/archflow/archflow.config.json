@@ -366,11 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T01:15:30.396Z",
+      "analyzedAt": "2026-03-31T01:34:10.365Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
-      "fileCount": 41,
-      "nodeCount": 36,
-      "edgeCount": 78
+      "fileCount": 40,
+      "nodeCount": 35,
+      "edgeCount": 79
     },
     "nodes": [
       {
@@ -477,18 +477,6 @@
           {
             "name": "StateFlowViewPage",
             "kind": "function"
-          }
-        ]
-      },
-      {
-        "id": "stores/useCanvasStore.ts",
-        "label": "useCanvasStore",
-        "filePath": "stores/useCanvasStore.ts",
-        "type": "unknown",
-        "exports": [
-          {
-            "name": "useCanvasStore",
-            "kind": "variable"
           }
         ]
       },
@@ -1248,6 +1236,16 @@
         "imports": [
           {
             "name": "FlowCanvas",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "pages/DependencyViewPage.tsx",
+        "target": "stores/useProjectStore.ts",
+        "imports": [
+          {
+            "name": "useProjectStore",
             "isTypeOnly": false
           }
         ]
