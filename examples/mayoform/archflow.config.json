@@ -1,357 +1,1415 @@
 {
   "version": 1,
   "project": {
-    "name": "MAYOForm System",
-    "description": "MAYOForm 表單管理系統（前端 + 後端）",
-    "repository": "https://mayohr.visualstudio.com/MAYO-Form/_git/MAYOForm-Web"
+    "name": "form-frontend",
+    "description": "Architecture of form-frontend"
   },
   "layers": [
     {
       "id": "presentation",
-      "label": "Presentation Layer",
+      "label": "Presentation",
       "color": "#3B82F6",
       "order": 0,
       "modules": [
         {
-          "id": "designer-pages",
-          "name": "Designer Pages",
+          "id": "app-[lng]",
+          "name": "[lng]",
           "type": "page",
-          "description": "表單設計器頁面群組（流程設計、欄位設計、預覽）",
+          "description": "Presentation — [lng]",
           "files": [
-            "src/app/[lng]/[appCode]/(interface)/designer/**"
+            "src/app/[lng]/**"
           ],
           "tags": [
-            "react-flow",
-            "designer"
-          ],
-          "dependsOn": [
-            "designer-hooks",
-            "form-components"
+            "page"
           ]
         },
         {
-          "id": "form-pages",
-          "name": "Form Pages",
+          "id": "app-api",
+          "name": "api",
           "type": "page",
-          "description": "表單填寫 / 審核 / 查閱頁面",
+          "description": "Presentation — api",
           "files": [
-            "src/app/[lng]/[appCode]/(interface)/form/**"
+            "src/app/api/**"
           ],
           "tags": [
-            "form",
-            "approval"
-          ],
-          "dependsOn": [
-            "form-hooks",
-            "form-components"
+            "page"
           ]
         },
         {
-          "id": "form-components",
-          "name": "Form Components",
+          "id": "app-i18n",
+          "name": "i18n",
+          "type": "page",
+          "description": "Presentation — i18n",
+          "files": [
+            "src/app/i18n/**"
+          ],
+          "tags": [
+            "page"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-components",
+      "label": "UI Components",
+      "color": "#8B5CF6",
+      "order": 1,
+      "modules": [
+        {
+          "id": "components-Action",
+          "name": "Action",
           "type": "component",
-          "description": "共用表單元件（輸入欄位、計算控件、Grid 等）",
+          "description": "UI Components — Action",
           "files": [
-            "src/components/form/**"
+            "src/components/Action/**"
           ],
           "tags": [
-            "shared",
-            "ui"
+            "component"
+          ]
+        },
+        {
+          "id": "components-Auth",
+          "name": "Auth",
+          "type": "component",
+          "description": "UI Components — Auth",
+          "files": [
+            "src/components/Auth/**"
           ],
-          "dependsOn": [
-            "form-atoms"
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-ConditionBuilder",
+          "name": "ConditionBuilder",
+          "type": "component",
+          "description": "UI Components — ConditionBuilder",
+          "files": [
+            "src/components/ConditionBuilder/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-DescriptionArea",
+          "name": "DescriptionArea",
+          "type": "component",
+          "description": "UI Components — DescriptionArea",
+          "files": [
+            "src/components/DescriptionArea/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Designs",
+          "name": "Designs",
+          "type": "component",
+          "description": "UI Components — Designs",
+          "files": [
+            "src/components/Designs/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-DevTools",
+          "name": "DevTools",
+          "type": "component",
+          "description": "UI Components — DevTools",
+          "files": [
+            "src/components/DevTools/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-EmployeeAndUnitAttributeConditionBuilder",
+          "name": "EmployeeAndUnitAttributeConditionBuilder",
+          "type": "component",
+          "description": "UI Components — EmployeeAndUnitAttributeConditionBuilder",
+          "files": [
+            "src/components/EmployeeAndUnitAttributeConditionBuilder/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-ErrorHandle",
+          "name": "ErrorHandle",
+          "type": "component",
+          "description": "UI Components — ErrorHandle",
+          "files": [
+            "src/components/ErrorHandle/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-FocusLock",
+          "name": "FocusLock",
+          "type": "component",
+          "description": "UI Components — FocusLock",
+          "files": [
+            "src/components/FocusLock/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Form",
+          "name": "Form",
+          "type": "component",
+          "description": "UI Components — Form",
+          "files": [
+            "src/components/Form/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-FormCard",
+          "name": "FormCard",
+          "type": "component",
+          "description": "UI Components — FormCard",
+          "files": [
+            "src/components/FormCard/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-FormPage",
+          "name": "FormPage",
+          "type": "component",
+          "description": "UI Components — FormPage",
+          "files": [
+            "src/components/FormPage/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-JoyRide",
+          "name": "JoyRide",
+          "type": "component",
+          "description": "UI Components — JoyRide",
+          "files": [
+            "src/components/JoyRide/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Modals",
+          "name": "Modals",
+          "type": "component",
+          "description": "UI Components — Modals",
+          "files": [
+            "src/components/Modals/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-ProgressBarProvider",
+          "name": "ProgressBarProvider",
+          "type": "component",
+          "description": "UI Components — ProgressBarProvider",
+          "files": [
+            "src/components/ProgressBarProvider/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-RouterListener",
+          "name": "RouterListener",
+          "type": "component",
+          "description": "UI Components — RouterListener",
+          "files": [
+            "src/components/RouterListener/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Skeletons",
+          "name": "Skeletons",
+          "type": "component",
+          "description": "UI Components — Skeletons",
+          "files": [
+            "src/components/Skeletons/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-SystemInfo",
+          "name": "SystemInfo",
+          "type": "component",
+          "description": "UI Components — SystemInfo",
+          "files": [
+            "src/components/SystemInfo/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Tag",
+          "name": "Tag",
+          "type": "component",
+          "description": "UI Components — Tag",
+          "files": [
+            "src/components/Tag/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Titles",
+          "name": "Titles",
+          "type": "component",
+          "description": "UI Components — Titles",
+          "files": [
+            "src/components/Titles/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-Trace",
+          "name": "Trace",
+          "type": "component",
+          "description": "UI Components — Trace",
+          "files": [
+            "src/components/Trace/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-common",
+          "name": "common",
+          "type": "component",
+          "description": "UI Components — common",
+          "files": [
+            "src/components/common/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-composite",
+          "name": "composite",
+          "type": "component",
+          "description": "UI Components — composite",
+          "files": [
+            "src/components/composite/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-tables",
+          "name": "tables",
+          "type": "component",
+          "description": "UI Components — tables",
+          "files": [
+            "src/components/tables/**"
+          ],
+          "tags": [
+            "component"
+          ]
+        },
+        {
+          "id": "components-ui",
+          "name": "ui",
+          "type": "component",
+          "description": "UI Components — ui",
+          "files": [
+            "src/components/ui/**"
+          ],
+          "tags": [
+            "component"
           ]
         }
       ]
     },
     {
       "id": "business-logic",
-      "label": "Business Logic Layer",
+      "label": "Business Logic",
       "color": "#10B981",
-      "order": 1,
+      "order": 2,
       "modules": [
         {
-          "id": "designer-hooks",
-          "name": "Designer Hooks",
+          "id": "hooks-TimeZone",
+          "name": "TimeZone",
           "type": "hook",
-          "description": "表單設計器業務邏輯（圖形流程、節點操作、公式編輯）",
+          "description": "Business Logic — TimeZone",
           "files": [
-            "src/app/[lng]/[appCode]/(interface)/designer/hooks/**"
+            "src/hooks/TimeZone/**"
           ],
           "tags": [
-            "react-flow",
-            "designer"
-          ],
-          "dependsOn": [
-            "designer-atoms",
-            "api-layer"
+            "hook"
           ]
         },
         {
-          "id": "form-hooks",
-          "name": "Form Hooks",
+          "id": "hooks-api",
+          "name": "api",
           "type": "hook",
-          "description": "表單填寫業務邏輯（驗證、計算、聯動）",
+          "description": "Business Logic — api",
           "files": [
-            "src/hooks/form/**"
+            "src/hooks/api/**"
           ],
           "tags": [
-            "form",
-            "validation"
-          ],
-          "dependsOn": [
-            "form-atoms",
-            "api-layer"
+            "hook"
           ]
         },
         {
-          "id": "flow-action-logic",
-          "name": "Flow Action Logic",
-          "type": "service",
-          "description": "簽核流程動作邏輯（審核、退回、加簽、會簽）",
+          "id": "hooks-dataSource",
+          "name": "dataSource",
+          "type": "hook",
+          "description": "Business Logic — dataSource",
+          "files": [
+            "src/hooks/dataSource/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-devTool",
+          "name": "devTool",
+          "type": "hook",
+          "description": "Business Logic — devTool",
+          "files": [
+            "src/hooks/devTool/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-file",
+          "name": "file",
+          "type": "hook",
+          "description": "Business Logic — file",
+          "files": [
+            "src/hooks/file/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-flowAction",
+          "name": "flowAction",
+          "type": "hook",
+          "description": "Business Logic — flowAction",
           "files": [
             "src/hooks/flowAction/**"
           ],
           "tags": [
-            "approval",
-            "workflow"
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-form",
+          "name": "form",
+          "type": "hook",
+          "description": "Business Logic — form",
+          "files": [
+            "src/hooks/form/**"
           ],
-          "dependsOn": [
-            "api-layer"
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-modal",
+          "name": "modal",
+          "type": "hook",
+          "description": "Business Logic — modal",
+          "files": [
+            "src/hooks/modal/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-pathname",
+          "name": "pathname",
+          "type": "hook",
+          "description": "Business Logic — pathname",
+          "files": [
+            "src/hooks/pathname/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-table",
+          "name": "table",
+          "type": "hook",
+          "description": "Business Logic — table",
+          "files": [
+            "src/hooks/table/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useAppBridge",
+          "name": "useAppBridge",
+          "type": "hook",
+          "description": "Business Logic — useAppBridge",
+          "files": [
+            "src/hooks/useAppBridge/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useAxios",
+          "name": "useAxios",
+          "type": "hook",
+          "description": "Business Logic — useAxios",
+          "files": [
+            "src/hooks/useAxios/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useCancelToken",
+          "name": "useCancelToken",
+          "type": "hook",
+          "description": "Business Logic — useCancelToken",
+          "files": [
+            "src/hooks/useCancelToken/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useCheckRoutePermissions",
+          "name": "useCheckRoutePermissions",
+          "type": "hook",
+          "description": "Business Logic — useCheckRoutePermissions",
+          "files": [
+            "src/hooks/useCheckRoutePermissions/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useClickOutside",
+          "name": "useClickOutside",
+          "type": "hook",
+          "description": "Business Logic — useClickOutside",
+          "files": [
+            "src/hooks/useClickOutside/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useDefinitionHandler",
+          "name": "useDefinitionHandler",
+          "type": "hook",
+          "description": "Business Logic — useDefinitionHandler",
+          "files": [
+            "src/hooks/useDefinitionHandler/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useElementHeight",
+          "name": "useElementHeight",
+          "type": "hook",
+          "description": "Business Logic — useElementHeight",
+          "files": [
+            "src/hooks/useElementHeight/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useFeatureToggle",
+          "name": "useFeatureToggle",
+          "type": "hook",
+          "description": "Business Logic — useFeatureToggle",
+          "files": [
+            "src/hooks/useFeatureToggle/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useFileUpload",
+          "name": "useFileUpload",
+          "type": "hook",
+          "description": "Business Logic — useFileUpload",
+          "files": [
+            "src/hooks/useFileUpload/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useFormPageFlowRecordsTable",
+          "name": "useFormPageFlowRecordsTable",
+          "type": "hook",
+          "description": "Business Logic — useFormPageFlowRecordsTable",
+          "files": [
+            "src/hooks/useFormPageFlowRecordsTable/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useGlobalErrorModal",
+          "name": "useGlobalErrorModal",
+          "type": "hook",
+          "description": "Business Logic — useGlobalErrorModal",
+          "files": [
+            "src/hooks/useGlobalErrorModal/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useGlobalModal",
+          "name": "useGlobalModal",
+          "type": "hook",
+          "description": "Business Logic — useGlobalModal",
+          "files": [
+            "src/hooks/useGlobalModal/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useI18n",
+          "name": "useI18n",
+          "type": "hook",
+          "description": "Business Logic — useI18n",
+          "files": [
+            "src/hooks/useI18n/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useIntervalAction",
+          "name": "useIntervalAction",
+          "type": "hook",
+          "description": "Business Logic — useIntervalAction",
+          "files": [
+            "src/hooks/useIntervalAction/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useLoading",
+          "name": "useLoading",
+          "type": "hook",
+          "description": "Business Logic — useLoading",
+          "files": [
+            "src/hooks/useLoading/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useModal",
+          "name": "useModal",
+          "type": "hook",
+          "description": "Business Logic — useModal",
+          "files": [
+            "src/hooks/useModal/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useOpen",
+          "name": "useOpen",
+          "type": "hook",
+          "description": "Business Logic — useOpen",
+          "files": [
+            "src/hooks/useOpen/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-usePagination",
+          "name": "usePagination",
+          "type": "hook",
+          "description": "Business Logic — usePagination",
+          "files": [
+            "src/hooks/usePagination/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-usePersistedAtom",
+          "name": "usePersistedAtom",
+          "type": "hook",
+          "description": "Business Logic — usePersistedAtom",
+          "files": [
+            "src/hooks/usePersistedAtom/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-usePrevious",
+          "name": "usePrevious",
+          "type": "hook",
+          "description": "Business Logic — usePrevious",
+          "files": [
+            "src/hooks/usePrevious/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useScrollIntoView",
+          "name": "useScrollIntoView",
+          "type": "hook",
+          "description": "Business Logic — useScrollIntoView",
+          "files": [
+            "src/hooks/useScrollIntoView/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useUserDeviceInfo",
+          "name": "useUserDeviceInfo",
+          "type": "hook",
+          "description": "Business Logic — useUserDeviceInfo",
+          "files": [
+            "src/hooks/useUserDeviceInfo/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useWebView",
+          "name": "useWebView",
+          "type": "hook",
+          "description": "Business Logic — useWebView",
+          "files": [
+            "src/hooks/useWebView/**"
+          ],
+          "tags": [
+            "hook"
+          ]
+        },
+        {
+          "id": "hooks-useWindowResize",
+          "name": "useWindowResize",
+          "type": "hook",
+          "description": "Business Logic — useWindowResize",
+          "files": [
+            "src/hooks/useWindowResize/**"
+          ],
+          "tags": [
+            "hook"
           ]
         }
       ]
     },
     {
       "id": "data-access",
-      "label": "Data Access Layer",
+      "label": "Data Access",
       "color": "#F59E0B",
-      "order": 2,
-      "modules": [
-        {
-          "id": "api-layer",
-          "name": "API Layer",
-          "type": "api",
-          "description": "Axios HTTP 客戶端",
-          "files": [
-            "src/api/**",
-            "src/hooks/api/**"
-          ],
-          "tags": [
-            "http",
-            "axios"
-          ],
-          "endpoints": [
-            "POST /api/form",
-            "GET /api/form/:id",
-            "PUT /api/form/:id",
-            "POST /api/flowAction"
-          ]
-        },
-        {
-          "id": "designer-atoms",
-          "name": "Designer Atoms",
-          "type": "store",
-          "description": "設計器相關的 Jotai atoms（流程節點、欄位設定）",
-          "files": [
-            "src/lib/jotai/designer/**"
-          ],
-          "tags": [
-            "jotai",
-            "state"
-          ]
-        },
-        {
-          "id": "form-atoms",
-          "name": "Form Atoms",
-          "type": "store",
-          "description": "表單相關的 Jotai atoms（表單資料、驗證狀態）",
-          "files": [
-            "src/lib/jotai/form/**"
-          ],
-          "tags": [
-            "jotai",
-            "state"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "be-api",
-      "label": "Backend API (.NET 8)",
-      "color": "#EF4444",
       "order": 3,
       "modules": [
         {
-          "id": "be-form-controller",
-          "name": "FormController",
+          "id": "api",
+          "name": "api",
           "type": "api",
-          "description": "表單 CRUD API — 建立、查詢、更新表單",
-          "tags": [
-            "asp.net",
-            "controller"
+          "description": "Data Access",
+          "files": [
+            "src/api/**"
           ],
-          "endpoints": [
-            "POST /api/form",
-            "GET /api/form/:id",
-            "PUT /api/form/:id"
-          ]
-        },
-        {
-          "id": "be-flow-controller",
-          "name": "FlowActionController",
-          "type": "api",
-          "description": "簽核流程 API — 審核、退回、加簽、會簽",
           "tags": [
-            "asp.net",
-            "controller"
-          ],
-          "endpoints": [
-            "POST /api/flowAction"
-          ]
-        },
-        {
-          "id": "be-auth",
-          "name": "AuthMiddleware",
-          "type": "service",
-          "description": "JWT 驗證 + 權限檢查中間件",
-          "tags": [
-            "security",
-            "middleware"
+            "api"
           ]
         }
       ]
     },
     {
-      "id": "be-domain",
-      "label": "Backend Domain (Clean Architecture)",
-      "color": "#EC4899",
-      "order": 4,
+      "id": "utilities",
+      "label": "Utilities",
+      "color": "#6B7280",
+      "order": 5,
       "modules": [
         {
-          "id": "be-form-handler",
-          "name": "FormCommandHandler",
-          "type": "service",
-          "description": "MediatR CQRS — CreateFormCommand, UpdateFormCommand, GetFormQuery",
-          "tags": [
-            "mediatr",
-            "cqrs"
+          "id": "lib-firebase",
+          "name": "firebase",
+          "type": "util",
+          "description": "Utilities — firebase",
+          "files": [
+            "src/lib/firebase/**"
           ],
-          "dependsOn": [
-            "be-form-repo"
+          "tags": [
+            "util"
           ]
         },
         {
-          "id": "be-flow-handler",
-          "name": "FlowActionHandler",
-          "type": "service",
-          "description": "MediatR CQRS — 簽核流程動作處理",
-          "tags": [
-            "mediatr",
-            "cqrs"
+          "id": "lib-jotai",
+          "name": "jotai",
+          "type": "util",
+          "description": "Utilities — jotai",
+          "files": [
+            "src/lib/jotai/**"
           ],
-          "dependsOn": [
-            "be-form-repo"
+          "tags": [
+            "util"
           ]
         },
         {
-          "id": "be-form-repo",
-          "name": "FormRepository",
-          "type": "store",
-          "description": "Entity Framework Core — 表單資料存取層",
+          "id": "lib-logger",
+          "name": "logger",
+          "type": "util",
+          "description": "Utilities — logger",
+          "files": [
+            "src/lib/logger/**"
+          ],
           "tags": [
-            "ef-core",
-            "sql-server"
+            "util"
+          ]
+        },
+        {
+          "id": "lib-observable",
+          "name": "observable",
+          "type": "util",
+          "description": "Utilities — observable",
+          "files": [
+            "src/lib/observable/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "lib-postRobot",
+          "name": "postRobot",
+          "type": "util",
+          "description": "Utilities — postRobot",
+          "files": [
+            "src/lib/postRobot/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-Auth",
+          "name": "Auth",
+          "type": "util",
+          "description": "Utilities — Auth",
+          "files": [
+            "src/utils/Auth/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-api",
+          "name": "api",
+          "type": "util",
+          "description": "Utilities — api",
+          "files": [
+            "src/utils/api/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-common",
+          "name": "common",
+          "type": "util",
+          "description": "Utilities — common",
+          "files": [
+            "src/utils/common/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-demo",
+          "name": "demo",
+          "type": "util",
+          "description": "Utilities — demo",
+          "files": [
+            "src/utils/demo/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-devTool",
+          "name": "devTool",
+          "type": "util",
+          "description": "Utilities — devTool",
+          "files": [
+            "src/utils/devTool/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-device",
+          "name": "device",
+          "type": "util",
+          "description": "Utilities — device",
+          "files": [
+            "src/utils/device/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-expression",
+          "name": "expression",
+          "type": "util",
+          "description": "Utilities — expression",
+          "files": [
+            "src/utils/expression/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-fireBase",
+          "name": "fireBase",
+          "type": "util",
+          "description": "Utilities — fireBase",
+          "files": [
+            "src/utils/fireBase/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-form",
+          "name": "form",
+          "type": "util",
+          "description": "Utilities — form",
+          "files": [
+            "src/utils/form/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-i18n",
+          "name": "i18n",
+          "type": "util",
+          "description": "Utilities — i18n",
+          "files": [
+            "src/utils/i18n/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-jsLogic",
+          "name": "jsLogic",
+          "type": "util",
+          "description": "Utilities — jsLogic",
+          "files": [
+            "src/utils/jsLogic/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-layout",
+          "name": "layout",
+          "type": "util",
+          "description": "Utilities — layout",
+          "files": [
+            "src/utils/layout/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-localStorageOperator",
+          "name": "localStorageOperator",
+          "type": "util",
+          "description": "Utilities — localStorageOperator",
+          "files": [
+            "src/utils/localStorageOperator/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-logger",
+          "name": "logger",
+          "type": "util",
+          "description": "Utilities — logger",
+          "files": [
+            "src/utils/logger/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-managerPages",
+          "name": "managerPages",
+          "type": "util",
+          "description": "Utilities — managerPages",
+          "files": [
+            "src/utils/managerPages/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-metaData",
+          "name": "metaData",
+          "type": "util",
+          "description": "Utilities — metaData",
+          "files": [
+            "src/utils/metaData/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-modalList",
+          "name": "modalList",
+          "type": "util",
+          "description": "Utilities — modalList",
+          "files": [
+            "src/utils/modalList/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-sessionStorageOperator",
+          "name": "sessionStorageOperator",
+          "type": "util",
+          "description": "Utilities — sessionStorageOperator",
+          "files": [
+            "src/utils/sessionStorageOperator/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-sourcemap",
+          "name": "sourcemap",
+          "type": "util",
+          "description": "Utilities — sourcemap",
+          "files": [
+            "src/utils/sourcemap/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-table",
+          "name": "table",
+          "type": "util",
+          "description": "Utilities — table",
+          "files": [
+            "src/utils/table/**"
+          ],
+          "tags": [
+            "util"
+          ]
+        },
+        {
+          "id": "utils-timeZone",
+          "name": "timeZone",
+          "type": "util",
+          "description": "Utilities — timeZone",
+          "files": [
+            "src/utils/timeZone/**"
+          ],
+          "tags": [
+            "util"
           ]
         }
       ]
-    }
-  ],
-  "connections": [
-    {
-      "from": "api-layer",
-      "to": "be-form-controller",
-      "protocol": "REST",
-      "method": "POST",
-      "endpoint": "/api/form",
-      "description": "前端送出表單到後端"
     },
     {
-      "from": "api-layer",
-      "to": "be-form-controller",
-      "protocol": "REST",
-      "method": "GET",
-      "endpoint": "/api/form/:id",
-      "description": "前端查詢表單資料"
+      "id": "types",
+      "label": "Types",
+      "color": "#06B6D4",
+      "order": 6,
+      "modules": [
+        {
+          "id": "types-enums",
+          "name": "enums",
+          "type": "type",
+          "description": "Types — enums",
+          "files": [
+            "src/types/enums/**"
+          ],
+          "tags": [
+            "type"
+          ]
+        },
+        {
+          "id": "types-interface",
+          "name": "interface",
+          "type": "type",
+          "description": "Types — interface",
+          "files": [
+            "src/types/interface/**"
+          ],
+          "tags": [
+            "type"
+          ]
+        }
+      ]
     },
     {
-      "from": "api-layer",
-      "to": "be-flow-controller",
-      "protocol": "REST",
-      "method": "POST",
-      "endpoint": "/api/flowAction",
-      "description": "前端觸發簽核動作"
+      "id": "config",
+      "label": "Configuration",
+      "color": "#84CC16",
+      "order": 7,
+      "modules": [
+        {
+          "id": "constants-devtool",
+          "name": "devtool",
+          "type": "config",
+          "description": "Configuration — devtool",
+          "files": [
+            "src/constants/devtool/**"
+          ],
+          "tags": [
+            "config"
+          ]
+        },
+        {
+          "id": "constants-form",
+          "name": "form",
+          "type": "config",
+          "description": "Configuration — form",
+          "files": [
+            "src/constants/form/**"
+          ],
+          "tags": [
+            "config"
+          ]
+        }
+      ]
     }
   ],
   "routes": {
     "framework": "nextjs",
-    "basePath": "/",
     "entries": [
       {
-        "path": "/login",
-        "name": "Login",
-        "handler": "src/app/[lng]/login/page.tsx",
-        "tags": [
-          "public"
-        ]
+        "path": "/[lng]/[appCode]/insidedemo",
+        "name": "insidedemo",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/FormContent",
+        "name": "FormContent",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/FormContent/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/TestFileDownLoad",
+        "name": "TestFileDownLoad",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestFileDownLoad/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/TestPage",
+        "name": "TestPage",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/TestPage/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/iconHome",
+        "name": "iconHome",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/iconHome/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/orgtree",
+        "name": "orgtree",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/orgtree/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/insidedemo/transpage",
+        "name": "transpage",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/insidedemo/transpage/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/login",
+        "name": "login",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/login/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/testhome",
+        "name": "testhome",
+        "handler": "src/app/[lng]/[appCode]/(devTool)/testhome/page.tsx"
       },
       {
         "path": "/[lng]/[appCode]",
-        "name": "App Shell",
-        "guard": "RoutePermissionAuth",
-        "children": [
-          {
-            "path": "/[lng]/[appCode]/designer",
-            "name": "Form Designer",
-            "handler": "src/app/[lng]/[appCode]/(interface)/designer/page.tsx",
-            "tags": [
-              "designer"
-            ],
-            "children": [
-              {
-                "path": "/[lng]/[appCode]/designer/flow",
-                "name": "Flow Designer",
-                "handler": "src/app/.../FlowDesignSettingV3/index.tsx"
-              }
-            ]
-          },
-          {
-            "path": "/[lng]/[appCode]/form/:formId",
-            "name": "Form Fill",
-            "handler": "src/app/[lng]/[appCode]/(interface)/form/page.tsx",
-            "tags": [
-              "form"
-            ]
-          },
-          {
-            "path": "/[lng]/[appCode]/form/:formId/review",
-            "name": "Form Review",
-            "handler": "src/app/[lng]/[appCode]/(interface)/form/review/page.tsx",
-            "tags": [
-              "form",
-              "approval"
-            ]
-          }
-        ]
+        "name": "[appCode]",
+        "handler": "src/app/[lng]/[appCode]/(interface)/page.tsx"
       },
       {
-        "path": "/api/log",
-        "name": "Log Endpoint",
-        "handler": "src/app/api/log/route.ts",
-        "method": "POST",
-        "tags": [
-          "api"
-        ]
+        "path": "/[lng]/[appCode]/apply/create/[typeCode]",
+        "name": "[typeCode]",
+        "handler": "src/app/[lng]/[appCode]/(interface)/apply/create/[typeCode]/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/apply/list",
+        "name": "list",
+        "handler": "src/app/[lng]/[appCode]/(interface)/apply/list/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/approves",
+        "name": "approves",
+        "handler": "src/app/[lng]/[appCode]/(interface)/approves/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/browse/[formNo]",
+        "name": "[formNo]",
+        "handler": "src/app/[lng]/[appCode]/(interface)/browse/[formNo]/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/demo/loadingtestpage",
+        "name": "loadingtestpage",
+        "handler": "src/app/[lng]/[appCode]/(interface)/demo/loadingtestpage/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/demo/testError",
+        "name": "testError",
+        "handler": "src/app/[lng]/[appCode]/(interface)/demo/testError/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/designer",
+        "name": "designer",
+        "handler": "src/app/[lng]/[appCode]/(interface)/designer/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/designs",
+        "name": "designs",
+        "handler": "src/app/[lng]/[appCode]/(interface)/designs/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/errorrecordreport",
+        "name": "errorrecordreport",
+        "handler": "src/app/[lng]/[appCode]/(interface)/errorrecordreport/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/formtemplate",
+        "name": "formtemplate",
+        "handler": "src/app/[lng]/[appCode]/(interface)/formtemplate/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/helpcenter",
+        "name": "helpcenter",
+        "handler": "src/app/[lng]/[appCode]/(interface)/helpcenter/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/manage",
+        "name": "manage",
+        "handler": "src/app/[lng]/[appCode]/(interface)/manage/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/oldformquery",
+        "name": "oldformquery",
+        "handler": "src/app/[lng]/[appCode]/(interface)/oldformquery/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/permissions/charsetting",
+        "name": "charsetting",
+        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/permissions/charsetting/editchar",
+        "name": "editchar",
+        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/charsetting/editchar/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/permissions/formdesign",
+        "name": "formdesign",
+        "handler": "src/app/[lng]/[appCode]/(interface)/permissions/formdesign/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/systemsetting/overduenotificationsettings",
+        "name": "overduenotificationsettings",
+        "handler": "src/app/[lng]/[appCode]/(interface)/systemsetting/overduenotificationsettings/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/traces",
+        "name": "traces",
+        "handler": "src/app/[lng]/[appCode]/(interface)/traces/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/auth",
+        "name": "auth",
+        "handler": "src/app/[lng]/[appCode]/auth/page.tsx"
+      },
+      {
+        "path": "/[lng]/[appCode]/errorpage",
+        "name": "errorpage",
+        "handler": "src/app/[lng]/[appCode]/errorpage/page.tsx"
+      },
+      {
+        "path": "/api/buildTimeStamp (API)",
+        "name": "buildTimeStamp API",
+        "handler": "src/app/api/buildTimeStamp/route.ts"
+      },
+      {
+        "path": "/api/checkCombineKey (API)",
+        "name": "checkCombineKey API",
+        "handler": "src/app/api/checkCombineKey/route.ts"
+      },
+      {
+        "path": "/api/decryptWork (API)",
+        "name": "decryptWork API",
+        "handler": "src/app/api/decryptWork/route.ts"
+      },
+      {
+        "path": "/api/directories (API)",
+        "name": "directories API",
+        "handler": "src/app/api/directories/route.ts"
+      },
+      {
+        "path": "/api/encryptWork (API)",
+        "name": "encryptWork API",
+        "handler": "src/app/api/encryptWork/route.ts"
+      },
+      {
+        "path": "/api/firebaseConfig (API)",
+        "name": "firebaseConfig API",
+        "handler": "src/app/api/firebaseConfig/route.ts"
+      },
+      {
+        "path": "/api/form/adminFlowDeliver (API)",
+        "name": "adminFlowDeliver API",
+        "handler": "src/app/api/form/adminFlowDeliver/route.ts"
+      },
+      {
+        "path": "/api/form/evaluateCalculations (API)",
+        "name": "evaluateCalculations API",
+        "handler": "src/app/api/form/evaluateCalculations/route.ts"
+      },
+      {
+        "path": "/api/form/evaluateLogic (API)",
+        "name": "evaluateLogic API",
+        "handler": "src/app/api/form/evaluateLogic/route.ts"
+      },
+      {
+        "path": "/api/form/executeDataSource (API)",
+        "name": "executeDataSource API",
+        "handler": "src/app/api/form/executeDataSource/route.ts"
+      },
+      {
+        "path": "/api/form/flowDeliver (API)",
+        "name": "flowDeliver API",
+        "handler": "src/app/api/form/flowDeliver/route.ts"
+      },
+      {
+        "path": "/api/form/getInitUserDataSession (API)",
+        "name": "getInitUserDataSession API",
+        "handler": "src/app/api/form/getInitUserDataSession/route.ts"
+      },
+      {
+        "path": "/api/form/getMaskedUserData (API)",
+        "name": "getMaskedUserData API",
+        "handler": "src/app/api/form/getMaskedUserData/route.ts"
+      },
+      {
+        "path": "/api/log (API)",
+        "name": "log API",
+        "handler": "src/app/api/log/route.ts"
+      },
+      {
+        "path": "/api/login (API)",
+        "name": "login API",
+        "handler": "src/app/api/login/route.ts"
+      },
+      {
+        "path": "/api/symbolicate (API)",
+        "name": "symbolicate API",
+        "handler": "src/app/api/symbolicate/route.ts"
       }
     ]
   },
@@ -359,88 +1417,122 @@
     "library": "jotai",
     "stores": [
       {
-        "id": "designer-atoms",
-        "name": "Designer Flow Atoms",
-        "file": "src/lib/jotai/designer/flow.ts",
+        "id": "designer",
+        "name": "designer",
+        "file": "src/lib/jotai/designer/designer.tsx",
         "atoms": [
-          "closeEdgeActionTooltipAtom",
-          "setCurrentConnectingTypeAtom",
-          "setOpenContextNodeIDAtom"
+          "designerAtom",
+          "designerFormInfoAtom",
+          "publishStateAtom",
+          "saveStateAtom",
+          "designerBasicAtom",
+          "designerBasicFormNameAtom"
         ]
       },
       {
-        "id": "form-atoms",
-        "name": "Form State Atoms",
-        "file": "src/lib/jotai/form/index.ts",
+        "id": "flow",
+        "name": "flow",
+        "file": "src/lib/jotai/designer/flow.ts",
         "atoms": [
-          "formDataAtom",
-          "formValidationAtom",
-          "formMetaAtom"
+          "openContextNodeIDAtom",
+          "setOpenContextNodeIDtom",
+          "EdgeActionTooltipAtom",
+          "showEdgeActionTooltipAtom",
+          "closeEdgeActionTooltipAtom",
+          "CurrentConnectingTypeAtom",
+          "setCurrentConnectingTypeAtom"
+        ]
+      },
+      {
+        "id": "index",
+        "name": "index",
+        "file": "src/lib/jotai/designer/index.ts",
+        "atoms": [
+          "DependedModulesByComponentKeyAtom",
+          "CircularDependencyCalcKeysAtom",
+          "CalculationDependComponentKeysByKeyAtom",
+          "handleCalculationDependComponentKeysByKeyAtom",
+          "handleDependedDetailModulesByKeyAtom",
+          "DependedTriggerComponentAtom",
+          "handleDependedTriggerComponentAtom",
+          "handleUpdateDependedTriggerComponentAtom",
+          "detailCompInfoAtom",
+          "logicFieldOptionListAtom",
+          "handleDetailCompInfoAtom",
+          "detailFormToDetailCompInfoAtom",
+          "transformSystemCompToDetailCompInfo",
+          "transformCustomCompToDetailCompInfo",
+          "deleteCompModalAtom",
+          "openDeleteCompModalAtom",
+          "handleCompDeleteAtom",
+          "handleComponentOptionDeleteAtom"
+        ]
+      },
+      {
+        "id": "loginAtom",
+        "name": "loginAtom",
+        "file": "src/lib/jotai/devTool/loginAtom.ts",
+        "atoms": [
+          "devLoginDataAtom"
+        ]
+      },
+      {
+        "id": "index",
+        "name": "index",
+        "file": "src/lib/jotai/errorHandle/index.tsx",
+        "atoms": [
+          "globalModalAtom",
+          "globalModalCodeAtom",
+          "openGlobalModalAtom",
+          "isReportingAtom",
+          "handleErrorAtom",
+          "handleModalErrorCodeAtom",
+          "handleAxiosErrorAtom"
+        ]
+      },
+      {
+        "id": "index",
+        "name": "index",
+        "file": "src/lib/jotai/layout/index.ts",
+        "atoms": [
+          "userInfoAtom",
+          "navigationConfigAtom",
+          "isIframeModeAtom",
+          "userDeviceInfoAtom",
+          "timeZoneAtom",
+          "updateTimeZoneAtom"
+        ]
+      },
+      {
+        "id": "index",
+        "name": "index",
+        "file": "src/lib/jotai/managePages/index.ts",
+        "atoms": [
+          "initDateRange",
+          "defaultFormMaterialValue"
+        ]
+      },
+      {
+        "id": "persistUtils",
+        "name": "persistUtils",
+        "file": "src/lib/jotai/managePages/persistUtils.ts",
+        "atoms": [
+          "mergeDefaults",
+          "stableStringify"
         ]
       }
     ],
-    "flows": [
-      {
-        "from": "designer-atoms",
-        "to": "designer-pages",
-        "direction": "read",
-        "description": "Designer 頁面讀取流程設計狀態"
-      },
-      {
-        "from": "designer-pages",
-        "to": "designer-atoms",
-        "direction": "write",
-        "description": "Designer 頁面寫入流程連接狀態"
-      },
-      {
-        "from": "form-atoms",
-        "to": "form-pages",
-        "direction": "read",
-        "description": "表單頁面讀取表單資料"
-      },
-      {
-        "from": "form-pages",
-        "to": "form-atoms",
-        "direction": "write",
-        "description": "表單頁面寫入表單資料"
-      },
-      {
-        "from": "form-atoms",
-        "to": "form-components",
-        "direction": "read",
-        "description": "表單元件讀取驗證狀態"
-      },
-      {
-        "from": "form-hooks",
-        "to": "form-atoms",
-        "direction": "read-write",
-        "description": "表單 hooks 讀寫表單狀態"
-      }
-    ]
+    "flows": []
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T02:51:15.568Z",
+      "analyzedAt": "2026-03-31T03:17:03.517Z",
       "rootDir": "/Users/tomas_chang/work/MAYOFormAISolutions/MAYOForm-Web/src",
       "fileCount": 1403,
-      "nodeCount": 1223,
-      "edgeCount": 1399
+      "nodeCount": 1225,
+      "edgeCount": 1405
     },
     "nodes": [
-      {
-        "id": "../global.d.ts",
-        "label": "global.d",
-        "filePath": "../global.d.ts",
-        "type": "unknown",
-        "exports": []
-      },
-      {
-        "id": "../next-env.d.ts",
-        "label": "next-env.d",
-        "filePath": "../next-env.d.ts",
-        "type": "unknown",
-        "exports": []
-      },
       {
         "id": "../next-i18next.config.js",
         "label": "next-i18next.config",
@@ -555,18 +1647,6 @@
           {
             "name": "isIgnoredError",
             "kind": "variable"
-          }
-        ]
-      },
-      {
-        "id": "types/axios.d.ts",
-        "label": "axios.d",
-        "filePath": "types/axios.d.ts",
-        "type": "unknown",
-        "exports": [
-          {
-            "name": "RecoverableRetryConfig",
-            "kind": "interface"
           }
         ]
       },
@@ -10459,6 +11539,54 @@
         ]
       },
       {
+        "id": "../.next/types/app/[lng]/[appCode]/layout.ts",
+        "label": "layout",
+        "filePath": "../.next/types/app/[lng]/[appCode]/layout.ts",
+        "type": "page",
+        "exports": [
+          {
+            "name": "PageProps",
+            "kind": "interface"
+          },
+          {
+            "name": "LayoutProps",
+            "kind": "interface"
+          }
+        ]
+      },
+      {
+        "id": "../.next/types/app/api/firebaseConfig/route.ts",
+        "label": "route",
+        "filePath": "../.next/types/app/api/firebaseConfig/route.ts",
+        "type": "page",
+        "exports": [
+          {
+            "name": "PageProps",
+            "kind": "interface"
+          },
+          {
+            "name": "LayoutProps",
+            "kind": "interface"
+          }
+        ]
+      },
+      {
+        "id": "../.next/types/app/api/log/route.ts",
+        "label": "route",
+        "filePath": "../.next/types/app/api/log/route.ts",
+        "type": "page",
+        "exports": [
+          {
+            "name": "PageProps",
+            "kind": "interface"
+          },
+          {
+            "name": "LayoutProps",
+            "kind": "interface"
+          }
+        ]
+      },
+      {
         "id": "app/[lng]/[appCode]/(devTool)/layout.tsx",
         "label": "layout",
         "filePath": "app/[lng]/[appCode]/(devTool)/layout.tsx",
@@ -11986,6 +13114,22 @@
         ]
       },
       {
+        "id": "../.next/types/app/[lng]/[appCode]/(interface)/layout.ts",
+        "label": "layout",
+        "filePath": "../.next/types/app/[lng]/[appCode]/(interface)/layout.ts",
+        "type": "page",
+        "exports": [
+          {
+            "name": "PageProps",
+            "kind": "interface"
+          },
+          {
+            "name": "LayoutProps",
+            "kind": "interface"
+          }
+        ]
+      },
+      {
         "id": "app/[lng]/[appCode]/(devTool)/insidedemo/page.tsx",
         "label": "page",
         "filePath": "app/[lng]/[appCode]/(devTool)/insidedemo/page.tsx",
@@ -13154,6 +14298,22 @@
           {
             "name": "removeHiddenCustomComponents",
             "kind": "variable"
+          }
+        ]
+      },
+      {
+        "id": "../.next/types/app/[lng]/[appCode]/(interface)/designer/page.ts",
+        "label": "page",
+        "filePath": "../.next/types/app/[lng]/[appCode]/(interface)/designer/page.ts",
+        "type": "page",
+        "exports": [
+          {
+            "name": "PageProps",
+            "kind": "interface"
+          },
+          {
+            "name": "LayoutProps",
+            "kind": "interface"
           }
         ]
       },
@@ -26902,6 +28062,39 @@
         ]
       },
       {
+        "source": "../.next/types/app/[lng]/[appCode]/layout.ts",
+        "target": "app/[lng]/[appCode]/layout.tsx",
+        "imports": [
+          {
+            "name": "*",
+            "alias": "entry",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "../.next/types/app/api/firebaseConfig/route.ts",
+        "target": "app/api/firebaseConfig/route.ts",
+        "imports": [
+          {
+            "name": "*",
+            "alias": "entry",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "../.next/types/app/api/log/route.ts",
+        "target": "app/api/log/route.ts",
+        "imports": [
+          {
+            "name": "*",
+            "alias": "entry",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
         "source": "app/[lng]/[appCode]/(devTool)/layout.tsx",
         "target": "components/Auth/LoginAuth.tsx",
         "imports": [
@@ -27511,6 +28704,17 @@
         "imports": [
           {
             "name": "isGridValue",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "../.next/types/app/[lng]/[appCode]/(interface)/layout.ts",
+        "target": "app/[lng]/[appCode]/(interface)/layout.tsx",
+        "imports": [
+          {
+            "name": "*",
+            "alias": "entry",
             "isTypeOnly": false
           }
         ]
@@ -28982,6 +30186,17 @@
         "imports": [
           {
             "name": "removeHiddenCustomComponents",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "../.next/types/app/[lng]/[appCode]/(interface)/designer/page.ts",
+        "target": "app/[lng]/[appCode]/(interface)/designer/page.tsx",
+        "imports": [
+          {
+            "name": "*",
+            "alias": "entry",
             "isTypeOnly": false
           }
         ]
@@ -31135,6 +32350,16 @@
         "imports": [
           {
             "name": "CustomComponentAttribute",
+            "isTypeOnly": false
+          }
+        ]
+      },
+      {
+        "source": "app/[lng]/[appCode]/(interface)/designer/hooks/useDesignerAttrGenerate/index.tsx",
+        "target": "app/[lng]/[appCode]/(interface)/designer/utils/dependency/calculation.ts",
+        "imports": [
+          {
+            "name": "getCalculationDependWithDetail",
             "isTypeOnly": false
           }
         ]
