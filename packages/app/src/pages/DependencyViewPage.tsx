@@ -14,27 +14,28 @@ interface AnalysisEntry {
 
 export default function DependencyViewPage() {
   const config = useProjectStore((s) => s.config)
+  const configVersion = useProjectStore((s) => s.configVersion)
   const [entries, setEntries] = useState<AnalysisEntry[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
-  // Auto-load from config.analysis if embedded
+  // Reset entries when a new config is loaded, then load its analysis
   useEffect(() => {
-    if (!config?.analysis) return
+    if (!config?.analysis) {
+      setEntries([])
+      setActiveIndex(0)
+      return
+    }
     const result = analysisResultSchema.safeParse(config.analysis)
     if (!result.success) return
 
-    setEntries((prev) => {
-      const configLabel = config.project.name ?? 'Config'
-      const existing = prev.findIndex((e) => e.label === configLabel)
-      if (existing >= 0) {
-        return prev.map((e, i) => i === existing ? { label: configLabel, data: result.data } : e)
-      }
-      return [{ label: configLabel, data: result.data }, ...prev]
-    })
-  }, [config?.analysis, config?.project.name])
+    const configLabel = config.project.name ?? 'Config'
+    setEntries([{ label: configLabel, data: result.data }])
+    setActiveIndex(0)
+    setSelectedNodeId(null)
+  }, [configVersion]) // eslint-disable-line react-hooks/exhaustive-deps -- intentionally reset on config change
 
   const analysis = entries[activeIndex]?.data ?? null
 
