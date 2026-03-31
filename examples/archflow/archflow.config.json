@@ -366,12 +366,11 @@
   },
   "analysis": {
     "metadata": {
-      "analyzedAt": "2026-03-31T05:43:17.509Z",
+      "analyzedAt": "2026-03-31T04:10:07.494Z",
       "rootDir": "/Users/tomas_chang/work/archflow/packages/app/src",
       "fileCount": 48,
       "nodeCount": 43,
-      "edgeCount": 95,
-      "circularCount": 0
+      "edgeCount": 95
     },
     "nodes": [
       {
@@ -783,10 +782,6 @@
             "kind": "variable"
           },
           {
-            "name": "circularDependencySchema",
-            "kind": "variable"
-          },
-          {
             "name": "analysisResultSchema",
             "kind": "variable"
           },
@@ -800,10 +795,6 @@
           },
           {
             "name": "AnalysisDependencyEdge",
-            "kind": "type"
-          },
-          {
-            "name": "CircularDependency",
             "kind": "type"
           }
         ]
@@ -988,10 +979,6 @@
           },
           {
             "name": "AnalysisDependencyEdge",
-            "kind": "type"
-          },
-          {
-            "name": "CircularDependency",
             "kind": "type"
           }
         ]
@@ -2150,10 +2137,6 @@
           {
             "name": "AnalysisDependencyEdge",
             "isTypeOnly": true
-          },
-          {
-            "name": "CircularDependency",
-            "isTypeOnly": true
           }
         ]
       },
@@ -2253,7 +2236,6 @@
           }
         ]
       }
-    ],
-    "circular": []
+    ]
   }
 }

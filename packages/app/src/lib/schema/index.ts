@@ -14,4 +14,4 @@ export { archflowConfigSchema, projectInfoSchema } from './config'
 export type { ArchflowConfig, ProjectInfo } from './config'
 
 export { analysisResultSchema } from './analysis'
-export type { AnalysisResult, AnalysisDependencyNode, AnalysisDependencyEdge, CircularDependency } from './analysis'
+export type { AnalysisResult, AnalysisDependencyNode, AnalysisDependencyEdge } from './analysis'

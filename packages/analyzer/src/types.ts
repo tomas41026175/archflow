@@ -37,14 +37,6 @@ export interface DependencyEdge {
   imports: ImportDetail[]
 }
 
-/** A circular dependency cycle */
-export interface CircularDependency {
-  /** Ordered list of file IDs forming the cycle (last → first creates the loop) */
-  cycle: string[]
-  /** Human-readable description */
-  description: string
-}
-
 /** Complete analysis output */
 export interface AnalysisResult {
   metadata: {
@@ -53,9 +45,7 @@ export interface AnalysisResult {
     fileCount: number
     nodeCount: number
     edgeCount: number
-    circularCount: number
   }
   nodes: DependencyNode[]
   edges: DependencyEdge[]
-  circular: CircularDependency[]
 }
